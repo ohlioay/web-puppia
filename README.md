@@ -7,6 +7,8 @@
 
 ## 문서
 
+- **프로토타입**: [`prototype/index.html`](prototype/index.html) — 홈 스크롤 시나리오 동작 검증용 (단일 파일, 빌드 불필요)
+
 | 문서 | 내용 |
 |---|---|
 | [docs/research/00-overview.md](docs/research/00-overview.md) | 리서치 요약, 전제 조건, 카페24 제약 |

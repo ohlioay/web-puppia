@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="PUPPIA Soft Harness — scroll choreography prototype.">
+<title>PUPPIA Soft Harness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Instrument+Sans:wght@400;500;600&family=Martian+Mono:wght@300;500;700&display=swap">
+<style>
+:root{
+  --ink:#14171B; --ink2:#1C2126; --ink3:#2A3138;
+  --bone:#E9E8E1; --bone2:#DCDAD1; --bone3:#C8C6BB;
+  --load:#2A45E0; --load-lt:#5C74F5;
+  --press:#E1492A; --press-lt:#F4795D;
+  --on-ink:#F2F1EB; --on-ink-mute:#8D959D;
+  --on-bone:#14171B; --on-bone-mute:#6A7076;
+  --product:#2A45E0;
+  --gap:clamp(20px,4vw,56px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--ink); color:var(--on-ink);
+  font-family:"Instrument Sans",system-ui,-apple-system,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.mono{font-family:"Martian Mono","IBM Plex Mono",ui-monospace,monospace}
+
+/* ---------------- type ---------------- */
+.display{
+  font-family:"Archivo",system-ui,sans-serif;
+  font-weight:900; font-stretch:118%;
+  letter-spacing:-.035em; line-height:.86; text-transform:uppercase;
+  margin:0; text-wrap:balance;
+}
+.d-xl{font-size:clamp(3.2rem,13.5vw,11rem)}
+.d-lg{font-size:clamp(2.6rem,8.5vw,6.5rem)}
+.d-md{font-size:clamp(2rem,5.6vw,4.2rem)}
+.eyebrow{
+  font-family:"Martian Mono",monospace; font-weight:500; font-size:clamp(9px,1.1vw,11px);
+  letter-spacing:.24em; text-transform:uppercase; display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:""; width:22px; height:1px; background:currentColor; opacity:.55; flex:0 0 auto}
+.lede{font-size:clamp(.95rem,1.45vw,1.1rem); line-height:1.62; max-width:min(44ch,100%)}
+
+/* ---------------- chrome ---------------- */
+#bar{position:fixed; top:0; left:0; height:2px; width:100%; z-index:60; background:transparent}
+#bar i{display:block; height:100%; width:0%; background:var(--load); transform-origin:0 50%}
+nav{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:16px clamp(16px,3vw,32px);
+  font-family:"Martian Mono",monospace; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+  transition:color .35s ease;
+  color:var(--on-ink); pointer-events:none;
+  --nav-bg:rgba(20,23,27,.78); --nav-rule:rgba(255,255,255,.1);
+}
+nav::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:var(--nav-bg); border-bottom:1px solid var(--nav-rule);
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  opacity:0; transition:opacity .3s ease, background .35s ease;
+}
+nav.stuck::before{opacity:1}
+nav.on-bone{color:var(--on-bone); --nav-bg:rgba(233,232,225,.8); --nav-rule:rgba(20,23,27,.1)}
+nav a, nav button{pointer-events:auto}
+.brand{font-family:"Archivo",sans-serif; font-weight:900; font-stretch:118%; font-size:15px; letter-spacing:.02em; text-decoration:none; color:inherit}
+.nav-mid{display:none; gap:22px}
+@media(min-width:860px){.nav-mid{display:flex}}
+.nav-mid a{color:inherit; text-decoration:none; opacity:.62; transition:opacity .2s}
+.nav-mid a:hover, .nav-mid a:focus-visible{opacity:1}
+.partner{
+  color:inherit; text-decoration:none; border:1px solid currentColor; border-radius:999px;
+  padding:7px 14px; opacity:.75; transition:opacity .2s, background .2s;
+}
+.partner:hover{opacity:1}
+.flag{
+  position:fixed; left:clamp(16px,3vw,32px); bottom:16px; z-index:50;
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
+  background:rgba(20,23,27,.72); color:var(--on-ink-mute); border:1px solid rgba(255,255,255,.14);
+  padding:6px 10px; border-radius:3px; backdrop-filter:blur(6px); max-width:min(72vw,420px); line-height:1.5;
+}
+
+/* ---------------- scene shell ---------------- */
+.scene{position:relative; height:var(--len,100vh)}
+.pin{position:sticky; top:0; height:100vh; overflow:hidden; display:grid}
+.pad{padding:88px clamp(20px,4vw,64px) 56px; width:100%; height:100%; display:flex; flex-direction:column; min-width:0}
+.pad > *{min-width:0; max-width:100%}
+.ink{background:var(--ink); color:var(--on-ink)}
+.bone{background:var(--bone); color:var(--on-bone)}
+.mute{color:var(--on-ink-mute)}
+.bone .mute{color:var(--on-bone-mute)}
+
+/* ---------------- 0 loader ---------------- */
+#load{
+  position:fixed; inset:0; z-index:100; background:var(--ink); color:var(--on-ink);
+  display:grid; place-items:center; gap:0; transition:opacity .6s ease .15s, visibility .6s ease .15s;
+}
+#load.done{opacity:0; visibility:hidden}
+.load-in{display:flex; flex-direction:column; align-items:center; gap:26px}
+.load-in svg{width:clamp(80px,14vw,120px); height:auto; overflow:visible}
+.load-in svg path, .load-in svg circle, .load-in svg rect{
+  fill:none; stroke:var(--load-lt); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:var(--dash,400); stroke-dashoffset:calc(var(--dash,400) * (1 - var(--lp,0)));
+}
+.load-meter{width:min(220px,50vw); height:1px; background:rgba(255,255,255,.18); position:relative}
+.load-meter i{position:absolute; inset:0 auto 0 0; background:var(--on-ink); width:calc(var(--lp,0) * 100%)}
+.load-num{font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.24em; color:var(--on-ink-mute); font-variant-numeric:tabular-nums}
+
+/* ---------------- 1 hero ---------------- */
+#s1 .pin{place-items:stretch}
+.hero{
+  position:relative; width:100%; height:100%;
+  display:grid; grid-template-columns:1fr; align-content:center; gap:clamp(8px,2vw,32px);
+  padding:96px clamp(20px,4vw,64px) 92px;
+}
+@media(min-width:900px){
+  .hero{grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr); align-items:center; gap:clamp(24px,4vw,64px)}
+}
+.hero-type{position:relative; z-index:3; display:flex; flex-direction:column; align-items:flex-start; gap:0}
+.hero-type h1{
+  font-size:clamp(2.9rem,9.2vw,7.4rem); color:var(--on-bone);
+  transform:translateY(calc(var(--p,0) * -12vh));
+  opacity:calc(1 - var(--p,0) * 1.35);
+}
+.hero-sub{
+  margin:20px 0 0; color:var(--on-bone-mute);
+  opacity:calc(1 - var(--p,0) * 1.7);
+  transform:translateY(calc(var(--p,0) * -7vh));
+}
+.hero-art{
+  position:relative; z-index:2; display:grid; place-items:center; pointer-events:none; min-height:0;
+}
+.hero-art svg{
+  width:min(46vh,78%,420px); height:auto; overflow:visible;
+  transform:
+    translateY(calc(var(--p,0) * 14vh))
+    rotate(calc(var(--rx,0) * 1deg))
+    scale(calc(.96 + var(--p,0) * .42));
+  transition:transform .55s cubic-bezier(.16,.7,.3,1);
+}
+@media(max-width:899px){
+  .hero-art{position:absolute; inset:0; opacity:.2}
+  .hero-art svg{width:min(74vw,340px)}
+}
+.hero-scroll{
+  position:absolute; bottom:26px; left:clamp(20px,4vw,64px);
+  display:flex; align-items:center; gap:12px; z-index:4;
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--on-bone-mute); opacity:calc(1 - var(--p,0) * 3);
+}
+.hero-scroll span.line{width:52px; height:1px; background:currentColor; position:relative; overflow:hidden}
+.hero-scroll span.line::after{content:""; position:absolute; inset:0; background:var(--on-bone); animation:slide 1.9s ease-in-out infinite}
+@keyframes slide{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+.hero-meta{
+  position:absolute; z-index:4; bottom:26px; right:clamp(20px,4vw,64px);
+  text-align:right; font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.16em;
+  color:var(--on-bone-mute); line-height:2; opacity:calc(1 - var(--p,0) * 2);
+}
+
+/* ---------------- 2 pressure ---------------- */
+.split{display:grid; gap:clamp(20px,3vw,44px); flex:1; min-height:0; align-content:center}
+@media(min-width:900px){.split{grid-template-columns:minmax(280px,.85fr) minmax(0,1.15fr); align-items:center}}
+.diagram{position:relative; width:100%}
+.diagram svg{width:100%; height:auto; display:block; overflow:visible}
+.dg-line{fill:none; stroke:var(--on-ink); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; opacity:.85}
+.dg-faint{fill:none; stroke:var(--on-ink); stroke-width:1.4; opacity:.28; stroke-dasharray:4 5}
+.dg-label{font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.14em; fill:var(--on-ink-mute); text-transform:uppercase}
+.dg-cap{font-family:"Archivo",sans-serif; font-weight:900; font-stretch:118%; font-size:19px; fill:var(--on-ink); letter-spacing:-.01em}
+.readout{
+  display:grid; grid-template-columns:auto 1fr auto; gap:8px 14px; align-items:center;
+  font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.1em; margin-top:18px;
+}
+.readout .k{color:var(--on-ink-mute); text-transform:uppercase; white-space:nowrap}
+.readout .track{height:5px; background:rgba(255,255,255,.1); border-radius:99px; overflow:hidden}
+.readout .track i{display:block; height:100%; border-radius:99px; transition:width .25s linear}
+.readout .v{font-variant-numeric:tabular-nums; text-align:right; min-width:5.5em}
+.tag-press{color:var(--press-lt)} .tag-load{color:var(--load-lt)}
+
+/* ---------------- 3 anatomy ---------------- */
+.anat{display:grid; gap:clamp(18px,3vw,40px); flex:1; align-content:center; min-height:0}
+@media(min-width:900px){.anat{grid-template-columns:minmax(0,1fr) minmax(260px,.7fr); align-items:center}}
+.anat-stage{position:relative; width:100%; aspect-ratio:1/.82; max-height:56vh; margin-inline:auto}
+.anat-stage svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
+.layer{transition:transform .1s linear}
+.anat-list{display:flex; flex-direction:column; gap:1px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.1)}
+.anat-row{
+  background:var(--ink); padding:13px 16px; display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:baseline;
+  opacity:.28; transition:opacity .28s ease, background .28s ease;
+}
+.anat-row.on{opacity:1; background:var(--ink2)}
+.anat-row .n{font-family:"Martian Mono",monospace; font-size:9.5px; color:var(--on-ink-mute)}
+.anat-row .t{font-weight:600; font-size:14.5px}
+.anat-row .t small{display:block; font-weight:400; font-size:12.5px; color:var(--on-ink-mute); margin-top:2px; letter-spacing:0}
+.anat-row .s{font-family:"Martian Mono",monospace; font-size:9.5px; color:var(--load-lt); white-space:nowrap}
+
+/* ---------------- 4 palette ---------------- */
+#s4{height:auto}
+#s4 .pin{position:static; height:auto; min-height:100vh}
+.pal-wrap{display:grid; gap:clamp(24px,4vw,56px); flex:1; align-content:center}
+@media(min-width:940px){.pal-wrap{grid-template-columns:minmax(0,1fr) minmax(300px,.78fr); align-items:center}}
+.pal-stage{display:grid; place-items:center; padding:clamp(12px,3vw,32px); background:var(--bone2); border-radius:3px}
+.pal-stage svg{width:min(340px,70%); height:auto; overflow:visible}
+.sw-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(70px,1fr)); gap:10px; margin:20px 0 0}
+.sw{
+  appearance:none; border:1px solid var(--bone3); background:transparent; cursor:pointer; padding:0;
+  display:flex; flex-direction:column; gap:0; text-align:left; border-radius:2px; overflow:hidden;
+  transition:border-color .18s ease, transform .18s ease;
+}
+.sw:hover{transform:translateY(-2px)}
+.sw .chip{height:52px; width:100%; display:block}
+.sw .nm{
+  font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.1em; text-transform:uppercase;
+  padding:6px 7px 7px; color:var(--on-bone-mute); background:var(--bone); line-height:1.35;
+}
+.sw[aria-pressed="true"]{border-color:var(--on-bone); border-width:2px}
+.sw[aria-pressed="true"] .nm{color:var(--on-bone); font-weight:700}
+.pal-meta{display:flex; gap:26px; flex-wrap:wrap; margin-top:20px; font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.1em}
+.pal-meta div span{display:block; color:var(--on-bone-mute); font-size:8.5px; letter-spacing:.18em; text-transform:uppercase; margin-bottom:4px}
+
+/* ---------------- 5 fit ---------------- */
+#s5{height:auto}
+#s5 .pin{position:static; height:auto; min-height:100vh}
+.fit{display:grid; gap:clamp(22px,4vw,52px); flex:1; align-content:center}
+@media(min-width:940px){.fit{grid-template-columns:minmax(0,1.1fr) minmax(290px,.75fr); align-items:center}}
+.fit-stage{position:relative; background:var(--ink2); border:1px solid rgba(255,255,255,.09); border-radius:3px; padding:clamp(18px,3vw,34px)}
+.fit-stage svg{width:100%; height:auto; overflow:visible; display:block}
+.strap{transition:none}
+.size-badge{
+  position:absolute; top:clamp(14px,2.4vw,24px); right:clamp(14px,2.4vw,24px);
+  font-family:"Archivo",sans-serif; font-weight:900; font-stretch:118%; font-size:clamp(2.4rem,6vw,4rem);
+  line-height:.8; color:var(--load-lt); letter-spacing:-.04em;
+}
+.size-badge b{display:block; font-family:"Martian Mono",monospace; font-size:9px; font-weight:500;
+  letter-spacing:.2em; color:var(--on-ink-mute); text-align:right; margin-bottom:7px}
+.slider-row{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:10px}
+.slider-row .val{font-family:"Martian Mono",monospace; font-size:clamp(1.4rem,3.4vw,2rem); font-variant-numeric:tabular-nums; color:var(--on-ink)}
+.slider-row .val em{font-style:normal; font-size:.5em; color:var(--on-ink-mute); margin-left:3px}
+input[type=range]{
+  -webkit-appearance:none; appearance:none; width:100%; height:26px; background:transparent; cursor:grab; display:block;
+}
+input[type=range]:active{cursor:grabbing}
+input[type=range]::-webkit-slider-runnable-track{height:3px; background:rgba(255,255,255,.16); border-radius:99px}
+input[type=range]::-moz-range-track{height:3px; background:rgba(255,255,255,.16); border-radius:99px}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--load-lt);
+  border:3px solid var(--ink); margin-top:-9.5px; box-shadow:0 0 0 1px var(--load-lt);
+}
+input[type=range]::-moz-range-thumb{
+  width:16px; height:16px; border-radius:50%; background:var(--load-lt); border:3px solid var(--ink); box-shadow:0 0 0 1px var(--load-lt);
+}
+input[type=range]:focus-visible{outline:2px solid var(--load-lt); outline-offset:6px; border-radius:4px}
+.size-table{width:100%; border-collapse:collapse; font-family:"Martian Mono",monospace; font-size:10px; margin-top:22px}
+.size-table th{
+  text-align:left; padding:7px 8px; color:var(--on-ink-mute); font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; font-size:8.5px; border-bottom:1px solid rgba(255,255,255,.14);
+}
+.size-table td{padding:8px; border-bottom:1px solid rgba(255,255,255,.07); font-variant-numeric:tabular-nums; color:var(--on-ink-mute); transition:color .2s, background .2s}
+.size-table tr.on td{color:var(--on-ink); background:rgba(92,116,245,.14)}
+.size-table tr.on td:first-child{color:var(--load-lt); font-weight:700}
+.breed-hint{margin-top:16px; font-size:13.5px; color:var(--on-ink-mute); min-height:2.8em}
+.breed-hint b{color:var(--on-ink); font-weight:600}
+
+/* ---------------- 6 every body ---------------- */
+#s6{height:auto}
+#s6 .pin{position:static; height:auto; min-height:100vh}
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin:22px 0 26px}
+.chip-btn{
+  appearance:none; cursor:pointer; border:1px solid var(--bone3); background:transparent; color:var(--on-bone-mute);
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
+  padding:8px 13px; border-radius:99px; transition:all .18s ease;
+}
+.chip-btn:hover{border-color:var(--on-bone); color:var(--on-bone)}
+.chip-btn[aria-pressed="true"]{background:var(--on-bone); border-color:var(--on-bone); color:var(--bone)}
+.rail{
+  display:flex; gap:14px; overflow-x:auto; padding-bottom:18px; scroll-snap-type:x proximity;
+  min-width:0; max-width:100%;
+  scrollbar-width:thin; cursor:grab; -webkit-overflow-scrolling:touch;
+}
+.rail.dragging{cursor:grabbing; scroll-snap-type:none}
+.rail::-webkit-scrollbar{height:3px}
+.rail::-webkit-scrollbar-track{background:var(--bone2)}
+.rail::-webkit-scrollbar-thumb{background:var(--bone3)}
+.card{
+  flex:0 0 clamp(200px,26vw,270px); scroll-snap-align:start; background:var(--bone2);
+  border-radius:3px; overflow:hidden; display:flex; flex-direction:column; user-select:none;
+  transition:opacity .3s ease, transform .3s ease;
+}
+.card.hide{display:none}
+.card .ph{aspect-ratio:4/5; position:relative; display:grid; place-items:center; background:var(--bone3)}
+.card .ph svg{width:64%; height:auto; overflow:visible; opacity:.9}
+.card .ph .sz{
+  position:absolute; top:9px; left:9px; font-family:"Martian Mono",monospace; font-size:8.5px;
+  letter-spacing:.14em; background:var(--on-bone); color:var(--bone); padding:3px 7px; border-radius:2px;
+}
+.card .cap{padding:12px 13px 14px}
+.card .cap b{display:block; font-size:14.5px; font-weight:600; letter-spacing:-.005em}
+.card .cap span{
+  display:block; font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.1em;
+  color:var(--on-bone-mute); margin-top:5px; font-variant-numeric:tabular-nums;
+}
+
+/* ---------------- 7 cta ---------------- */
+#s7{height:auto}
+#s7 .pin{position:static; height:auto; min-height:78vh}
+.cta{flex:1; display:grid; align-content:center; justify-items:start; gap:24px}
+.cta-btn{
+  display:inline-flex; align-items:center; gap:14px; text-decoration:none;
+  background:var(--load); color:#fff; padding:17px 26px; border-radius:99px;
+  font-family:"Martian Mono",monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  transition:transform .2s ease, background .2s ease;
+}
+.cta-btn:hover{transform:translateX(4px); background:var(--load-lt)}
+.cta-btn svg{width:15px; height:15px}
+
+/* ---------------- 8 global ---------------- */
+#s8{height:auto}
+#s8 .pin{position:static; height:auto; min-height:92vh}
+.globe{display:grid; gap:clamp(20px,4vw,48px); flex:1; align-content:center}
+@media(min-width:900px){.globe{grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr); align-items:center}}
+.dots{display:grid; grid-template-columns:repeat(28,1fr); gap:clamp(3px,.55vw,7px); width:100%}
+.dots i{
+  display:block; aspect-ratio:1; border-radius:50%; background:rgba(255,255,255,.09);
+}
+.dots i.live{background:var(--load-lt); position:relative}
+.dots i.live::after{
+  content:attr(data-c); position:absolute; bottom:150%; left:50%; transform:translateX(-50%);
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.12em; white-space:nowrap;
+  background:var(--on-ink); color:var(--ink); padding:3px 6px; border-radius:2px;
+  opacity:0; pointer-events:none; transition:opacity .16s ease; z-index:5;
+}
+.dots i.live:hover::after, .dots i.live:focus-visible::after{opacity:1}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:22px; margin-top:28px}
+.stats div b{
+  display:block; font-family:"Archivo",sans-serif; font-weight:900; font-stretch:118%;
+  font-size:clamp(2rem,4.4vw,3rem); line-height:.9; letter-spacing:-.03em;
+}
+.stats div span{
+  display:block; font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--on-ink-mute); margin-top:9px;
+}
+
+/* ---------------- footer ---------------- */
+footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px) 40px}
+.foot-grid{display:grid; gap:32px; max-width:1300px; margin:0 auto}
+@media(min-width:820px){.foot-grid{grid-template-columns:1.4fr 1fr 1fr}}
+.foot-grid h4{
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--on-ink-mute); margin:0 0 14px; font-weight:500;
+}
+.foot-grid ul{list-style:none; margin:0; padding:0; font-size:14px}
+.foot-grid li{margin-bottom:8px}
+.foot-grid a{color:var(--on-ink); text-decoration:none; opacity:.72; transition:opacity .18s}
+.foot-grid a:hover{opacity:1}
+.foot-cta{
+  display:inline-flex; align-items:center; gap:12px; border:1px solid rgba(255,255,255,.28);
+  padding:14px 20px; border-radius:99px; text-decoration:none; color:var(--on-ink);
+  font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  margin-top:18px; transition:background .2s, border-color .2s;
+}
+.foot-cta:hover{background:var(--on-ink); color:var(--ink); border-color:var(--on-ink)}
+.foot-base{
+  max-width:1300px; margin:44px auto 0; padding-top:22px; border-top:1px solid rgba(255,255,255,.1);
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-ink-mute);
+}
+
+/* ---------------- small screens ---------------- */
+@media(max-width:700px){
+  .hero-meta, .hero-scroll{display:none}
+  .flag{font-size:8.5px; padding:5px 9px; left:14px; bottom:12px; max-width:calc(100vw - 28px)}
+  .pad{padding:80px 20px 76px}
+  .hero{padding:80px 20px 76px}
+  .readout{grid-template-columns:1fr auto; gap:6px 10px}
+  .readout .track{grid-column:1 / -1; order:3}
+  .size-badge{position:static; text-align:left; margin-bottom:14px}
+  .size-badge b{text-align:left}
+}
+
+a:focus-visible, button:focus-visible{outline:2px solid var(--load-lt); outline-offset:3px}
+.bone a:focus-visible, .bone button:focus-visible{outline-color:var(--load)}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *{animation:none !important; transition:none !important}
+  .scene{height:auto !important}
+  .pin{position:static !important; height:auto !important; min-height:100vh}
+  .hero-type h1,.hero-sub,.hero-art svg,.hero-scroll,.hero-meta{transform:none !important; opacity:1 !important}
+  .hero-art{opacity:1 !important}
+}
+</style>
+</head>
+<body>
+<!-- ===================== LOADER ===================== -->
+<div id="load">
+  <div class="load-in">
+    <svg viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M32 34 h56 a10 10 0 0 1 10 10 v22 a10 10 0 0 1 -10 10 h-56 a10 10 0 0 1 -10 -10 v-22 a10 10 0 0 1 10 -10 z" style="--dash:220"/>
+      <path d="M42 34 v-16 M78 34 v-16" style="--dash:34"/>
+      <path d="M42 76 v18 M78 76 v18" style="--dash:38"/>
+      <path d="M22 55 h76" style="--dash:78"/>
+    </svg>
+    <div class="load-meter"><i></i></div>
+    <div class="load-num"><span id="lnum">0</span>%</div>
+  </div>
+</div>
+
+<div id="bar"><i></i></div>
+
+<nav id="nav">
+  <a class="brand" href="#s1">PUPPIA</a>
+  <div class="nav-mid">
+    <a href="#s2">Pressure</a>
+    <a href="#s3">Anatomy</a>
+    <a href="#s4">Palette</a>
+    <a href="#s5">Fit</a>
+    <a href="#s6">Breeds</a>
+  </div>
+  <a class="partner" href="#partners">Partner Login</a>
+</nav>
+
+<div class="flag">Prototype — 도형은 실제 제품 자산 대체용 플레이스홀더입니다. 스크롤 연출·인터랙션 검증용.</div>
+
+<main>
+<!-- ===================== 1 HERO ===================== -->
+<section class="scene" id="s1" style="--len:210vh" data-scene data-ground="bone">
+  <div class="pin bone">
+    <div class="hero">
+      <div class="hero-type">
+        <p class="eyebrow" style="color:var(--on-bone-mute); margin:0 0 22px">01 — The signature</p>
+        <h1 class="display">Soft<br>Harness</h1>
+        <p class="hero-sub lede" style="max-width:34ch">목이 아니라 가슴으로. 2002년부터 이어온 한 가지 구조를 세 개의 시리즈로 다듬어 왔습니다.</p>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 300 300" aria-hidden="true" id="heroArt">
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z"
+                  fill="var(--product)" stroke="none" opacity=".16"/>
+            <path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z"
+                  stroke="var(--product)" stroke-width="5"/>
+            <path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="var(--on-bone)" stroke-width="4.5" opacity=".82"/>
+            <path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="var(--on-bone)" stroke-width="4.5" opacity=".82"/>
+            <path d="M52 156 h196" stroke="var(--on-bone)" stroke-width="2" opacity=".22" stroke-dasharray="5 7"/>
+            <rect x="132" y="140" width="36" height="32" rx="7" fill="var(--on-bone)" opacity=".9"/>
+            <path d="M141 156 h18" stroke="var(--bone)" stroke-width="3"/>
+            <circle cx="150" cy="54" r="6" fill="var(--product)"/>
+            <circle cx="150" cy="258" r="6" fill="var(--product)"/>
+          </g>
+        </svg>
+      </div>
+      <div class="hero-scroll"><span class="line"></span><span>Scroll</span></div>
+      <div class="hero-meta">Prototype 01<br>Scene 1 / 8</div>
+    </div>
+  </div>
+  </section>
+
+<!-- ===================== 2 PRESSURE ===================== -->
+<section class="scene" id="s2" style="--len:300vh" data-scene data-ground="ink">
+  <div class="pin ink">
+    <div class="pad">
+      <div class="split">
+        <div>
+          <p class="eyebrow mute">02 — Why a harness</p>
+          <h2 class="display d-lg" style="margin:18px 0 20px">Neck.<br>No more.</h2>
+          <p class="lede mute">목줄은 하중 전체를 기관 위 한 점에 모읍니다. 소프트하네스는 같은 힘을 가슴판 전체로 흘려보냅니다. 스크롤해서 압력이 어디로 가는지 보세요.</p>
+          <div class="readout">
+            <span class="k tag-press">Collar · peak</span>
+            <span class="track"><i id="barPress" style="background:var(--press-lt); width:6%"></i></span>
+            <span class="v tag-press" id="numPress">0.4 N/cm²</span>
+            <span class="k tag-load">Harness · peak</span>
+            <span class="track"><i id="barLoad" style="background:var(--load-lt); width:6%"></i></span>
+            <span class="v tag-load" id="numLoad">0.4 N/cm²</span>
+          </div>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 640 420" role="img" aria-label="목줄과 소프트하네스의 압력 분포 비교 다이어그램">
+            <defs>
+              <radialGradient id="gPress" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="var(--press)" stop-opacity=".95"/>
+                <stop offset="55%" stop-color="var(--press)" stop-opacity=".35"/>
+                <stop offset="100%" stop-color="var(--press)" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="gLoad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="var(--load-lt)" stop-opacity=".55"/>
+                <stop offset="100%" stop-color="var(--load)" stop-opacity=".25"/>
+              </linearGradient>
+            </defs>
+
+            <!-- upper: collar -->
+            <g transform="translate(0,0)">
+              <text class="dg-cap" x="16" y="26" fill="var(--press-lt)">COLLAR</text>
+              <text class="dg-label" x="16" y="44">단일 지점 · 기관 압박</text>
+              <g class="dg-line" stroke="var(--on-ink)">
+                <ellipse cx="250" cy="128" rx="98" ry="46"/>
+                <path d="M336 104 L392 66"/>
+                <ellipse cx="424" cy="56" rx="34" ry="24"/>
+                <path d="M452 48 l30 -4 l-6 16 z"/>
+                <path d="M400 36 l-14 -20 l24 4"/>
+                <path d="M182 168 v46 M226 172 v42 M280 172 v42 M320 166 v48"/>
+                <path d="M154 108 c-26 -14 -34 6 -22 20"/>
+              </g>
+              <circle id="pressHalo" cx="378" cy="78" r="0" fill="url(#gPress)"/>
+              <path d="M356 96 C368 78 382 66 400 58" fill="none" stroke="var(--press)" stroke-width="7" stroke-linecap="round" id="collarBand" opacity=".9"/>
+              <path class="dg-faint" d="M378 78 L556 78"/>
+              <text class="dg-label" x="562" y="82" id="lblPress">PEAK</text>
+            </g>
+
+            <!-- divider -->
+            <path d="M16 216 H624" stroke="var(--on-ink)" stroke-opacity=".14" stroke-width="1"/>
+
+            <!-- lower: harness -->
+            <g transform="translate(0,216)">
+              <text class="dg-cap" x="16" y="26" fill="var(--load-lt)">SOFT HARNESS</text>
+              <text class="dg-label" x="16" y="44">가슴판 전면 · 하중 분산</text>
+              <g class="dg-line" stroke="var(--on-ink)">
+                <ellipse cx="250" cy="128" rx="98" ry="46"/>
+                <path d="M336 104 L392 66"/>
+                <ellipse cx="424" cy="56" rx="34" ry="24"/>
+                <path d="M452 48 l30 -4 l-6 16 z"/>
+                <path d="M400 36 l-14 -20 l24 4"/>
+                <path d="M182 168 v46 M226 172 v42 M280 172 v42 M320 166 v48"/>
+                <path d="M154 108 c-26 -14 -34 6 -22 20"/>
+              </g>
+              <path id="loadPlate"
+                    d="M262 96 C300 82 330 86 352 104 C356 126 342 148 312 156 C282 162 258 148 250 126 Z"
+                    fill="url(#gLoad)" stroke="var(--load-lt)" stroke-width="2.5" opacity="0"/>
+              <g id="loadArrows" opacity="0" stroke="var(--load-lt)" stroke-width="2" stroke-linecap="round" fill="none">
+                <path d="M272 100 l-16 -18"/><path d="M300 94 l0 -22"/><path d="M330 100 l16 -18"/>
+                <path d="M266 132 l-20 8"/><path d="M336 136 l20 8"/>
+              </g>
+              <path class="dg-faint" d="M352 118 L556 118"/>
+              <text class="dg-label" x="562" y="122" id="lblLoad">SPREAD</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3 ANATOMY ===================== -->
+<section class="scene" id="s3" style="--len:340vh" data-scene data-ground="ink">
+  <div class="pin ink">
+    <div class="pad">
+      <div class="anat">
+        <div class="anat-stage">
+          <svg viewBox="0 0 420 340" role="img" aria-label="소프트하네스 4개 레이어 분해도">
+            <g id="lyr4" class="layer">
+              <path d="M110 208 h200 a22 22 0 0 1 22 22 v22 a22 22 0 0 1 -22 22 h-200 a22 22 0 0 1 -22 -22 v-22 a22 22 0 0 1 22 -22 z"
+                    fill="#2A3138" stroke="var(--on-ink-mute)" stroke-width="1.6"/>
+              <path d="M120 240 h180" stroke="var(--on-ink-mute)" stroke-width="1.4" stroke-dasharray="3 5" fill="none"/>
+            </g>
+            <g id="lyr3" class="layer">
+              <path d="M110 190 h200 a22 22 0 0 1 22 22 v18 a22 22 0 0 1 -22 22 h-200 a22 22 0 0 1 -22 -22 v-18 a22 22 0 0 1 22 -22 z"
+                    fill="var(--load)" fill-opacity=".2" stroke="var(--load-lt)" stroke-width="2"/>
+              <g stroke="var(--load-lt)" stroke-width="1.2" opacity=".8">
+                <path d="M130 196 v40 M160 196 v40 M190 196 v40 M220 196 v40 M250 196 v40 M280 196 v40"/>
+              </g>
+            </g>
+            <g id="lyr2" class="layer">
+              <path d="M110 172 h200 a22 22 0 0 1 22 22 v16 a22 22 0 0 1 -22 22 h-200 a22 22 0 0 1 -22 -22 v-16 a22 22 0 0 1 22 -22 z"
+                    fill="var(--ink2)" stroke="var(--on-ink)" stroke-width="2"/>
+              <rect x="186" y="182" width="48" height="38" rx="9" fill="var(--on-ink)"/>
+              <path d="M198 201 h24" stroke="var(--ink)" stroke-width="3.4" stroke-linecap="round"/>
+            </g>
+            <g id="lyr1" class="layer">
+              <path d="M110 154 h200 a22 22 0 0 1 22 22 v14 a22 22 0 0 1 -22 22 h-200 a22 22 0 0 1 -22 -22 v-14 a22 22 0 0 1 22 -22 z"
+                    fill="var(--product)" fill-opacity=".28" stroke="var(--product)" stroke-width="2.4"/>
+              <g stroke="var(--product)" stroke-width="1" opacity=".75" fill="none">
+                <circle cx="140" cy="184" r="4"/><circle cx="164" cy="184" r="4"/><circle cx="188" cy="184" r="4"/>
+                <circle cx="212" cy="184" r="4"/><circle cx="236" cy="184" r="4"/><circle cx="260" cy="184" r="4"/>
+                <circle cx="284" cy="184" r="4"/>
+              </g>
+              <path d="M128 154 v-26 a12 12 0 0 1 12 -12 h140 a12 12 0 0 1 12 12 v26" fill="none" stroke="var(--product)" stroke-width="3.4"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <p class="eyebrow mute">03 — Anatomy</p>
+          <h2 class="display d-md" style="margin:16px 0 22px">Four layers.<br>One fit.</h2>
+          <div class="anat-list" id="anatList">
+            <div class="anat-row" data-i="0"><span class="n">01</span><span class="t">SoftMesh™ 외피<small>3D 에어 니트 · 통기 개방률 42%</small></span><span class="s">0.9 mm</span></div>
+            <div class="anat-row" data-i="1"><span class="n">02</span><span class="t">이중 잠금 버클<small>측면 릴리즈 · 인장 22 kgf</small></span><span class="s">22 kgf</span></div>
+            <div class="anat-row" data-i="2"><span class="n">03</span><span class="t">FlexFit 분산 패턴<small>가슴판 전면으로 하중 재분배</small></span><span class="s">6.4 cm²</span></div>
+            <div class="anat-row" data-i="3"><span class="n">04</span><span class="t">내피 쿠션<small>저자극 브러시드 라이닝</small></span><span class="s">2.2 mm</span></div>
+          </div>
+          <p class="lede mute" style="margin-top:20px; font-size:13.5px">스펙 수치는 프로토타입용 예시입니다. 실제 시험성적서 값으로 대체하면 그대로 바이어 스펙시트가 됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4 PALETTE ===================== -->
+<section class="scene" id="s4" data-ground="bone">
+  <div class="pin bone">
+    <div class="pad">
+      <div class="pal-wrap">
+        <div class="pal-stage">
+          <svg viewBox="0 0 300 300" role="img" aria-label="선택한 컬러웨이가 적용된 하네스">
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z"
+                    fill="var(--product)" stroke="none" opacity=".2" class="pfill"/>
+              <path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z"
+                    stroke="var(--product)" stroke-width="6" class="pstroke"/>
+              <path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="var(--on-bone)" stroke-width="4.5" opacity=".8"/>
+              <path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="var(--on-bone)" stroke-width="4.5" opacity=".8"/>
+              <rect x="132" y="140" width="36" height="32" rx="7" fill="var(--on-bone)" opacity=".92"/>
+              <path d="M141 156 h18" stroke="var(--bone)" stroke-width="3"/>
+              <circle cx="150" cy="54" r="6" fill="var(--product)" class="pdot"/>
+              <circle cx="150" cy="258" r="6" fill="var(--product)" class="pdot"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <p class="eyebrow" style="color:var(--on-bone-mute)">04 — Colorway</p>
+          <h2 class="display d-md" style="margin:16px 0 16px">The<br>palette.</h2>
+          <p class="lede" style="color:var(--on-bone-mute)">컬러웨이는 제품 옵션이 아니라 매 시즌 발표하는 브랜드 자산입니다. 스와치를 눌러 실시간으로 바꿔보세요.</p>
+          <div class="sw-grid" id="swatches" role="group" aria-label="컬러웨이 선택"></div>
+          <div class="pal-meta">
+            <div><span>Selected</span><b id="palName">Cobalt</b></div>
+            <div><span>Hex</span><b id="palHex">#2A45E0</b></div>
+            <div><span>Season</span><b>SS26</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5 FIT ===================== -->
+<section class="scene" id="s5" data-ground="ink">
+  <div class="pin ink">
+    <div class="pad">
+      <div class="fit">
+        <div>
+          <p class="eyebrow mute">05 — Fit simulator</p>
+          <h2 class="display d-md" style="margin:16px 0 20px">Find<br>the fit.</h2>
+          <div class="slider-row">
+            <label class="eyebrow mute" for="girth" style="letter-spacing:.2em">Chest girth</label>
+            <span class="val"><span id="girthVal">46</span><em>cm</em></span>
+          </div>
+          <input type="range" id="girth" min="26" max="76" step="1" value="46"
+                 aria-describedby="breedHint" aria-label="가슴둘레 (cm)">
+          <table class="size-table">
+            <thead><tr><th>Size</th><th>Girth</th><th>Neck</th><th>Weight</th></tr></thead>
+            <tbody id="sizeRows"></tbody>
+          </table>
+          <p class="breed-hint" id="breedHint"></p>
+        </div>
+        <div class="fit-stage">
+          <div class="size-badge"><b>Recommended</b><span id="sizeBadge">M</span></div>
+          <svg viewBox="0 0 420 300" role="img" aria-label="가슴둘레에 따라 크기가 변하는 강아지와 하네스 밴드">
+            <!-- fixed reference frame -->
+            <path d="M28 262 H392" stroke="var(--on-ink-mute)" stroke-width="1" stroke-opacity=".4"/>
+            <g stroke="var(--on-ink-mute)" stroke-width="1" stroke-opacity=".22">
+              <path d="M28 262 v-9 M119 262 v-9 M210 262 v-14 M301 262 v-9 M392 262 v-9"/>
+            </g>
+            <text class="dg-label" x="28" y="280" fill="var(--on-ink-mute)">26</text>
+            <text class="dg-label" x="210" y="284" text-anchor="middle" fill="var(--on-ink-mute)">51 CM</text>
+            <text class="dg-label" x="392" y="280" text-anchor="end" fill="var(--on-ink-mute)">76</text>
+
+            <!-- scaling dog + harness -->
+            <g id="dogScale">
+              <g class="dg-line" stroke="var(--on-ink)" opacity=".5" fill="none">
+                <ellipse cx="196" cy="196" rx="86" ry="42"/>
+                <path d="M272 172 L318 140"/>
+                <ellipse cx="342" cy="132" rx="26" ry="19"/>
+                <path d="M366 126 q16 -3 22 5 q-10 9 -22 7"/>
+                <path d="M322 116 q-6 -18 8 -20 q8 8 6 18"/>
+                <path d="M138 236 v26 M176 238 v24 M226 238 v24 M262 234 v28"/>
+                <path d="M112 178 q-22 -14 -28 0 q-4 12 8 16"/>
+              </g>
+              <path id="chestBand"
+                    d="M242 168 C268 158 292 164 302 180 C304 202 288 220 262 226 C238 230 220 218 216 198 Z"
+                    fill="var(--load)" fill-opacity=".22" stroke="var(--load-lt)" stroke-width="3"/>
+              <path d="M232 160 q30 -26 66 -8" fill="none" stroke="var(--load-lt)" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+            </g>
+
+            <!-- girth caliper -->
+            <g id="caliper" stroke="var(--load-lt)" stroke-width="1.2" stroke-dasharray="3 4" fill="none" opacity=".7">
+              <path id="calTop" d="M210 150 v-40"/>
+            </g>
+            <text class="dg-label" x="210" y="102" text-anchor="middle" fill="var(--load-lt)" id="strapLabel">46 CM</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6 EVERY BODY ===================== -->
+<section class="scene" id="s6" data-ground="bone">
+  <div class="pin bone">
+    <div class="pad">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center">
+        <p class="eyebrow" style="color:var(--on-bone-mute)">06 — Breed fit index</p>
+        <h2 class="display d-md" style="margin:16px 0 12px">Every<br>body.</h2>
+        <p class="lede" style="color:var(--on-bone-mute)">체형은 견종마다 다릅니다. 필터로 좁히고, 가로로 끌어서 넘겨보세요.</p>
+        <div class="chips" id="chips" role="group" aria-label="체형 필터"></div>
+        <div class="rail" id="rail" tabindex="0" aria-label="견종별 핏 카드 목록"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7 CTA ===================== -->
+<section class="scene" id="s7" data-ground="ink">
+  <div class="pin ink">
+    <div class="pad">
+      <div class="cta">
+        <p class="eyebrow mute">07 — Next</p>
+        <h2 class="display d-lg">Measure once.<br>Walk right.</h2>
+        <p class="lede mute">5문항이면 견종과 체형에 맞는 모델·사이즈가 나옵니다. 여기서 모인 데이터는 그대로 지역별 수요 리포트가 되어 바이어에게 전달됩니다.</p>
+        <a class="cta-btn" href="#s5">Start fit finder
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 8 GLOBAL ===================== -->
+<section class="scene" id="s8" data-ground="ink">
+  <div class="pin ink">
+    <div class="pad">
+      <div class="globe">
+        <div>
+          <p class="eyebrow mute">08 — Distribution</p>
+          <h2 class="display d-md" style="margin:16px 0 18px">In 35<br>countries.</h2>
+          <p class="lede mute">점 위에 커서를 올리면 국가가 표시됩니다. 실제 사이트에서는 공식 디스트리뷰터 맵으로 연결됩니다.</p>
+          <div class="stats">
+            <div><b>35</b><span>Countries</span></div>
+            <div><b>1,200+</b><span>Retail doors</span></div>
+            <div><b>2002</b><span>Since</span></div>
+          </div>
+        </div>
+        <div class="dots" id="dots" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="partners">
+  <div class="foot-grid">
+    <div>
+      <h4>For buyers</h4>
+      <p class="lede mute" style="font-size:14.5px">라인시트 열람부터 매트릭스 발주, 브랜드 자산 다운로드까지 로그인 한 번으로. 승인제로 운영됩니다.</p>
+      <a class="foot-cta" href="#partners">Partner login
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#s1">Soft Harness</a></li>
+        <li><a href="#s3">Anatomy</a></li>
+        <li><a href="#s4">Colorway</a></li>
+        <li><a href="#s5">Fit finder</a></li>
+        <li><a href="#s6">Breed index</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#s8">Where to buy</a></li>
+        <li><a href="#partners">Become a dealer</a></li>
+        <li><a href="#partners">Brand assets</a></li>
+        <li><a href="#partners">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-base">
+    <span>PUPPIA — Scroll prototype 01</span>
+    <span>Placeholder geometry · No product photography</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function(v,a,b){ return v<a?a:(v>b?b:v); };
+  var lerp  = function(a,b,t){ return a+(b-a)*t; };
+
+  /* ---------------- loader ---------------- */
+  (function(){
+    var el = document.getElementById('load'), num = document.getElementById('lnum');
+    var p = 0, start = performance.now(), MIN = REDUCED ? 200 : 1150;
+    function tick(now){
+      var t = clamp((now-start)/MIN, 0, 1);
+      p = t<1 ? 1-Math.pow(1-t,2.2) : 1;
+      el.style.setProperty('--lp', p.toFixed(3));
+      num.textContent = Math.round(p*100);
+      if(t<1){ requestAnimationFrame(tick); }
+      else { el.classList.add('done'); setTimeout(function(){ el.remove(); }, 800); }
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  /* ---------------- data ---------------- */
+  var COLORWAYS = [
+    { name:'Cobalt',   hex:'#2A45E0' },
+    { name:'Signal',   hex:'#E1492A' },
+    { name:'Moss',     hex:'#4C6B45' },
+    { name:'Sand',     hex:'#C4A87C' },
+    { name:'Slate',    hex:'#4E5A66' },
+    { name:'Blossom',  hex:'#D98BA8' },
+    { name:'Charcoal', hex:'#25292E' },
+    { name:'Chalk',    hex:'#D8D5CA' }
+  ];
+
+  var SIZES = [
+    { s:'XS', min:26, max:36, neck:'20–26', kg:'1.5–3' },
+    { s:'S',  min:37, max:45, neck:'25–31', kg:'3–5.5' },
+    { s:'M',  min:46, max:55, neck:'30–37', kg:'5.5–9' },
+    { s:'L',  min:56, max:65, neck:'36–44', kg:'9–15' },
+    { s:'XL', min:66, max:76, neck:'43–52', kg:'15–24' }
+  ];
+
+  var BREEDS = [
+    { n:'Dachshund',          ko:'닥스훈트',        g:44, sz:'S',  t:'long'  },
+    { n:'French Bulldog',     ko:'프렌치불독',      g:56, sz:'L',  t:'thick' },
+    { n:'Pug',                ko:'퍼그',            g:52, sz:'M',  t:'thick' },
+    { n:'Italian Greyhound',  ko:'이탈리안 그레이하운드', g:40, sz:'S', t:'slim' },
+    { n:'Toy Poodle',         ko:'토이푸들',        g:38, sz:'S',  t:'slim'  },
+    { n:'Shih Tzu',           ko:'시추',            g:47, sz:'M',  t:'thick' },
+    { n:'Corgi',              ko:'웰시코기',        g:62, sz:'L',  t:'long'  },
+    { n:'Beagle',             ko:'비글',            g:58, sz:'L',  t:'slim'  },
+    { n:'Maltese',            ko:'말티즈',          g:35, sz:'XS', t:'slim'  },
+    { n:'Basset Hound',       ko:'바셋하운드',      g:70, sz:'XL', t:'long'  },
+    { n:'Boston Terrier',     ko:'보스턴테리어',    g:50, sz:'M',  t:'thick' },
+    { n:'Whippet',            ko:'휘핏',            g:60, sz:'L',  t:'slim'  }
+  ];
+
+  var FILTERS = [
+    { k:'all',   label:'All bodies' },
+    { k:'slim',  label:'Deep chest · 탈출 위험' },
+    { k:'thick', label:'Thick neck · 단두종' },
+    { k:'long',  label:'Long back · 장구종' }
+  ];
+
+  /* ---------------- scroll driver ---------------- */
+  var progressScenes = [].slice.call(document.querySelectorAll('[data-scene]'));
+  var allScenes      = [].slice.call(document.querySelectorAll('.scene'));
+  var nav            = document.getElementById('nav');
+  var barFill        = document.querySelector('#bar i');
+  var ticking = false, lastGround = '';
+
+  function sceneProgress(sec){
+    var r = sec.getBoundingClientRect();
+    var span = r.height - window.innerHeight;
+    if(span <= 0) return r.top <= 0 ? 1 : 0;
+    return clamp(-r.top / span, 0, 1);
+  }
+
+  function paintGround(){
+    var y = 42, found = '';
+    for(var i=0;i<allScenes.length;i++){
+      var r = allScenes[i].getBoundingClientRect();
+      if(r.top <= y && r.bottom > y){ found = allScenes[i].getAttribute('data-ground') || ''; break; }
+    }
+    if(!found) found = 'ink';
+    if(found !== lastGround){
+      lastGround = found;
+      nav.classList.toggle('on-bone', found === 'bone');
+    }
+  }
+
+  function update(){
+    ticking = false;
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    barFill.style.width = (max > 0 ? clamp(window.scrollY / max, 0, 1) * 100 : 0).toFixed(2) + '%';
+    nav.classList.toggle('stuck', window.scrollY > 48);
+
+    for(var i=0;i<progressScenes.length;i++){
+      var sec = progressScenes[i];
+      var p = REDUCED ? 1 : sceneProgress(sec);
+      sec.style.setProperty('--p', p.toFixed(4));
+      if(sec.id === 's2') paintPressure(p);
+      if(sec.id === 's3') paintAnatomy(p);
+    }
+    paintGround();
+  }
+
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+
+  /* ---------------- scene 1 · hero pointer ---------------- */
+  (function(){
+    if(REDUCED) return;
+    var s1 = document.getElementById('s1');
+    window.addEventListener('pointermove', function(e){
+      var r = s1.getBoundingClientRect();
+      if(r.bottom < 0 || r.top > window.innerHeight) return;
+      var nx = (e.clientX / window.innerWidth) - 0.5;
+      s1.style.setProperty('--rx', (nx * 16).toFixed(2));
+    }, {passive:true});
+  })();
+
+  /* ---------------- scene 2 · pressure ---------------- */
+  var pressHalo  = document.getElementById('pressHalo');
+  var collarBand = document.getElementById('collarBand');
+  var loadPlate  = document.getElementById('loadPlate');
+  var loadArrows = document.getElementById('loadArrows');
+  var barPress   = document.getElementById('barPress');
+  var barLoad    = document.getElementById('barLoad');
+  var numPress   = document.getElementById('numPress');
+  var numLoad    = document.getElementById('numLoad');
+  var lblPress   = document.getElementById('lblPress');
+  var lblLoad    = document.getElementById('lblLoad');
+
+  function paintPressure(p){
+    // 0.00–0.55 : collar load builds.  0.45–1.00 : harness spreads it.
+    var a = clamp(p / 0.55, 0, 1);
+    var b = clamp((p - 0.45) / 0.55, 0, 1);
+
+    pressHalo.setAttribute('r', (a * 62).toFixed(1));
+    collarBand.setAttribute('stroke-width', (7 + a * 4).toFixed(1));
+
+    loadPlate.setAttribute('opacity', b.toFixed(3));
+    loadArrows.setAttribute('opacity', (b * 0.9).toFixed(3));
+
+    var peakCollar = lerp(0.4, 9.6, a);
+    var peakHarness = lerp(0.4, 1.7, b);
+    barPress.style.width = (clamp(peakCollar / 10, 0.02, 1) * 100).toFixed(1) + '%';
+    barLoad.style.width  = (clamp(peakHarness / 10, 0.02, 1) * 100).toFixed(1) + '%';
+    numPress.textContent = peakCollar.toFixed(1) + ' N/cm²';
+    numLoad.textContent  = peakHarness.toFixed(1) + ' N/cm²';
+    lblPress.textContent = a > 0.6 ? 'PEAK ×5.6' : 'PEAK';
+    lblLoad.textContent  = b > 0.6 ? 'SPREAD 6.4 cm²' : 'SPREAD';
+  }
+
+  /* ---------------- scene 3 · anatomy ---------------- */
+  var LAYERS = ['lyr1','lyr2','lyr3','lyr4'].map(function(id){ return document.getElementById(id); });
+  var anatRows = [].slice.call(document.querySelectorAll('.anat-row'));
+  var OFFSETS = [-96, -32, 32, 96];
+
+  function paintAnatomy(p){
+    var spread = clamp((p - 0.1) / 0.6, 0, 1);
+    var eased  = 1 - Math.pow(1 - spread, 3);
+    for(var i=0;i<LAYERS.length;i++){
+      if(!LAYERS[i]) continue;
+      LAYERS[i].setAttribute('transform', 'translate(0,' + (OFFSETS[i] * eased).toFixed(1) + ')');
+    }
+    var active = clamp(Math.floor(clamp((p - 0.18) / 0.68, 0, 0.999) * 4), 0, 3);
+    for(var j=0;j<anatRows.length;j++){
+      anatRows[j].classList.toggle('on', spread > 0.12 && j === active);
+    }
+  }
+
+  /* ---------------- scene 4 · palette ---------------- */
+  (function(){
+    var host = document.getElementById('swatches');
+    var nameEl = document.getElementById('palName');
+    var hexEl = document.getElementById('palHex');
+    var stage = document.querySelector('#s4 .pal-stage');
+    var btns = [];
+
+    function select(i){
+      var c = COLORWAYS[i];
+      stage.style.setProperty('--product', c.hex);
+      nameEl.textContent = c.name;
+      hexEl.textContent = c.hex.toUpperCase();
+      btns.forEach(function(b,k){ b.setAttribute('aria-pressed', k===i ? 'true' : 'false'); });
+    }
+
+    COLORWAYS.forEach(function(c,i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'sw';
+      b.setAttribute('aria-pressed', i===0 ? 'true' : 'false');
+      b.innerHTML = '<span class="chip" style="background:' + c.hex + '"></span><span class="nm">' + c.name + '</span>';
+      b.addEventListener('click', function(){ select(i); });
+      host.appendChild(b);
+      btns.push(b);
+    });
+    select(0);
+  })();
+
+  /* ---------------- scene 5 · fit simulator ---------------- */
+  (function(){
+    var input = document.getElementById('girth');
+    var valEl = document.getElementById('girthVal');
+    var badge = document.getElementById('sizeBadge');
+    var strap = document.getElementById('dogScale');
+    var label = document.getElementById('strapLabel');
+    var hint  = document.getElementById('breedHint');
+    var tbody = document.getElementById('sizeRows');
+    var rows  = [];
+
+    SIZES.forEach(function(z){
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + z.s + '</td><td>' + z.min + '–' + z.max + ' cm</td><td>' + z.neck + ' cm</td><td>' + z.kg + ' kg</td>';
+      tbody.appendChild(tr);
+      rows.push(tr);
+    });
+
+    function sizeFor(g){
+      for(var i=0;i<SIZES.length;i++){ if(g <= SIZES[i].max) return i; }
+      return SIZES.length - 1;
+    }
+
+    function nearestBreeds(g){
+      return BREEDS.slice().sort(function(a,b){
+        return Math.abs(a.g - g) - Math.abs(b.g - g);
+      }).slice(0,2);
+    }
+
+    function render(){
+      var g = parseInt(input.value, 10);
+      var i = sizeFor(g);
+      valEl.textContent = g;
+      badge.textContent = SIZES[i].s;
+      label.textContent = g + ' CM';
+      var k = 0.62 + (g - 26) / 50 * 0.62;             // 26cm -> 0.62,  76cm -> 1.24
+      strap.setAttribute('transform',
+        'translate(' + (210 - 210*k).toFixed(2) + ' ' + (262 - 262*k).toFixed(2) + ') scale(' + k.toFixed(4) + ')');
+      var topY = 262 - (262 - 150) * k;                  // track the body top as it scales
+      document.getElementById('calTop').setAttribute('d', 'M210 ' + topY.toFixed(1) + ' V' + (topY - 34).toFixed(1));
+      label.setAttribute('y', (topY - 44).toFixed(1));
+      rows.forEach(function(tr,k){ tr.classList.toggle('on', k === i); });
+      var near = nearestBreeds(g);
+      hint.innerHTML = '이 둘레는 <b>' + near[0].ko + '</b>(' + near[0].n + ') · <b>' +
+                       near[1].ko + '</b>(' + near[1].n + ') 평균에 가깝습니다. 권장 <b>' + SIZES[i].s + '</b>.';
+    }
+
+    input.addEventListener('input', render);
+    render();
+  })();
+
+  /* ---------------- scene 6 · breed rail ---------------- */
+  (function(){
+    var rail = document.getElementById('rail');
+    var chipHost = document.getElementById('chips');
+    var cards = [];
+
+    function dogIcon(t){
+      var rx = t === 'long' ? 50 : (t === 'thick' ? 34 : 41);
+      var ry = t === 'long' ? 19 : (t === 'thick' ? 26 : 18);
+      var neck = t === 'thick' ? 8.5 : 4.5;
+      var cx = 62, cy = 62;
+      var bx = cx + rx * 0.52, by = cy - 2;              // chest, toward the head
+      return '<svg viewBox="0 0 140 120" aria-hidden="true">' +
+        '<g fill="none" stroke="#14171B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".72">' +
+          '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '"/>' +
+          '<path d="M' + (cx + rx * 0.82) + ' ' + (cy - ry * 0.7) + ' L112 32" stroke-width="' + neck + '"/>' +
+          '<ellipse cx="122" cy="26" rx="13" ry="10"/>' +
+          '<path d="M133 22 q9 -2 12 3 q-6 5 -12 4"/>' +
+          '<path d="M112 14 q-4 -11 5 -12 q5 5 4 11"/>' +
+          '<path d="M' + (cx - rx * 0.55) + ' ' + (cy + ry) + ' v22 M' + cx + ' ' + (cy + ry) + ' v22 M' + (cx + rx * 0.55) + ' ' + (cy + ry) + ' v22"/>' +
+          '<path d="M' + (cx - rx) + ' ' + (cy - 8) + ' q-13 -9 -17 1 q-2 8 6 10"/>' +
+        '</g>' +
+        '<g transform="rotate(-16 ' + bx + ' ' + by + ')">' +
+          '<ellipse cx="' + bx + '" cy="' + by + '" rx="' + (ry * 0.72).toFixed(1) + '" ry="' + (ry * 0.98).toFixed(1) + '" ' +
+            'fill="var(--load)" fill-opacity=".2" stroke="var(--load)" stroke-width="2.6"/>' +
+        '</g>' +
+        '<path d="M' + (bx - 13) + ' ' + (by - ry * 0.9) + ' q13 -11 26 -1" fill="none" stroke="var(--load)" stroke-width="2.6" stroke-linecap="round" opacity=".9"/>' +
+        '</svg>';
+    }
+
+    BREEDS.forEach(function(b){
+      var el = document.createElement('article');
+      el.className = 'card';
+      el.setAttribute('data-t', b.t);
+      el.innerHTML =
+        '<div class="ph"><span class="sz">' + b.sz + '</span>' + dogIcon(b.t) + '</div>' +
+        '<div class="cap"><b>' + b.ko + '</b><span>' + b.n.toUpperCase() + ' · GIRTH ' + b.g + ' CM</span></div>';
+      rail.appendChild(el);
+      cards.push(el);
+    });
+
+    var chipBtns = [];
+    FILTERS.forEach(function(f,i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip-btn';
+      b.textContent = f.label;
+      b.setAttribute('aria-pressed', i===0 ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        chipBtns.forEach(function(x,k){ x.setAttribute('aria-pressed', k===i ? 'true':'false'); });
+        cards.forEach(function(c){
+          c.classList.toggle('hide', f.k !== 'all' && c.getAttribute('data-t') !== f.k);
+        });
+        rail.scrollTo({ left:0, behavior: REDUCED ? 'auto' : 'smooth' });
+      });
+      chipHost.appendChild(b);
+      chipBtns.push(b);
+    });
+
+    // drag to scroll
+    var down = false, startX = 0, startL = 0, moved = 0;
+    rail.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'touch') return;
+      down = true; moved = 0;
+      startX = e.clientX; startL = rail.scrollLeft;
+      rail.classList.add('dragging');
+    });
+    window.addEventListener('pointermove', function(e){
+      if(!down) return;
+      var dx = e.clientX - startX;
+      moved = Math.abs(dx);
+      rail.scrollLeft = startL - dx;
+    });
+    window.addEventListener('pointerup', function(){
+      if(!down) return;
+      down = false; rail.classList.remove('dragging');
+    });
+  })();
+
+  /* ---------------- scene 8 · distribution dots ---------------- */
+  (function(){
+    var host = document.getElementById('dots');
+    var COLS = 28, ROWS = 13, TOTAL = COLS * ROWS;
+    var LIVE = {
+      69:'Norway', 70:'Sweden', 71:'Finland', 88:'Canada', 97:'United Kingdom',
+      98:'Netherlands', 99:'Poland', 106:'South Korea', 107:'Japan', 117:'United States',
+      119:'United States', 125:'France', 126:'Germany', 127:'Czechia', 128:'Türkiye',
+      133:'China', 134:'Taiwan', 153:'Spain', 154:'Italy', 155:'Greece', 156:'UAE',
+      157:'Saudi Arabia', 162:'Hong Kong', 175:'Mexico', 188:'India', 189:'Vietnam',
+      190:'Philippines', 204:'Colombia', 217:'Thailand', 218:'Malaysia', 232:'Brazil',
+      239:'South Africa', 246:'Singapore', 261:'Chile', 275:'Australia', 304:'New Zealand'
+    };
+    var frag = document.createDocumentFragment();
+    for(var i=0;i<TOTAL;i++){
+      var d = document.createElement('i');
+      if(LIVE[i]){ d.className = 'live'; d.setAttribute('data-c', LIVE[i]); }
+      frag.appendChild(d);
+    }
+    host.appendChild(frag);
+  })();
+
+  /* ---------------- go ---------------- */
+  update();
+})();
+</script>
+</body>
+</html>
