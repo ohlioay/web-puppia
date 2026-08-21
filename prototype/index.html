@@ -1332,6 +1332,37 @@ body.has-ordbar .toast{bottom:104px}
 .nd-locale{display:flex; gap:18px; padding:0 20px 4px;
   font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-bone-mute)}
 
+/* ---- assets sheet ---- */
+.as-link{
+  display:flex; align-items:center; gap:10px; background:var(--bone2); border:1px solid var(--bone3);
+  border-radius:3px; padding:11px 13px; margin:8px 0 14px; overflow:hidden;
+}
+.as-link code{
+  flex:1; min-width:0; font-family:"Martian Mono",monospace; font-size:10.5px; color:var(--on-bone-mute);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.as-inside{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px;
+  background:var(--bone3); border:1px solid var(--bone3); border-radius:3px; overflow:hidden}
+.as-inside li{background:var(--bone); padding:11px 14px; display:flex; align-items:center; gap:11px; font-size:13.5px}
+.as-inside li i{width:6px; height:6px; border-radius:50%; background:var(--red); flex:0 0 auto}
+.as-inside li span{margin-left:auto; font-family:"Martian Mono",monospace; font-size:9px;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--on-bone-mute)}
+.as-row{
+  display:grid; grid-template-columns:40px minmax(0,1fr) auto; gap:12px; align-items:center;
+  padding:12px 0; border-bottom:1px solid var(--bone3);
+}
+.as-row .im{aspect-ratio:1; background:var(--bone2); border-radius:2px; display:grid; place-items:center}
+.as-row .im svg{width:78%; height:auto}
+.as-row b{display:block; font-size:14px}
+.as-row code{display:block; font-family:"Martian Mono",monospace; font-size:9px; color:var(--on-bone-mute);
+  margin-top:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%}
+.as-row .acts{display:flex; gap:7px}
+.as-warn{
+  margin:0 0 16px; padding:11px 14px; background:rgba(237,178,48,.16); border-left:3px solid var(--yellow);
+  font-size:12.5px; line-height:1.6; color:var(--on-bone-mute);
+}
+.as-warn b{color:var(--on-bone)}
+
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
   :root{--navh:78px}
@@ -1367,6 +1398,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   .hero-art{opacity:1 !important}
 }
 </style>
+
 </head>
 <body>
 <!-- ===================== LOADER ===================== -->
@@ -1678,6 +1710,13 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   <div class="nd-body" id="ndBody"></div>
   <div class="nd-foot" id="ndFoot"></div>
 </aside>
+
+<div class="exp" id="assetsModal" hidden role="dialog" aria-modal="true" aria-labelledby="asTitle">
+  <div class="exp-head"><h2 class="display" id="asTitle">Assets</h2>
+    <button class="sp-close" type="button" data-close>Close</button></div>
+  <div class="exp-body" id="asBody"></div>
+  <div class="exp-foot" id="asFoot"></div>
+</div>
 
 <div class="scrim" id="scrim" hidden></div>
 
@@ -2464,49 +2503,71 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
 
   var PRODUCTS = [
     { id:'soft-harness-a', b:'puppia',  c:'walk',    n:'Soft Harness A',     p:32, std:true,  nw:false, cw:[0,1,2,4],
-      d:'The original. An A-frame back panel spreads the load across the whole chest instead of pressing on the throat — our signature since 2002.' },
+      d:'The original. An A-frame back panel spreads the load across the whole chest instead of pressing on the throat — our signature since 2002.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-soft-harness-a' },
     { id:'soft-harness-b', b:'puppia',  c:'walk',    n:'Soft Harness B',     p:34, std:true,  nw:true,  cw:[0,1,5],
-      d:'A wider back panel and a double-locking buckle. Built for dogs that pull and play hard.' },
+      d:'A wider back panel and a double-locking buckle. Built for dogs that pull and play hard.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-soft-harness-b' },
     { id:'ritefit-collar', b:'puppia',  c:'walk',    n:'Ritefit Collar',     p:18, std:false, nw:false, cw:[0,2,4],
-      d:'An everyday collar matched to the Soft Harness colourways, with a reinforced ID-tag ring.' },
+      d:'An everyday collar matched to the Soft Harness colourways, with a reinforced ID-tag ring.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-ritefit-collar' },
     { id:'two-tone-lead',  b:'puppia',  c:'walk',    n:'Two-Tone Lead',      p:22, std:false, nw:true,  cw:[0,1,3],
-      d:'A 120 cm lead made to pair with the harness. Non-slip lining inside the handle.' },
+      d:'A 120 cm lead made to pair with the harness. Non-slip lining inside the handle.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-two-tone-lead' },
     { id:'mountaineer',    b:'puppia',  c:'apparel', n:'Mountaineer Coat',   p:58, std:false, nw:false, cw:[0,1,3,4],
-      d:'Water-repellent shell with light insulation, and a harness port through the back.' },
+      d:'Water-repellent shell with light insulation, and a harness port through the back.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-mountaineer' },
     { id:'gaspar-fleece',  b:'puppia',  c:'apparel', n:'Gaspar Fleece',      p:44, std:false, nw:true,  cw:[2,3,4],
-      d:'A reversible mid-season fleece, cut wide at the neck so brachycephalic breeds can wear it comfortably.' },
+      d:'A reversible mid-season fleece, cut wide at the neck so brachycephalic breeds can wear it comfortably.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-gaspar-fleece' },
     { id:'woven-mat',      b:'puppia',  c:'living',  n:'Woven Mat',          p:46, std:false, nw:false, cw:[2,3,4],
-      d:'Machine-washable flat-weave mat with a non-slip backing.' },
+      d:'Machine-washable flat-weave mat with a non-slip backing.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-woven-mat' },
     { id:'travel-bowl',    b:'puppia',  c:'acc',     n:'Travel Bowl',        p:21, std:false, nw:false, cw:[0,1,2],
-      d:'A silicone bowl that folds flat into a bag. Marked to 400 ml.' },
+      d:'A silicone bowl that folds flat into a bag. Marked to 400 ml.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-travel-bowl' },
     { id:'olchi-vest',     b:'olchi',   c:'walk',    n:'Olchi Vest Harness', p:29, std:false, nw:true,  cw:[0,1,5],
-      d:'A vest-style harness that wraps the whole chest and shares the pressure widely.' },
+      d:'A vest-style harness that wraps the whole chest and shares the pressure widely.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-olchi-vest' },
     { id:'bold-lead',      b:'olchi',   c:'walk',    n:'Bold Lead',          p:19, std:false, nw:false, cw:[0,3,5],
-      d:'A lead with heavy webbing and high-contrast colour blocking.' },
+      d:'A lead with heavy webbing and high-contrast colour blocking.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-bold-lead' },
     { id:'color-block-tee',b:'olchi',   c:'apparel', n:'Color Block Tee',    p:26, std:false, nw:false, cw:[0,1,5],
-      d:'Cotton-blend tee with the season palette laid out in blocks.' },
+      d:'Cotton-blend tee with the season palette laid out in blocks.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-color-block-tee' },
     { id:'puffer-vest',    b:'olchi',   c:'apparel', n:'Puffer Vest',        p:49, std:false, nw:true,  cw:[0,1,4],
-      d:'A light padded vest with a lead ring on the back panel.' },
+      d:'A light padded vest with a lead ring on the back panel.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-puffer-vest' },
     { id:'car-seat',       b:'olchi',   c:'living',  n:'2-Row Car Seat',     p:89, std:false, nw:true,  cw:[2,4],
-      d:'A rear-seat car seat with a two-strap mount. Seatbelt clip included.' },
+      d:'A rear-seat car seat with a two-strap mount. Seatbelt clip included.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-car-seat' },
     { id:'snap-pouch',     b:'olchi',   c:'acc',     n:'Snap Pouch',         p:16, std:false, nw:false, cw:[0,3,5],
-      d:'A small pouch that snaps onto the lead.' },
+      d:'A small pouch that snaps onto the lead.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-snap-pouch' },
     { id:'lapel-harness',  b:'pinka',   c:'walk',    n:'Lapel Harness',      p:42, std:false, nw:false, cw:[5,2,4],
-      d:'A fashion harness finished with a tailored jacket lapel.' },
+      d:'A fashion harness finished with a tailored jacket lapel.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-lapel-harness' },
     { id:'bijou-dress',    b:'pinka',   c:'apparel', n:'Bijou Dress',        p:64, std:false, nw:false, cw:[5,2],
-      d:'A layered tulle dress that can be worn over a harness.' },
+      d:'A layered tulle dress that can be worn over a harness.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-bijou-dress' },
     { id:'fur-trim-coat',  b:'pinka',   c:'apparel', n:'Fur Trim Coat',      p:78, std:false, nw:false, cw:[5,4,2],
-      d:'A coat trimmed with faux fur and lined in brushed fleece.' },
+      d:'A coat trimmed with faux fur and lined in brushed fleece.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-fur-trim-coat' },
     { id:'charm-collar',   b:'pinka',   c:'acc',     n:'Charm Collar',       p:24, std:false, nw:false, cw:[5,2],
-      d:'A collar with a ring for hanging charms.' },
+      d:'A collar with a ring for hanging charms.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-charm-collar' },
     { id:'cat-vest',       b:'catspia', c:'walk',    n:'Cat Vest Harness',   p:27, std:false, nw:false, cw:[1,3,4],
-      d:'A vest harness shaped for feline shoulders, with a double lock against escapes.' },
+      d:'A vest harness shaped for feline shoulders, with a double lock against escapes.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-cat-vest' },
     { id:'knit-cardigan',  b:'catspia', c:'apparel', n:'Knit Cardigan',      p:31, std:false, nw:false, cw:[2,3],
-      d:'A low-irritation knit cardigan with an open front that is easy to step into.' },
+      d:'A low-irritation knit cardigan with an open front that is easy to step into.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-knit-cardigan' },
     { id:'cat-cave',       b:'catspia', c:'living',  n:'Cat Cave',           p:72, std:false, nw:false, cw:[2,3,4],
-      d:'A felt dome house. The entrance can be turned to face either way.' },
+      d:'A felt dome house. The entrance can be turned to face either way.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-cat-cave' },
     { id:'bell-collar',    b:'catspia', c:'acc',     n:'Bell Collar',        p:14, std:false, nw:false, cw:[1,5],
-      d:'A lightweight collar with a safety buckle and a bell.' }
+      d:'A lightweight collar with a safety buckle and a bell.' ,
+      as:'https://drive.google.com/drive/folders/puppia-ss26-bell-collar' }
   ];
   var PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
 
@@ -2755,16 +2816,16 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       paintPdLine();
       buy.innerHTML =
         '<button class="btn-primary" type="button" id="pdViewOrder">Review order</button>' +
-        '<a class="btn-ghost" href="#/soft-harness">Find my size</a>';
+        '<button class="btn-ghost" type="button" id="pdAssets">Assets</button>';
       document.getElementById('pdViewOrder').addEventListener('click', function(){ open('cart'); });
+      document.getElementById('pdAssets').addEventListener('click', function(){ openAssetsFor(x); });
     } else {
       ord.innerHTML =
         '<div class="pd-trade tradeonly"><p class="opt-label" style="margin:0 0 8px"><span>Trade only</span></p>' +
         '<p>PUPPIA sells through authorised retailers and distributors, not directly to consumers. ' +
-        'Sign in to the partner portal for wholesale prices and matrix ordering, or find a stockist near you.</p></div>';
+        'Sign in to the partner portal for wholesale prices, matrix ordering and downloadable assets.</p></div>';
       buy.innerHTML =
-        '<button class="btn-primary" type="button" id="pdLogin">Partner login</button>' +
-        '<a class="btn-ghost" href="#h7">Where to buy</a>';
+        '<button class="btn-primary" type="button" id="pdLogin">Partner login</button>';
       document.getElementById('pdLogin').addEventListener('click', function(){ open('partner'); });
     }
 
@@ -3022,8 +3083,118 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePanel(); });
   document.getElementById('btnSearch').addEventListener('click', function(){ open('search'); });
   document.getElementById('btnCart').addEventListener('click', function(){ open('cart'); });
-  document.getElementById('btnPartner').addEventListener('click', function(){ open('partner'); });
-  document.getElementById('utilPartner').addEventListener('click', function(e){ e.preventDefault(); open('partner'); });
+  function partnerEntry(){
+    if(session){ location.hash = '#/partners'; return; }
+    open('partner');
+  }
+  document.getElementById('btnPartner').addEventListener('click', partnerEntry);
+  document.getElementById('utilPartner').addEventListener('click', function(e){ e.preventDefault(); partnerEntry(); });
+  function paintPartnerLabels(){
+    document.getElementById('btnPartner').textContent = session ? 'Portal' : 'Partner';
+    document.getElementById('utilPartner').textContent = session ? 'Partner portal' : 'Partner login';
+  }
+
+  /* ---------- assets sheet (one style, or every style in an order) ---------- */
+  panels.assets = document.getElementById('assetsModal');
+  var INSIDE = [
+    { n:'Product photography', m:'4 views · JPG 300 dpi' },
+    { n:'Colourway swatches',  m:'PNG' },
+    { n:'Spec sheet',          m:'PDF' },
+    { n:'Care label artwork',  m:'AI / PDF' }
+  ];
+  function copyText(text, msg){
+    var done = function(){ toast(msg); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, fb);
+    } else fb();
+    function fb(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){ toast('Could not copy — select the link and copy it manually.'); }
+      ta.remove();
+    }
+  }
+  function openFolder(url){
+    if(!url){ toast('No folder is linked to this style yet.'); return; }
+    var w = window.open(url, '_blank', 'noopener');
+    if(!w) toast('Your browser blocked the new tab — use Copy link instead.');
+  }
+  var PLACEHOLDER_NOTE =
+    '<p class="as-warn"><b>Prototype links.</b> These folder URLs are placeholders. ' +
+    'In the live site the Google Drive link is set once per style at product registration, ' +
+    'and this button opens the real folder.</p>';
+
+  function openAssetsFor(x){
+    document.getElementById('asTitle').textContent = 'Assets — ' + x.n;
+    document.getElementById('asBody').innerHTML =
+      '<p class="eyebrow" style="color:var(--on-bone-mute); margin:0 0 12px">' +
+        BMAP[x.b].n + ' · ' + x.c + '</p>' + PLACEHOLDER_NOTE +
+      '<p class="opt-label" style="margin:0"><span>Google Drive folder</span></p>' +
+      '<div class="as-link"><code>' + esc(x.as || 'Not linked yet') + '</code>' +
+      '<button class="btn-mini" type="button" id="asCopy">Copy</button></div>' +
+      '<p class="opt-label" style="margin:18px 0 8px"><span>What is inside</span></p>' +
+      '<ul class="as-inside">' + INSIDE.map(function(i){
+        return '<li><i></i>' + i.n + '<span>' + i.m + '</span></li>';
+      }).join('') + '</ul>';
+    document.getElementById('asFoot').innerHTML =
+      '<button class="btn-primary" type="button" id="asOpen">Open Drive folder</button>';
+    open('assets');
+    document.getElementById('asOpen').addEventListener('click', function(){ openFolder(x.as); });
+    document.getElementById('asCopy').addEventListener('click', function(){
+      copyText(x.as || '', 'Folder link copied');
+    });
+  }
+
+  function openAssetsForOrder(o){
+    var ids = {}; o.lines.forEach(function(l){ ids[l.id] = true; });
+    var list = Object.keys(ids).map(function(id){ return PMAP[id]; });
+    document.getElementById('asTitle').textContent = 'Assets — ' + o.po;
+    document.getElementById('asBody').innerHTML =
+      '<p class="eyebrow" style="color:var(--on-bone-mute); margin:0 0 12px">' +
+        list.length + ' styles in this order</p>' + PLACEHOLDER_NOTE +
+      list.map(function(x){
+        return '<div class="as-row"><span class="im">' + art(x.c, 'var(' + BMAP[x.b].v + ')') + '</span>' +
+          '<span><b>' + x.n + '</b><code>' + esc(x.as || 'Not linked yet') + '</code></span>' +
+          '<span class="acts"><button class="btn-mini" type="button" data-ascopy="' + x.id + '">Copy</button>' +
+          '<button class="btn-mini" type="button" data-asopen="' + x.id + '">Open</button></span></div>';
+      }).join('');
+    document.getElementById('asFoot').innerHTML =
+      '<button class="btn-primary" type="button" id="asCopyAll">Copy all links</button>' +
+      '<button class="btn-mini" type="button" id="asCsv">Download link list (CSV)</button>' +
+      '<p class="exp-note">Hand the list to your studio in one paste. Each line is the style, its code and the folder link.</p>';
+    open('assets');
+    [].forEach.call(document.querySelectorAll('[data-ascopy]'), function(b){
+      b.addEventListener('click', function(){ copyText(PMAP[b.dataset.ascopy].as || '', 'Folder link copied'); });
+    });
+    [].forEach.call(document.querySelectorAll('[data-asopen]'), function(b){
+      b.addEventListener('click', function(){ openFolder(PMAP[b.dataset.asopen].as); });
+    });
+    function lines(){
+      return list.map(function(x){
+        return [BMAP[x.b].n, x.n, x.c.slice(0,2).toUpperCase() + '-' + (1000 + x.n.length * 37), x.as || ''];
+      });
+    }
+    document.getElementById('asCopyAll').addEventListener('click', function(){
+      copyText(lines().map(function(r){ return r[1] + '  ' + r[3]; }).join('\n'), list.length + ' links copied');
+    });
+    document.getElementById('asCsv').addEventListener('click', function(){
+      var rows = [['Brand', 'Style', 'Code', 'Drive folder']].concat(lines());
+      var pl = { text:toCSV(rows), name:'puppia-' + o.po.toLowerCase() + '-assets.csv',
+                 mime:'text/csv;charset=utf-8' };
+      withSaver(function(dl){
+        if(!dl){ anchorSave(pl); return; }
+        dl.save({ filename:pl.name, data:BOM + pl.text }).then(function(){ toast('Saved ' + pl.name); }, function(err){
+          if(err && err.code === 'extension_not_enabled'){
+            dl.save({ filename:pl.name.replace(/\.csv$/, '.txt'), data:BOM + pl.text })
+              .then(function(){ toast('Saved as .txt — rename it to .csv'); }, saveFailed);
+            return;
+          }
+          saveFailed(err);
+        });
+      });
+    });
+  }
 
   /* ---------- mobile menu ---------- */
   panels.menu = document.getElementById('navDrawer');
@@ -3109,6 +3280,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     if(!d) return;
     d.textContent = n; d.classList.toggle('on', n > 0);
     document.getElementById('btnCart').hidden = !session;
+    paintPartnerLabels();
   }
   function renderCart(){
     var body = document.getElementById('cartBody'), t = orderTotals();
@@ -3146,14 +3318,14 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         var pid = b.dataset.p, si = +b.dataset.s, ci = +b.dataset.c;
         var q = qtyOf(pid, si, ci) + (+b.dataset.d);
         if(q > 0) ORDER[key(pid, si, ci)] = q; else delete ORDER[key(pid, si, ci)];
-        repaintProduct(pid); renderCart();
+        repaintProduct(pid); renderCart(); persist();
       });
     });
     [].forEach.call(body.querySelectorAll('[data-clr]'), function(b){
       b.addEventListener('click', function(){
         var x = PMAP[b.dataset.clr], rs = rowsOf(x);
         rs.forEach(function(z, si){ x.cw.forEach(function(ci, k){ delete ORDER[key(x.id, si, k)]; }); });
-        repaintProduct(x.id); renderCart();
+        repaintProduct(x.id); renderCart(); persist();
       });
     });
   }
@@ -3182,6 +3354,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     }
     if(email === DEMO.email && pass === DEMO.pass){
       session = { email:DEMO.email, company:DEMO.company };
+      persist();
       note.textContent = 'Signed in as ' + DEMO.company + '.';
       note.style.borderLeftColor = '#4CC38A';
       closePanel();
@@ -3234,6 +3407,37 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     { n:'OEKO-TEX & GRS certificates', f:'PDF', s:'1.3 MB' }
   ];
   var ptWrap = document.getElementById('ptWrap');
+
+  /* the buyer stays signed in while they browse — and across a reload */
+  var STORE = 'puppia.partner.v1';
+  function persist(){
+    try {
+      localStorage.setItem(STORE, JSON.stringify({
+        session:session, order:ORDER, orders:ORDERS, threads:THREADS
+      }));
+    } catch(e){}
+  }
+  function restore(){
+    var raw;
+    try { raw = localStorage.getItem(STORE); } catch(e){ return; }
+    if(!raw) return;
+    try {
+      var d = JSON.parse(raw);
+      if(d.session && d.session.email === DEMO.email) session = d.session;
+      if(d.order && typeof d.order === 'object') ORDER = d.order;
+      if(Array.isArray(d.orders) && d.orders.length) ORDERS = d.orders;
+      if(Array.isArray(d.threads) && d.threads.length){
+        THREADS = d.threads;
+        TMAP = {}; THREADS.forEach(function(t){ TMAP[t.id] = t; });
+      }
+    } catch(e){}
+  }
+  function signOut(){
+    session = null; ORDER = {}; ptTab = 'linesheet'; ptOrderPO = null; ptThread = null;
+    document.body.classList.remove('has-ordbar');
+    try { localStorage.removeItem(STORE); } catch(e){}
+    paintDot();
+  }
 
   function wholesale(x){ return Math.round(price(x) * WS * 2) / 2; }
   function rowsOf(x){ return (x.c === 'walk' || x.c === 'apparel') ? SIZES : [{ s:'OS', min:0, max:0 }]; }
@@ -3341,6 +3545,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         var td = inp.parentNode, ats = stockOf(PMAP[pid], si, ci);
         td.title = v > ats ? 'Above available stock (' + ats + ') — we will confirm the balance' : '';
         repaintProduct(pid);
+        persist();
       });
       inp.addEventListener('keydown', function(e){
         var dir = e.key === 'ArrowDown' || e.key === 'Enter' ? 1 : (e.key === 'ArrowUp' ? -1 : 0);
@@ -3507,6 +3712,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       '<tfoot><tr><th style="text-align:right">Total</th><th class="num">' + units + '</th><th></th>' +
       '<th class="num">' + money(value) + '</th></tr></tfoot></table></div>' +
       '<div class="od-act"><button class="btn-primary" type="button" id="odDup">Copy into current order</button>' +
+      '<button class="btn-mini" type="button" id="odAssets">Assets for this order</button>' +
       '<button class="btn-mini" type="button" id="odMsg">Message us about this order</button>' +
       '<button class="btn-mini" type="button" id="odPdf">Download PO (PDF)</button></div>';
   }
@@ -3542,10 +3748,15 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       if(dup) dup.addEventListener('click', function(){
         var o = ORDERS.filter(function(x){ return x.po === ptOrderPO; })[0];
         o.lines.forEach(function(l){ ORDER[key(l.id, l.si, l.ci)] = (ORDER[key(l.id, l.si, l.ci)] || 0) + l.q; });
+        persist();
         toast(o.po + ' copied into your current order');
         location.hash = '#/partners/linesheet';
       });
       if(pdf) pdf.addEventListener('click', function(){ toast('PO document — file delivery is out of scope for this prototype'); });
+      var oas = document.getElementById('odAssets');
+      if(oas) oas.addEventListener('click', function(){
+        openAssetsForOrder(ORDERS.filter(function(x){ return x.po === ptOrderPO; })[0]);
+      });
       var msg = document.getElementById('odMsg');
       if(msg) msg.addEventListener('click', function(){
         var ex = THREADS.filter(function(t){ return t.po === ptOrderPO; })[0];
@@ -3553,15 +3764,13 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       });
     }
     document.getElementById('ptOut').addEventListener('click', function(){
-      session = null; ORDER = {}; ptTab = 'linesheet'; ptOrderPO = null;
-      document.body.classList.remove('has-ordbar');
-      paintDot(); renderPortal(); toast('Signed out');
+      signOut(); renderPortal(); toast('Signed out');
     });
     var obR = document.getElementById('obReview'), obC = document.getElementById('obClear');
     if(obR) obR.addEventListener('click', openReview);
     if(obC) obC.addEventListener('click', function(){
       if(!orderTotals().units){ toast('Nothing to clear'); return; }
-      ORDER = {}; renderPortal(); toast('Order cleared');
+      ORDER = {}; persist(); renderPortal(); toast('Order cleared');
     });
     if(ptTab === 'linesheet') wireLineSheet();
     if(ptTab === 'messages' && !ptOrderPO) wireMessages(body);
@@ -3627,7 +3836,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         b:'Yes — everything in Brand assets is cleared for retailer print use, including 300 dpi TIFFs. Grab “SS26 product photography”; the window crops are in the /panels folder inside the zip.' }
     ] }
   ];
-  var TMAP = {}; THREADS.forEach(function(t){ TMAP[t.id] = t; });
+  var TMAP = {}; THREADS.forEach(function(t){ TMAP[t.id] = t; });  /* rebuilt on restore */
   var ptThread = null;
   function unreadCount(){ return THREADS.filter(function(t){ return t.unread; }).length; }
   function lastMsg(t){ return t.msgs[t.msgs.length - 1]; }
@@ -3687,7 +3896,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       var id = 't' + (THREADS.length + 1 + Math.floor(Math.random() * 90));
       var t = { id:id, subj:subj, po:po, status:'answered', unread:false,
                 msgs:[{ who:'me', name:'You', t:new Date().toISOString().slice(0, 16).replace('T', ' '), b:bodyv }] };
-      THREADS.unshift(t); TMAP[id] = t; newPO = '';
+      THREADS.unshift(t); TMAP[id] = t; newPO = ''; persist();
       location.hash = '#/partners/messages/' + id;
       toast('Message sent');
     });
@@ -3700,7 +3909,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         var t = TMAP[ptThread];
         t.msgs.push({ who:'me', name:'You', t:new Date().toISOString().slice(0, 16).replace('T', ' '), b:v });
         t.status = 'answered'; t.unread = false;
-        renderPortal();
+        persist(); renderPortal();
         var bb = document.getElementById('bubbles');
         if(bb) bb.scrollTop = bb.scrollHeight;
         toast('Message sent');
@@ -3948,6 +4157,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     ORDERS.unshift({ po:po, date:new Date().toISOString().slice(0, 10), season:DEMO.season,
                      status:'sub', ship:'', lines:lines });
     ORDER = {};
+    persist();
     document.getElementById('rvTitle').textContent = 'Order submitted';
     document.getElementById('rvBody').innerHTML =
       '<div class="rv-done"><p class="eyebrow" style="color:var(--on-bone-mute); justify-content:center">Purchase order</p>' +
@@ -4025,7 +4235,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       ptOrderPO = (ptTab === 'orders' && seg[3]) ? decodeURIComponent(seg[3]) : null;
       ptThread = (ptTab === 'messages' && seg[3])
         ? (seg[3] === 'new' ? 'new' : (TMAP[seg[3]] ? seg[3] : null)) : null;
-      if(ptThread && ptThread !== 'new') TMAP[ptThread].unread = false;
+      if(ptThread && ptThread !== 'new'){ TMAP[ptThread].unread = false; persist(); }
       renderPortal();
     }
     requestAnimationFrame(function(){
@@ -4037,6 +4247,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   window.addEventListener('hashchange', route);
 
   /* ---------------- go ---------------- */
+  restore();
   paintDot();
   route();
   update();
