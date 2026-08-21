@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="PUPPIA global site prototype — home, shop, product detail, seasonal catalog web-book and the Soft Harness signature page.">
+<meta name="description" content="PUPPIA global site prototype.">
 <title>PUPPIA Soft Harness</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,7 @@
   --press:#E13B26; --press-lt:#F26A50;
   --load:#1B4FD8;  --load-lt:#5C82F5;
 
+  --on-red:#FFF1EC;
   --product:#E13B26;
   --b-puppia:#E13B26; --b-olchi:#EDB230; --b-pinka:#B8446B; --b-catspia:#3E7C74;
   --navh:94px;
@@ -58,31 +59,22 @@ body{
 
 /* ---------------- chrome ---------------- */
 #bar{position:fixed; top:0; left:0; height:2px; width:100%; z-index:60; background:transparent}
-#bar i{display:block; height:100%; width:0%; background:var(--red); transform-origin:0 50%}
+#bar i{display:block; height:100%; width:0%; background:var(--yellow); transform-origin:0 50%}
 
 /* ---------------- header : utility + main nav ---------------- */
 #top{
-  position:fixed; top:0; left:0; right:0; z-index:50; color:var(--on-ink);
-  transition:color .35s ease;
-  --nav-bg:rgba(20,23,27,.82); --nav-rule:rgba(255,255,255,.12); --mega-bg:#1C2126;
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  background:var(--red); color:var(--on-red);
+  box-shadow:0 1px 0 rgba(0,0,0,.06);
 }
-#top.on-bone{color:var(--on-bone); --nav-bg:rgba(233,232,225,.86); --nav-rule:rgba(20,23,27,.13); --mega-bg:#E9E8E1}
-#top::before{
-  content:""; position:absolute; inset:0; z-index:-1;
-  background:var(--nav-bg); border-bottom:1px solid var(--nav-rule);
-  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
-  opacity:0; transition:opacity .3s ease, background .35s ease;
-}
-#top.stuck::before{opacity:1}
-
 .util{
   display:flex; align-items:center; justify-content:space-between; gap:14px;
   padding:0 clamp(14px,3vw,32px); height:34px;
   font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase;
-  border-bottom:1px solid var(--nav-rule);
+  border-bottom:1px solid rgba(255,255,255,.2);
 }
 .util-l, .util-r{display:flex; align-items:center; gap:clamp(10px,1.8vw,20px)}
-.util a{color:inherit; text-decoration:none; opacity:.6; transition:opacity .2s; white-space:nowrap}
+.util a{color:inherit; text-decoration:none; opacity:.78; transition:opacity .2s; white-space:nowrap}
 .util a:hover{opacity:1}
 .util .hide-s{display:none}
 @media(min-width:820px){.util .hide-s{display:inline}}
@@ -101,38 +93,47 @@ nav{
 .navitem > a{
   color:inherit; text-decoration:none; display:flex; align-items:center; gap:7px; height:100%;
   font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.17em; text-transform:uppercase;
-  opacity:.66; transition:opacity .2s; white-space:nowrap;
+  opacity:.8; transition:opacity .2s; white-space:nowrap; position:relative;
+}
+.navitem > a::after{
+  content:""; position:absolute; left:0; right:0; bottom:14px; height:1.5px; background:currentColor;
+  transform:scaleX(0); transform-origin:0 50%; transition:transform .22s ease;
 }
 .navitem > a:hover, .navitem:focus-within > a, .navitem.on > a{opacity:1}
+.navitem.on > a::after, .navitem > a:hover::after{transform:scaleX(1)}
 .navitem.signature > a{opacity:1; font-weight:700; letter-spacing:.13em}
-.navdiv{width:1px; height:16px; background:currentColor; opacity:.2; flex:0 0 auto}
+.navdiv{width:1px; height:16px; background:currentColor; opacity:.32; flex:0 0 auto}
 
 /* the STANDARD seal */
 .seal{width:15px; height:15px; flex:0 0 auto; display:block}
-.seal circle{fill:none; stroke:var(--red-lt); stroke-width:1.6}
-#top.on-bone .seal circle{stroke:var(--red)}
-.seal path{fill:var(--red-lt)}
+.seal circle{fill:none; stroke:currentColor; stroke-width:1.6}
 .seal circle:nth-of-type(2){stroke-width:1}
-#top.on-bone .seal path{fill:var(--red)}
+.seal path{fill:currentColor}
 
-.nav-r{display:flex; align-items:center; gap:12px; flex:0 0 auto}
+.nav-r{display:flex; align-items:center; gap:10px; flex:0 0 auto}
 .icon-btn{
   appearance:none; background:transparent; border:0; cursor:pointer; color:inherit; padding:6px;
-  display:grid; place-items:center; opacity:.7; transition:opacity .2s;
+  display:grid; place-items:center; opacity:.85; transition:opacity .2s; position:relative;
 }
 .icon-btn:hover{opacity:1}
 .icon-btn svg{width:17px; height:17px}
+.cart-dot{
+  position:absolute; top:0; right:0; min-width:15px; height:15px; border-radius:99px;
+  background:var(--yellow); color:var(--ink); display:none; place-items:center; padding:0 4px;
+  font-family:"Martian Mono",monospace; font-size:8px; font-weight:700; letter-spacing:0;
+}
+.cart-dot.on{display:grid}
 .partner{
   color:inherit; text-decoration:none; border:1px solid currentColor; border-radius:99px;
-  padding:7px 13px; opacity:.8; transition:opacity .2s;
+  padding:7px 13px; opacity:.9; transition:all .2s; background:transparent; cursor:pointer;
   font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; white-space:nowrap;
 }
-.partner:hover{opacity:1}
+.partner:hover{background:#fff; color:var(--red); opacity:1}
 
 /* mega menu */
 .mega{
-  position:absolute; top:100%; left:0; right:0; background:var(--mega-bg);
-  border-bottom:1px solid var(--nav-rule); box-shadow:0 24px 48px -24px rgba(0,0,0,.5);
+  position:absolute; top:100%; left:0; right:0; background:var(--bone); color:var(--on-bone);
+  border-bottom:1px solid var(--bone3); box-shadow:0 24px 48px -24px rgba(0,0,0,.28);
   opacity:0; visibility:hidden; transform:translateY(-6px);
   transition:opacity .2s ease, visibility .2s ease, transform .2s ease;
   padding:26px clamp(14px,3vw,32px) 30px;
@@ -159,6 +160,7 @@ nav{
   display:block; font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.14em;
   text-transform:uppercase; opacity:.55;
 }
+.mega ul a:hover{color:var(--red)}
 
 /* brand label */
 .blabel{
@@ -414,13 +416,13 @@ input[type=range]:focus-visible{outline:2px solid var(--load-lt); outline-offset
 @media(min-width:900px){.globe{grid-template-columns:minmax(240px,.8fr) minmax(0,1.2fr); align-items:center}}
 .dots{display:grid; grid-template-columns:repeat(28,1fr); gap:clamp(3px,.55vw,7px); width:100%}
 .dots i{
-  display:block; aspect-ratio:1; border-radius:50%; background:rgba(255,255,255,.09);
+  display:block; aspect-ratio:1; border-radius:50%; background:var(--bone3); opacity:.5;
 }
-.dots i.live{background:var(--red-lt); position:relative}
+.dots i.live{background:var(--red); opacity:1; position:relative}
 .dots i.live::after{
   content:attr(data-c); position:absolute; bottom:150%; left:50%; transform:translateX(-50%);
   font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.12em; white-space:nowrap;
-  background:var(--on-ink); color:var(--ink); padding:3px 6px; border-radius:2px;
+  background:var(--ink); color:var(--bone); padding:3px 6px; border-radius:2px;
   opacity:0; pointer-events:none; transition:opacity .16s ease; z-index:5;
 }
 .dots i.live:hover::after, .dots i.live:focus-visible::after{opacity:1}
@@ -431,32 +433,32 @@ input[type=range]:focus-visible{outline:2px solid var(--load-lt); outline-offset
 }
 .stats div span{
   display:block; font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--on-ink-mute); margin-top:9px;
+  text-transform:uppercase; opacity:.55; margin-top:9px;
 }
 
 /* ---------------- footer ---------------- */
-footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px) 40px}
+footer{background:var(--red); color:var(--on-red); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px) 40px}
 .foot-grid{display:grid; gap:32px; max-width:1300px; margin:0 auto}
 @media(min-width:820px){.foot-grid{grid-template-columns:1.4fr 1fr 1fr}}
 .foot-grid h4{
   font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--on-ink-mute); margin:0 0 14px; font-weight:500;
+  opacity:.68; margin:0 0 14px; font-weight:500;
 }
 .foot-grid ul{list-style:none; margin:0; padding:0; font-size:14px}
 .foot-grid li{margin-bottom:8px}
-.foot-grid a{color:var(--on-ink); text-decoration:none; opacity:.72; transition:opacity .18s}
+.foot-grid a{color:inherit; text-decoration:none; opacity:.8; transition:opacity .18s}
 .foot-grid a:hover{opacity:1}
 .foot-cta{
-  display:inline-flex; align-items:center; gap:12px; border:1px solid rgba(255,255,255,.28);
-  padding:14px 20px; border-radius:99px; text-decoration:none; color:var(--on-ink);
+  display:inline-flex; align-items:center; gap:12px; border:1px solid rgba(255,255,255,.55);
+  padding:14px 20px; border-radius:99px; text-decoration:none; color:inherit;
   font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase;
   margin-top:18px; transition:background .2s, border-color .2s;
 }
-.foot-cta:hover{background:var(--on-ink); color:var(--ink); border-color:var(--on-ink)}
+.foot-cta:hover{background:#fff; color:var(--red); border-color:#fff}
 .foot-base{
-  max-width:1300px; margin:44px auto 0; padding-top:22px; border-top:1px solid rgba(255,255,255,.1);
+  max-width:1300px; margin:44px auto 0; padding-top:22px; border-top:1px solid rgba(255,255,255,.28);
   display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
-  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-ink-mute);
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; opacity:.7;
 }
 
 /* ================= HOME VIEW ================= */
@@ -571,16 +573,16 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
 .empty{grid-column:1/-1; padding:44px 0; text-align:center; color:var(--on-bone-mute); font-size:14px}
 
 /* --- S4 categories --- */
-#h4{background:var(--ink); color:var(--on-ink)}
-.doors{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1px; background:rgba(255,255,255,.11);
-  border:1px solid rgba(255,255,255,.11); border-radius:3px; overflow:hidden}
-.door{background:var(--ink); padding:26px 22px 24px; text-decoration:none; color:inherit;
+#h4{background:var(--red); color:var(--on-red)}
+.doors{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1px; background:rgba(255,255,255,.3);
+  border:1px solid rgba(255,255,255,.3); border-radius:3px; overflow:hidden}
+.door{background:var(--red); padding:26px 22px 24px; text-decoration:none; color:inherit;
   display:flex; flex-direction:column; gap:12px; min-height:180px; transition:background .22s ease}
-.door:hover{background:var(--ink2)}
-.door .dnum{font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.16em; color:var(--on-ink-mute)}
+.door:hover{background:var(--red-dk)}
+.door .dnum{font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.16em; opacity:.72}
 .door h3{margin:0; font-family:"Archivo",sans-serif; font-weight:900; font-stretch:118%; font-size:clamp(1.35rem,2.6vw,1.8rem);
   letter-spacing:-.025em; text-transform:uppercase; line-height:.95}
-.door p{margin:0; font-size:13px; color:var(--on-ink-mute); max-width:26ch}
+.door p{margin:0; font-size:13px; opacity:.8; max-width:26ch}
 .door .arrow{margin-top:auto; opacity:.5}
 .door:hover .arrow{opacity:1}
 .door svg{width:15px; height:15px}
@@ -596,8 +598,8 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
 .house p{margin:0; font-size:13.5px; color:var(--on-bone-mute); line-height:1.55}
 
 /* --- S6 fit / S7 global (home compact) --- */
-#h6{background:var(--ink); color:var(--on-ink)}
-#h7{background:var(--ink2); color:var(--on-ink)}
+#h6{background:var(--bone2); color:var(--on-bone)}
+#h7{background:var(--bone); color:var(--on-bone)}
 .hfit{display:grid; gap:clamp(20px,3vw,44px); align-items:center}
 @media(min-width:900px){.hfit{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)}}
 .hglobe{display:grid; gap:clamp(20px,3vw,44px); align-items:center}
@@ -610,24 +612,8 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
 }
 .house .house-im svg{width:52%; height:auto; overflow:visible}
 
-/* ---- prototype slot preview ---- */
-.demobar{
-  position:fixed; right:clamp(14px,3vw,32px); bottom:16px; z-index:52; display:flex; align-items:center; gap:8px;
-  background:rgba(23,22,26,.86); border:1px solid rgba(255,255,255,.16); border-radius:99px; padding:6px 8px 6px 13px;
-  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-  font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--on-ink-mute);
-}
-.demobar button{
-  appearance:none; cursor:pointer; border:1px solid rgba(255,255,255,.24); background:transparent; color:var(--on-ink);
-  border-radius:99px; padding:5px 10px; font:inherit; letter-spacing:.14em; opacity:.6; transition:opacity .18s, background .18s;
-}
-.demobar button:hover{opacity:1}
-.demobar button[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:#fff; opacity:1}
-.demobar[hidden]{display:none}
-@media(max-width:700px){.demobar{display:none}}
-
 /* ================= CATALOG · WEB BOOK ================= */
-#view-catalog{background:var(--ink); color:var(--on-ink); min-height:100vh}
+#view-catalog{background:var(--red-dk); color:var(--on-red); min-height:100vh}
 .cat-wrap{padding:calc(var(--navh) + 16px) clamp(16px,3vw,40px) 32px; max-width:1320px; margin:0 auto}
 .cat-head{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:16px}
 .cat-head h1{margin:8px 0 0; font-size:clamp(1.5rem,3.1vw,2.2rem)}
@@ -638,7 +624,7 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
   font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.15em; text-transform:uppercase;
 }
 .season-btn:hover{opacity:1}
-.season-btn[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:#fff; opacity:1}
+.season-btn[aria-pressed="true"]{background:#fff; border-color:#fff; color:var(--red-dk); opacity:1}
 
 .book-stage{
   position:relative; perspective:2600px; margin:0 auto;
@@ -646,7 +632,7 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
 }
 .book{
   position:relative; display:grid; grid-template-columns:1fr 1fr; aspect-ratio:2/1.41;
-  background:var(--ink2); border-radius:3px; overflow:hidden;
+  background:rgba(0,0,0,.16); border-radius:3px; overflow:hidden;
   box-shadow:0 40px 90px -40px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.07);
 }
 .book::after{
@@ -655,7 +641,7 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
   pointer-events:none; z-index:4;
 }
 .pg{position:relative; background:var(--bone); color:var(--on-bone); overflow:hidden; display:flex; flex-direction:column}
-.pg.blank{background:var(--ink2)}
+.pg.blank{background:rgba(0,0,0,.14)}
 .pg-num{
   position:absolute; bottom:12px; font-family:"Martian Mono",monospace; font-size:8px;
   letter-spacing:.16em; color:var(--on-bone-mute);
@@ -683,7 +669,7 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
   border:1px solid rgba(255,255,255,.24); background:transparent; color:var(--on-ink);
   display:grid; place-items:center; transition:all .18s ease;
 }
-.pgbtn:hover:not(:disabled){background:var(--red); border-color:var(--red)}
+.pgbtn:hover:not(:disabled){background:#fff; border-color:#fff; color:var(--red-dk)}
 .pgbtn:disabled{opacity:.25; cursor:not-allowed}
 .pgbtn svg{width:17px; height:17px}
 .pgcount{font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.18em; color:var(--on-ink-mute); font-variant-numeric:tabular-nums; min-width:8em; text-align:center}
@@ -854,6 +840,118 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
 }
 .toast.on{opacity:1; transform:translate(-50%,0)}
 
+/* ================= overlays : search · cart · partner ================= */
+.scrim{
+  position:fixed; inset:0; z-index:80; background:rgba(23,22,26,.5);
+  -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+  opacity:0; transition:opacity .28s ease;
+}
+.scrim.on{opacity:1}
+.scrim[hidden]{display:none}
+
+/* search */
+.searchpanel{
+  position:fixed; top:0; left:0; right:0; z-index:82; background:var(--bone); color:var(--on-bone);
+  transform:translateY(-100%); transition:transform .34s cubic-bezier(.3,.8,.3,1);
+  max-height:88vh; overflow-y:auto; box-shadow:0 24px 60px -30px rgba(0,0,0,.5);
+}
+.searchpanel.on{transform:none}
+.searchpanel[hidden]{display:none}
+.sp-in{max-width:1100px; margin:0 auto; padding:clamp(24px,4vw,46px) clamp(20px,4vw,40px) clamp(30px,4vw,52px)}
+.sp-row{display:flex; align-items:center; gap:16px; border-bottom:2px solid var(--on-bone); padding-bottom:12px}
+.sp-row svg{width:22px; height:22px; flex:0 0 auto; opacity:.5}
+.sp-row input{
+  flex:1; min-width:0; border:0; background:transparent; outline:none; color:inherit;
+  font-family:"Archivo",sans-serif; font-weight:900; font-stretch:112%; letter-spacing:-.02em;
+  font-size:clamp(1.4rem,3.6vw,2.4rem); text-transform:uppercase;
+}
+.sp-row input::placeholder{color:var(--bone3)}
+.sp-row input::-webkit-search-cancel-button, .sp-row input::-webkit-search-decoration{-webkit-appearance:none; display:none}
+.sp-close{
+  appearance:none; background:transparent; border:0; cursor:pointer; color:inherit; padding:6px;
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; opacity:.6;
+}
+.sp-close:hover{opacity:1}
+.sp-meta{
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin:14px 0 22px;
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--on-bone-mute);
+}
+.sp-sugg{display:flex; gap:8px; flex-wrap:wrap}
+.sp-sugg button{
+  appearance:none; cursor:pointer; background:transparent; border:1px solid var(--bone3); color:inherit;
+  border-radius:99px; padding:6px 12px; font:inherit; transition:all .16s;
+}
+.sp-sugg button:hover{border-color:var(--red); color:var(--red)}
+.sp-results{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:clamp(12px,1.6vw,22px)}
+
+/* cart */
+.drawer{
+  position:fixed; top:0; right:0; bottom:0; z-index:82; width:min(420px,100%);
+  background:var(--bone); color:var(--on-bone); display:flex; flex-direction:column;
+  transform:translateX(100%); transition:transform .34s cubic-bezier(.3,.8,.3,1);
+  box-shadow:-24px 0 60px -30px rgba(0,0,0,.5);
+}
+.drawer.on{transform:none}
+.drawer[hidden]{display:none}
+.dw-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:22px clamp(18px,3vw,26px); border-bottom:1px solid var(--bone3);
+}
+.dw-head h2{margin:0; font-size:1.15rem; font-stretch:112%}
+.dw-body{flex:1; overflow-y:auto; padding:clamp(14px,2vw,20px) clamp(18px,3vw,26px)}
+.dw-foot{padding:20px clamp(18px,3vw,26px) clamp(22px,3vw,28px); border-top:1px solid var(--bone3)}
+.dw-sum{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;
+  font-family:"Martian Mono",monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase}
+.dw-sum b{font-size:1.15rem; letter-spacing:0; font-variant-numeric:tabular-nums}
+.ci{display:grid; grid-template-columns:64px 1fr auto; gap:14px; padding:14px 0; border-bottom:1px solid var(--bone3); align-items:start}
+.ci .im{aspect-ratio:1; background:var(--bone2); border-radius:2px; display:grid; place-items:center; overflow:hidden}
+.ci .im svg{width:78%; height:auto}
+.ci .col{display:flex; flex-direction:column; align-items:flex-start; min-width:0}
+.ci .nm{display:block; font-size:13.5px; font-weight:600; line-height:1.35}
+.ci .op{display:block; font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.1em; color:var(--on-bone-mute); margin-top:4px; text-transform:uppercase}
+.ci .pr{display:block; font-family:"Martian Mono",monospace; font-size:11px; font-variant-numeric:tabular-nums; margin-top:7px}
+.qty{display:inline-flex; align-items:center; border:1px solid var(--bone3); border-radius:99px; margin-top:8px}
+.qty button{appearance:none; background:transparent; border:0; cursor:pointer; width:26px; height:26px; color:inherit; font-size:14px; line-height:1}
+.qty span{font-family:"Martian Mono",monospace; font-size:10px; min-width:20px; text-align:center; font-variant-numeric:tabular-nums}
+.ci .rm{appearance:none; background:transparent; border:0; cursor:pointer; color:var(--on-bone-mute); padding:2px;
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase}
+.ci .rm:hover{color:var(--red)}
+.dw-empty{padding:60px 0; text-align:center; color:var(--on-bone-mute); font-size:14px}
+
+/* modal */
+.modal{
+  position:fixed; z-index:82; left:50%; top:50%; transform:translate(-50%,-46%) scale(.98);
+  width:min(420px,calc(100% - 32px)); background:var(--bone); color:var(--on-bone); border-radius:4px;
+  opacity:0; transition:opacity .26s ease, transform .26s ease; box-shadow:0 40px 80px -30px rgba(0,0,0,.55);
+}
+.modal.on{opacity:1; transform:translate(-50%,-50%) scale(1)}
+.modal[hidden]{display:none}
+.md-in{padding:clamp(24px,4vw,34px)}
+.md-in h2{margin:8px 0 6px; font-size:1.5rem; font-stretch:112%}
+.md-in p.sub{margin:0 0 22px; font-size:13.5px; color:var(--on-bone-mute); line-height:1.6}
+.field{margin-bottom:14px}
+.field label{
+  display:block; font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--on-bone-mute); margin-bottom:6px;
+}
+.field input{
+  width:100%; border:1px solid var(--bone3); background:#fff; border-radius:2px; padding:12px 13px;
+  font:inherit; font-size:14px; color:inherit; outline:none; transition:border-color .16s;
+}
+.field input:focus{border-color:var(--red)}
+.md-note{
+  margin-top:16px; padding:12px 14px; background:var(--bone2); border-left:3px solid var(--red);
+  font-size:12.5px; line-height:1.6; color:var(--on-bone-mute);
+}
+.md-alt{margin-top:18px; text-align:center; font-size:13px}
+.md-alt a{color:var(--red)}
+.md-x{
+  position:absolute; top:12px; right:12px; appearance:none; background:transparent; border:0; cursor:pointer;
+  color:var(--on-bone-mute); width:32px; height:32px; display:grid; place-items:center; font-size:18px; line-height:1;
+}
+.md-x:hover{color:var(--on-bone)}
+body.locked{overflow:hidden}
+
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
   :root{--navh:78px}
@@ -918,7 +1016,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     <div class="util-r">
       <a href="#/" class="hide-s">EN</a>
       <a href="#/" class="hide-s">KRW</a>
-      <a href="#partners">Partner Login</a>
+      <a href="#partners" id="utilPartner">Partner Login</a>
     </div>
   </div>
   <nav>
@@ -926,31 +1024,26 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     <div class="nav-mid">
       <div class="navitem signature"><a href="#/soft-harness"><svg class="seal" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.6"/><circle cx="12" cy="12" r="8.1" opacity=".45"/><path d="M8.6 9.6 h6.8 a1.5 1.5 0 0 1 1.5 1.5 v1.8 a1.5 1.5 0 0 1 -1.5 1.5 h-6.8 a1.5 1.5 0 0 1 -1.5 -1.5 v-1.8 a1.5 1.5 0 0 1 1.5 -1.5 z"/><path d="M10.4 11.6 h3.2" stroke-width="0" opacity="0"/></svg>Soft Harness®</a></div>
       <span class="navdiv"></span>
-      <div class="navitem" data-cat="walk"><a href="#/shop?c=walk">Walk</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=walk">Harness</a></li><li><a href="#/shop?c=walk">Leash</a></li><li><a href="#/shop?c=walk">Collar</a></li><li><a href="#/shop?c=walk">Walk Set</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-puppia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Walk Kit</b><span>WALK · 자세히 보기</span></span></div></div></div></div></div>
-      <div class="navitem" data-cat="apparel"><a href="#/shop?c=apparel">Apparel</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=apparel">Outerwear</a></li><li><a href="#/shop?c=apparel">Tee & Knit</a></li><li><a href="#/shop?c=apparel">Dress</a></li><li><a href="#/shop?c=apparel">Rainwear</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-pinka)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Outerwear</b><span>APPAREL · 자세히 보기</span></span></div></div></div></div></div>
-      <div class="navitem" data-cat="living"><a href="#/shop?c=living">Living</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=living">Bed & Mat</a></li><li><a href="#/shop?c=living">House</a></li><li><a href="#/shop?c=living">Carrier</a></li><li><a href="#/shop?c=living">Car Seat</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-olchi)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>2-Row Car Seat</b><span>LIVING · 자세히 보기</span></span></div></div></div></div></div>
-      <div class="navitem" data-cat="acc"><a href="#/shop?c=acc">Acc</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=acc">Bowl</a></li><li><a href="#/shop?c=acc">Pouch</a></li><li><a href="#/shop?c=acc">Charm</a></li><li><a href="#/shop?c=acc">Grooming</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-catspia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>Bell & Charm</b><span>ACC · 자세히 보기</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="walk"><a href="#/shop?c=walk">Walk</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=walk">Harness</a></li><li><a href="#/shop?c=walk">Leash</a></li><li><a href="#/shop?c=walk">Collar</a></li><li><a href="#/shop?c=walk">Walk Set</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-puppia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Walk Kit</b><span>WALK · See the collection</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="apparel"><a href="#/shop?c=apparel">Apparel</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=apparel">Outerwear</a></li><li><a href="#/shop?c=apparel">Tee & Knit</a></li><li><a href="#/shop?c=apparel">Dress</a></li><li><a href="#/shop?c=apparel">Rainwear</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-pinka)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Outerwear</b><span>APPAREL · See the collection</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="living"><a href="#/shop?c=living">Living</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=living">Bed & Mat</a></li><li><a href="#/shop?c=living">House</a></li><li><a href="#/shop?c=living">Carrier</a></li><li><a href="#/shop?c=living">Car Seat</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-olchi)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>2-Row Car Seat</b><span>LIVING · See the collection</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="acc"><a href="#/shop?c=acc">Acc</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=acc">Bowl</a></li><li><a href="#/shop?c=acc">Pouch</a></li><li><a href="#/shop?c=acc">Charm</a></li><li><a href="#/shop?c=acc">Grooming</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-catspia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>Bell & Charm</b><span>ACC · See the collection</span></span></div></div></div></div></div>
       <div class="navitem"><a href="#/catalog">Catalog</a></div>
     </div>
     <div class="nav-r">
-      <button class="icon-btn" type="button" aria-label="검색">
+      <button class="icon-btn" id="btnSearch" type="button" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
       </button>
-      <button class="icon-btn" type="button" aria-label="장바구니">
+      <button class="icon-btn" id="btnCart" type="button" aria-label="Cart"><span class="cart-dot" id="cartDot">0</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
       </button>
-      <a class="partner" href="#partners">Partner</a>
+      <button class="partner" id="btnPartner" type="button">Partner</button>
     </div>
   </nav>
 </header>
 
-<button class="flag" id="flag" type="button" title="닫기">Prototype — 홈 + Soft Harness&#174; 두 페이지. 도형은 실제 제품 자산 대체용 플레이스홀더입니다. <b style="opacity:.75">닫기 ×</b></button>
+<button class="flag" id="flag" type="button" title="Dismiss">Prototype — placeholder geometry stands in for product photography. <b style="opacity:.75">Dismiss ×</b></button>
 
-<div class="demobar" id="demobar">
-  <span>Season slot</span>
-  <button type="button" data-slotb="puppia" aria-pressed="true">PUPPIA</button>
-  <button type="button" data-slotb="olchi" aria-pressed="false">OLCHI</button>
-</div>
 <div id="view-home">
 
   <!-- ============ H1 · THE SEASON ============ -->
@@ -961,10 +1054,10 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         <div class="season-copy">
           <span class="blabel" id="seasonBrand" style="--bd:var(--b-puppia)"><i></i><span>PUPPIA</span></span>
           <h1 class="display" id="seasonTitle">Spring<br>Walk Kit</h1>
-          <p class="lede" style="color:var(--on-bone-mute)" id="seasonDek">하네스와 리드를 같은 컬러웨이로 맞춘 시즌 세트. 이 자리는 매주 교체되는 캠페인 슬롯입니다.</p>
+          <p class="lede" style="color:var(--on-bone-mute)" id="seasonDek">Harness and lead matched in one colourway. This block is the campaign slot that changes every season.</p>
           <a class="more" href="#/shop">Shop the collection <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-        <div class="slot" id="seasonSlot" data-slot="season.hero · 캠페인 이미지 슬롯" style="--slot:var(--b-puppia)">
+        <div class="slot" id="seasonSlot" data-slot="season.hero · campaign image slot" style="--slot:var(--b-puppia)">
           <span class="wash"></span><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".18"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.6)" stroke-width="4.5"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.6)" stroke-width="4.5"/><rect x="132" y="140" width="36" height="32" rx="7" fill="#fff" opacity=".92"/><path d="M141 156 h18" stroke="rgba(0,0,0,.3)" stroke-width="3"/></g></svg>
         </div>
       </div>
@@ -972,24 +1065,24 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     </div>
   </section>
 
-  <!-- ============ H2 · THE STANDARD (고정) ============ -->
+  <!-- ============ H2 · THE STANDARD (fixed) ============ -->
   <section class="hsec" id="h2" data-ground="ink">
     <div class="hpad">
       <div class="standard">
         <div>
-          <span class="std-badge"><svg class="seal" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.6"/><circle cx="12" cy="12" r="8.1" opacity=".45"/><path d="M8.6 9.6 h6.8 a1.5 1.5 0 0 1 1.5 1.5 v1.8 a1.5 1.5 0 0 1 -1.5 1.5 h-6.8 a1.5 1.5 0 0 1 -1.5 -1.5 v-1.8 a1.5 1.5 0 0 1 1.5 -1.5 z"/><path d="M10.4 11.6 h3.2" stroke-width="0" opacity="0"/></svg> The Standard · 고정 섹션</span>
+          <span class="std-badge"><svg class="seal" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.6"/><circle cx="12" cy="12" r="8.1" opacity=".45"/><path d="M8.6 9.6 h6.8 a1.5 1.5 0 0 1 1.5 1.5 v1.8 a1.5 1.5 0 0 1 -1.5 1.5 h-6.8 a1.5 1.5 0 0 1 -1.5 -1.5 v-1.8 a1.5 1.5 0 0 1 1.5 -1.5 z"/><path d="M10.4 11.6 h3.2" stroke-width="0" opacity="0"/></svg> The Standard · fixed section</span>
           <h2 class="display d-md" style="margin:0 0 18px">Soft<br>Harness®</h2>
-          <p class="lede mute">목줄은 하중을 기관 위 한 점에 모읍니다. 소프트하네스는 같은 힘을 가슴판 전체로 흘려보냅니다. 2002년부터 이 구조 하나를 다듬어 왔습니다.</p>
+          <p class="lede mute">A collar gathers the whole load onto one point above the windpipe. The Soft Harness spreads that same force across the entire chest plate. We have been refining this one structure since 2002.</p>
           <div class="std-facts">
             <div><b>2002</b><span>Since</span></div>
             <div><b>3</b><span>Series</span></div>
-            <div><b>6.4</b><span>cm² 분산면적</span></div>
-            <div><b>×5.6</b><span>목줄 대비 압력차</span></div>
+            <div><b>6.4</b><span>cm² spread</span></div>
+            <div><b>×5.6</b><span>vs collar peak</span></div>
           </div>
-          <a class="std-cta" href="#/soft-harness">시그니처 페이지 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="std-cta" href="#/soft-harness">See the signature page <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
         <div class="std-art">
-          <svg viewBox="0 0 640 208" role="img" aria-label="목줄과 소프트하네스의 압력 분포 비교 요약">
+          <svg viewBox="0 0 640 208" role="img" aria-label="Pressure distribution: collar versus soft harness">
             <defs>
               <radialGradient id="hPress" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="var(--press)" stop-opacity=".9"/>
@@ -1026,8 +1119,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
                 <path d="M272 100 l-16 -18"/><path d="M300 94 l0 -22"/><path d="M330 100 l16 -18"/>
               </g>
             </g>
-            <text class="dg-label" x="8" y="188" fill="var(--on-ink-mute)">단일 지점 · 9.6 N/cm²</text>
-            <text class="dg-label" x="332" y="188" fill="var(--on-ink-mute)">가슴판 전면 · 1.7 N/cm²</text>
+            <text class="dg-label" x="8" y="188" fill="var(--on-ink-mute)">Single point · 9.6 N/cm²</text>
+            <text class="dg-label" x="332" y="188" fill="var(--on-ink-mute)">Full chest plate · 1.7 N/cm²</text>
           </svg>
         </div>
       </div>
@@ -1042,14 +1135,14 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           <p class="eyebrow" style="color:var(--on-bone-mute)">Shop — 4 brands, one catalog</p>
           <h2 class="display d-md">New<br>arrivals.</h2>
         </div>
-        <a class="more" href="#/shop">전체 제품 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="more" href="#/shop">See all products <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <div class="pgrid" id="pgrid"></div>
     </div>
   </section>
 
   <!-- ============ H4 · CATEGORIES ============ -->
-  <section class="hsec" id="h4" data-ground="ink">
+  <section class="hsec" id="h4" data-ground="red">
     <div class="hpad">
       <div class="hhead">
         <div class="t">
@@ -1057,7 +1150,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           <h2 class="display d-md">Four<br>doors.</h2>
         </div>
       </div>
-      <div class="doors"><a class="door" href="#/shop?c=walk"><span class="dnum">01</span><h3>Walk</h3><p>하네스 · 리드 · 칼라. 소프트하네스가 속한 카테고리.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="door" href="#/shop?c=apparel"><span class="dnum">02</span><h3>Apparel</h3><p>아우터 · 티셔츠 · 드레스 · 레인웨어.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="door" href="#/shop?c=living"><span class="dnum">03</span><h3>Living</h3><p>베드 · 하우스 · 캐리어 · 카시트.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="door" href="#/shop?c=acc"><span class="dnum">04</span><h3>Acc</h3><p>보울 · 파우치 · 참 · 그루밍.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      <div class="doors"><a class="door" href="#/shop?c=walk"><span class="dnum">01</span><h3>Walk</h3><p>Harnesses, leads and collars — where the Soft Harness lives.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="door" href="#/shop?c=apparel"><span class="dnum">02</span><h3>Apparel</h3><p>Outerwear, tees, dresses and rainwear.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="door" href="#/shop?c=living"><span class="dnum">03</span><h3>Living</h3><p>Beds, houses, carriers and car seats.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="door" href="#/shop?c=acc"><span class="dnum">04</span><h3>Acc</h3><p>Bowls, pouches, charms and grooming.</p><span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
     </div>
   </section>
 
@@ -1069,37 +1162,37 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           <p class="eyebrow" style="color:var(--on-bone-mute)">The Houses</p>
           <h2 class="display d-md">Four<br>labels.</h2>
         </div>
-        <p class="lede" style="color:var(--on-bone-mute); margin:0">한 사이트 안에 네 개의 라벨이 있습니다. 로고를 나열하는 대신 같은 서체·같은 크기의 라벨과 점 하나로 구분합니다.</p>
+        <p class="lede" style="color:var(--on-bone-mute); margin:0">Four labels live on one site. Instead of a row of logos, each is set in the same type at the same size and told apart by a single dot.</p>
       </div>
       <div class="houses" id="houses"></div>
     </div>
   </section>
 
   <!-- ============ H6 · FIT FINDER ============ -->
-  <section class="hsec" id="h6" data-ground="ink">
+  <section class="hsec bone" id="h6" data-ground="bone">
     <div class="hpad">
       <div class="hfit">
         <div>
           <p class="eyebrow mute">Fit finder</p>
           <h2 class="display d-md" style="margin:14px 0 18px">Measure once.<br>Walk right.</h2>
-          <p class="lede mute">견종과 실측 치수 5문항이면 모델과 사이즈가 나옵니다. 여기 모인 데이터는 지역별 수요 리포트가 되어 바이어에게 전달됩니다.</p>
+          <p class="lede mute">Five questions — breed and measurements — return a model and a size. What we learn becomes a regional demand report for our buyers.</p>
         </div>
         <div style="justify-self:start">
-          <a class="std-cta" href="#/soft-harness">핏 파인더 열기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="std-cta" href="#/soft-harness">Open the fit finder <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ H7 · GLOBAL / PARTNER ============ -->
-  <section class="hsec" id="h7" data-ground="ink">
+  <section class="hsec bone" id="h7" data-ground="bone">
     <div class="hpad">
       <div class="hglobe">
         <div>
           <p class="eyebrow mute">Distribution &amp; partners</p>
           <h2 class="display d-md" style="margin:16px 0 18px">In 35<br>countries.</h2>
-          <p class="lede mute">점 위에 커서를 올리면 국가가 표시됩니다. 실제 사이트에서는 공식 디스트리뷰터 맵으로 연결됩니다.</p>
-          <a class="more" href="#partners" style="margin-top:14px">바이어로 등록하기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <p class="lede mute">Hover a dot to see the country. On the live site this links through to the official distributor map.</p>
+          <a class="more" href="#partners" style="margin-top:14px">Become a partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <div class="stats">
             <div><b>35</b><span>Countries</span></div>
             <div><b>1,200+</b><span>Retail doors</span></div>
@@ -1129,7 +1222,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         <div class="fgroup"><h4>Brand</h4><ul id="fBrand"></ul></div>
       </aside>
       <div>
-        <div class="sortbar" id="sortbar" role="group" aria-label="정렬"></div>
+        <div class="sortbar" id="sortbar" role="group" aria-label="Sort"></div>
         <div class="shop-grid" id="shopGrid"></div>
       </div>
     </div>
@@ -1142,7 +1235,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     <div class="pd-main">
       <div class="pd-gal">
         <div class="pd-hero" id="pdHero"></div>
-        <div class="pd-thumbs" id="pdThumbs" role="group" aria-label="이미지 선택"></div>
+        <div class="pd-thumbs" id="pdThumbs" role="group" aria-label="Choose an image"></div>
       </div>
       <div class="pd-info">
         <span class="blabel" id="pdBrand"><i></i><span></span></span>
@@ -1151,24 +1244,70 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         <p class="pd-desc" id="pdDesc">—</p>
         <div>
           <p class="opt-label"><span>Colourway</span><b id="pdCwName">—</b></p>
-          <div class="cw-row" id="pdCw" role="group" aria-label="컬러웨이"></div>
+          <div class="cw-row" id="pdCw" role="group" aria-label="Colourway"></div>
         </div>
         <div>
-          <p class="opt-label"><span>Size</span><b id="pdSzHint">가슴둘레 기준</b></p>
-          <div class="sz-row" id="pdSz" role="group" aria-label="사이즈"></div>
+          <p class="opt-label"><span>Size</span><b id="pdSzHint">By chest girth</b></p>
+          <div class="sz-row" id="pdSz" role="group" aria-label="Size"></div>
         </div>
         <div class="pd-buy">
-          <button class="btn-primary" type="button" id="pdAdd">장바구니 담기</button>
-          <a class="btn-ghost" href="#/soft-harness">사이즈 찾기</a>
+          <button class="btn-primary" type="button" id="pdAdd">Add to cart</button>
+          <a class="btn-ghost" href="#/soft-harness">Find my size</a>
         </div>
         <div class="acc" id="pdAcc"></div>
       </div>
     </div>
     <div class="pd-rel">
-      <div class="hhead"><div class="t"><p class="eyebrow" style="color:var(--on-bone-mute)">함께 보면 좋은</p>
+      <div class="hhead"><div class="t"><p class="eyebrow" style="color:var(--on-bone-mute)">You may also like</p>
         <h2 class="display d-md">Related.</h2></div></div>
       <div class="shop-grid" id="pdRel"></div>
     </div>
+  </div>
+</div>
+
+
+<div class="scrim" id="scrim" hidden></div>
+
+<div class="searchpanel" id="searchPanel" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="sp-in">
+    <div class="sp-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+      <input id="searchInput" type="search" placeholder="Search products" autocomplete="off" aria-label="Search products">
+      <button class="sp-close" type="button" data-close>Close</button>
+    </div>
+    <div class="sp-meta">
+      <span id="searchCount">Type to search</span>
+      <span class="sp-sugg" id="searchSugg"></span>
+    </div>
+    <div class="sp-results" id="searchResults"></div>
+  </div>
+</div>
+
+<aside class="drawer" id="cartDrawer" hidden role="dialog" aria-modal="true" aria-label="Cart">
+  <div class="dw-head">
+    <h2 class="display">Cart</h2>
+    <button class="sp-close" type="button" data-close>Close</button>
+  </div>
+  <div class="dw-body" id="cartBody"></div>
+  <div class="dw-foot">
+    <p class="dw-sum"><span>Subtotal</span><b id="cartTotal">KRW 0</b></p>
+    <button class="btn-primary" style="width:100%" type="button" id="cartCheckout">Proceed to checkout</button>
+  </div>
+</aside>
+
+<div class="modal" id="partnerModal" hidden role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+  <button class="md-x" type="button" data-close aria-label="Close">&times;</button>
+  <div class="md-in">
+    <p class="eyebrow" style="color:var(--on-bone-mute)">For buyers</p>
+    <h2 class="display" id="pmTitle">Partner login</h2>
+    <p class="sub">Line sheets, matrix ordering and brand assets — all behind one login.</p>
+    <form id="pmForm" novalidate>
+      <div class="field"><label for="pmEmail">Work email</label><input id="pmEmail" type="email" placeholder="buyer@company.com" required></div>
+      <div class="field"><label for="pmPass">Password</label><input id="pmPass" type="password" placeholder="••••••••" required></div>
+      <button class="btn-primary" style="width:100%" type="submit">Sign in</button>
+    </form>
+    <p class="md-note" id="pmNote">Accounts are approval-based. New buyers apply first; access opens once the account is verified.</p>
+    <p class="md-alt"><a href="#partners" data-close>Apply for an account &rarr;</a></p>
   </div>
 </div>
 
@@ -1178,10 +1317,10 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   <div class="cat-wrap">
     <div class="cat-head">
       <div>
-        <p class="eyebrow mute">Catalog — 시즌 라인시트 웹북</p>
+        <p class="eyebrow mute">Catalog — seasonal line sheet, as a web book</p>
         <h1 class="display" id="catTitle">SS26<br>Collection</h1>
       </div>
-      <div class="seasons" id="seasons" role="group" aria-label="시즌 선택"></div>
+      <div class="seasons" id="seasons" role="group" aria-label="Choose a season"></div>
     </div>
 
     <div class="book-stage">
@@ -1191,19 +1330,19 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         <div class="leaf" id="leaf" hidden><div class="face f"></div><div class="face b"></div></div>
       </div>
       <div class="book-nav">
-        <button class="pgbtn" id="prevPg" type="button" aria-label="이전 페이지">
+        <button class="pgbtn" id="prevPg" type="button" aria-label="Previous page">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
         <span class="pgcount" id="pgCount">— / —</span>
-        <button class="pgbtn" id="nextPg" type="button" aria-label="다음 페이지">
+        <button class="pgbtn" id="nextPg" type="button" aria-label="Next page">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
         </button>
       </div>
     </div>
 
     <div class="cat-foot">
-      <span class="cat-hint">← → 키 · 페이지 좌우 클릭으로 넘기기</span>
-      <a class="more" href="#partners">PDF 원본 · 라인시트 다운로드는 파트너 로그인 후 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <span class="cat-hint">Arrow keys, or click either side of the spread</span>
+      <a class="more" href="#partners">Download the source PDF after partner login <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </div>
@@ -1217,7 +1356,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       <div class="hero-type">
         <p class="eyebrow" style="color:var(--on-bone-mute); margin:0 0 22px">01 — The signature</p>
         <h1 class="display">Soft<br>Harness</h1>
-        <p class="hero-sub lede" style="max-width:34ch">목이 아니라 가슴으로. 2002년부터 이어온 한 가지 구조를 세 개의 시리즈로 다듬어 왔습니다.</p>
+        <p class="hero-sub lede" style="max-width:34ch">Across the chest, not the neck. One structure, refined into three series since 2002.</p>
       </div>
       <div class="hero-art">
         <svg viewBox="0 0 300 300" aria-hidden="true" id="heroArt">
@@ -1250,7 +1389,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         <div>
           <p class="eyebrow mute">02 — Why a harness</p>
           <h2 class="display d-lg" style="margin:18px 0 20px">Neck.<br>No more.</h2>
-          <p class="lede mute">목줄은 하중 전체를 기관 위 한 점에 모읍니다. 소프트하네스는 같은 힘을 가슴판 전체로 흘려보냅니다. 스크롤해서 압력이 어디로 가는지 보세요.</p>
+          <p class="lede mute">A collar gathers the whole load onto one point above the windpipe. The Soft Harness spreads that same force across the chest. Scroll to see where the pressure goes.</p>
           <div class="readout">
             <span class="k tag-press">Collar · peak</span>
             <span class="track"><i id="barPress" style="background:var(--press-lt); width:6%"></i></span>
@@ -1261,7 +1400,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           </div>
         </div>
         <div class="diagram">
-          <svg viewBox="0 0 640 420" role="img" aria-label="목줄과 소프트하네스의 압력 분포 비교 다이어그램">
+          <svg viewBox="0 0 640 420" role="img" aria-label="Diagram comparing collar and soft harness pressure">
             <defs>
               <radialGradient id="gPress" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="var(--press)" stop-opacity=".95"/>
@@ -1277,7 +1416,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
             <!-- upper: collar -->
             <g transform="translate(0,0)">
               <text class="dg-cap" x="16" y="26" fill="var(--press-lt)">COLLAR</text>
-              <text class="dg-label" x="16" y="44">단일 지점 · 기관 압박</text>
+              <text class="dg-label" x="16" y="44">Single point · tracheal load</text>
               <g class="dg-line" stroke="var(--on-ink)">
                 <ellipse cx="250" cy="128" rx="98" ry="46"/>
                 <path d="M336 104 L392 66"/>
@@ -1299,7 +1438,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
             <!-- lower: harness -->
             <g transform="translate(0,216)">
               <text class="dg-cap" x="16" y="26" fill="var(--load-lt)">SOFT HARNESS</text>
-              <text class="dg-label" x="16" y="44">가슴판 전면 · 하중 분산</text>
+              <text class="dg-label" x="16" y="44">Full chest plate · load spread</text>
               <g class="dg-line" stroke="var(--on-ink)">
                 <ellipse cx="250" cy="128" rx="98" ry="46"/>
                 <path d="M336 104 L392 66"/>
@@ -1332,7 +1471,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     <div class="pad">
       <div class="anat">
         <div class="anat-stage">
-          <svg viewBox="0 0 420 340" role="img" aria-label="소프트하네스 4개 레이어 분해도">
+          <svg viewBox="0 0 420 340" role="img" aria-label="Soft Harness exploded into four layers">
             <g id="lyr4" class="layer">
               <path d="M110 208 h200 a22 22 0 0 1 22 22 v22 a22 22 0 0 1 -22 22 h-200 a22 22 0 0 1 -22 -22 v-22 a22 22 0 0 1 22 -22 z"
                     fill="#2A3138" stroke="var(--on-ink-mute)" stroke-width="1.6"/>
@@ -1367,12 +1506,12 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           <p class="eyebrow mute">03 — Anatomy</p>
           <h2 class="display d-md" style="margin:16px 0 22px">Four layers.<br>One fit.</h2>
           <div class="anat-list" id="anatList">
-            <div class="anat-row" data-i="0"><span class="n">01</span><span class="t">SoftMesh™ 외피<small>3D 에어 니트 · 통기 개방률 42%</small></span><span class="s">0.9 mm</span></div>
-            <div class="anat-row" data-i="1"><span class="n">02</span><span class="t">이중 잠금 버클<small>측면 릴리즈 · 인장 22 kgf</small></span><span class="s">22 kgf</span></div>
-            <div class="anat-row" data-i="2"><span class="n">03</span><span class="t">FlexFit 분산 패턴<small>가슴판 전면으로 하중 재분배</small></span><span class="s">6.4 cm²</span></div>
-            <div class="anat-row" data-i="3"><span class="n">04</span><span class="t">내피 쿠션<small>저자극 브러시드 라이닝</small></span><span class="s">2.2 mm</span></div>
+            <div class="anat-row" data-i="0"><span class="n">01</span><span class="t">SoftMesh™ shell<small>3D air knit · 42% open area</small></span><span class="s">0.9 mm</span></div>
+            <div class="anat-row" data-i="1"><span class="n">02</span><span class="t">Double-lock buckle<small>Side release · 22 kgf tensile</small></span><span class="s">22 kgf</span></div>
+            <div class="anat-row" data-i="2"><span class="n">03</span><span class="t">FlexFit spread pattern<small>Redistributes load across the chest plate</small></span><span class="s">6.4 cm²</span></div>
+            <div class="anat-row" data-i="3"><span class="n">04</span><span class="t">Inner cushion<small>Low-irritation brushed lining</small></span><span class="s">2.2 mm</span></div>
           </div>
-          <p class="lede mute" style="margin-top:20px; font-size:13.5px">스펙 수치는 프로토타입용 예시입니다. 실제 시험성적서 값으로 대체하면 그대로 바이어 스펙시트가 됩니다.</p>
+          <p class="lede mute" style="margin-top:20px; font-size:13.5px">Spec figures are prototype placeholders. Swap in real test-report values and this becomes the buyer spec sheet.</p>
         </div>
       </div>
     </div>
@@ -1385,7 +1524,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     <div class="pad">
       <div class="pal-wrap">
         <div class="pal-stage">
-          <svg viewBox="0 0 300 300" role="img" aria-label="선택한 컬러웨이가 적용된 하네스">
+          <svg viewBox="0 0 300 300" role="img" aria-label="Harness in the selected colourway">
             <g fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z"
                     fill="var(--product)" stroke="none" opacity=".2" class="pfill"/>
@@ -1403,8 +1542,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         <div>
           <p class="eyebrow" style="color:var(--on-bone-mute)">04 — Colorway</p>
           <h2 class="display d-md" style="margin:16px 0 16px">The<br>palette.</h2>
-          <p class="lede" style="color:var(--on-bone-mute)">컬러웨이는 제품 옵션이 아니라 매 시즌 발표하는 브랜드 자산입니다. 스와치를 눌러 실시간으로 바꿔보세요.</p>
-          <div class="sw-grid" id="swatches" role="group" aria-label="컬러웨이 선택"></div>
+          <p class="lede" style="color:var(--on-bone-mute)">A colourway is not a product option — it is something the brand publishes each season. Tap a swatch to change it live.</p>
+          <div class="sw-grid" id="swatches" role="group" aria-label="Choose a colourway"></div>
           <div class="pal-meta">
             <div><span>Selected</span><b id="palName">Cobalt</b></div>
             <div><span>Hex</span><b id="palHex">#2A45E0</b></div>
@@ -1429,7 +1568,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
             <span class="val"><span id="girthVal">46</span><em>cm</em></span>
           </div>
           <input type="range" id="girth" min="26" max="76" step="1" value="46"
-                 aria-describedby="breedHint" aria-label="가슴둘레 (cm)">
+                 aria-describedby="breedHint" aria-label="Chest girth (cm)">
           <table class="size-table">
             <thead><tr><th>Size</th><th>Girth</th><th>Neck</th><th>Weight</th></tr></thead>
             <tbody id="sizeRows"></tbody>
@@ -1438,7 +1577,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         </div>
         <div class="fit-stage">
           <div class="size-badge"><b>Recommended</b><span id="sizeBadge">M</span></div>
-          <svg viewBox="0 0 420 300" role="img" aria-label="가슴둘레에 따라 크기가 변하는 강아지와 하네스 밴드">
+          <svg viewBox="0 0 420 300" role="img" aria-label="Dog and harness band scaling with chest girth">
             <!-- fixed reference frame -->
             <path d="M28 262 H392" stroke="var(--on-ink-mute)" stroke-width="1" stroke-opacity=".4"/>
             <g stroke="var(--on-ink-mute)" stroke-width="1" stroke-opacity=".22">
@@ -1484,9 +1623,9 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       <div style="flex:1; display:flex; flex-direction:column; justify-content:center">
         <p class="eyebrow" style="color:var(--on-bone-mute)">06 — Breed fit index</p>
         <h2 class="display d-md" style="margin:16px 0 12px">Every<br>body.</h2>
-        <p class="lede" style="color:var(--on-bone-mute)">체형은 견종마다 다릅니다. 필터로 좁히고, 가로로 끌어서 넘겨보세요.</p>
-        <div class="chips" id="chips" role="group" aria-label="체형 필터"></div>
-        <div class="rail" id="rail" tabindex="0" aria-label="견종별 핏 카드 목록"></div>
+        <p class="lede" style="color:var(--on-bone-mute)">Every breed is built differently. Filter by body type, then drag sideways.</p>
+        <div class="chips" id="chips" role="group" aria-label="Body type filter"></div>
+        <div class="rail" id="rail" tabindex="0" aria-label="Breed fit cards"></div>
       </div>
     </div>
   </div>
@@ -1499,7 +1638,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       <div class="cta">
         <p class="eyebrow mute">07 — Next</p>
         <h2 class="display d-lg">Measure once.<br>Walk right.</h2>
-        <p class="lede mute">5문항이면 견종과 체형에 맞는 모델·사이즈가 나옵니다. 여기서 모인 데이터는 그대로 지역별 수요 리포트가 되어 바이어에게 전달됩니다.</p>
+        <p class="lede mute">Five questions return the model and size that fit your dog's breed and build. What we learn becomes a regional demand report for our buyers.</p>
         <a class="cta-btn" href="#s5">Start fit finder
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -1517,7 +1656,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   <div class="foot-grid">
     <div>
       <h4>For buyers</h4>
-      <p class="lede mute" style="font-size:14.5px">라인시트 열람부터 매트릭스 발주, 브랜드 자산 다운로드까지 로그인 한 번으로. 승인제로 운영됩니다.</p>
+      <p class="lede mute" style="font-size:14.5px">Line sheets, matrix ordering and brand assets — all behind one login. Accounts are approval-based.</p>
       <a class="foot-cta" href="#partners">Partner login
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
@@ -1543,7 +1682,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     </div>
   </div>
   <div class="foot-base">
-    <span>PUPPIA — Scroll prototype 01</span>
+    <span>PUPPIA — Prototype 01</span>
     <span>Placeholder geometry · No product photography</span>
   </div>
 </footer>
@@ -1591,33 +1730,31 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   ];
 
   var BREEDS = [
-    { n:'Dachshund',          ko:'닥스훈트',        g:44, sz:'S',  t:'long'  },
-    { n:'French Bulldog',     ko:'프렌치불독',      g:56, sz:'L',  t:'thick' },
-    { n:'Pug',                ko:'퍼그',            g:52, sz:'M',  t:'thick' },
-    { n:'Italian Greyhound',  ko:'이탈리안 그레이하운드', g:40, sz:'S', t:'slim' },
-    { n:'Toy Poodle',         ko:'토이푸들',        g:38, sz:'S',  t:'slim'  },
-    { n:'Shih Tzu',           ko:'시추',            g:47, sz:'M',  t:'thick' },
-    { n:'Corgi',              ko:'웰시코기',        g:62, sz:'L',  t:'long'  },
-    { n:'Beagle',             ko:'비글',            g:58, sz:'L',  t:'slim'  },
-    { n:'Maltese',            ko:'말티즈',          g:35, sz:'XS', t:'slim'  },
-    { n:'Basset Hound',       ko:'바셋하운드',      g:70, sz:'XL', t:'long'  },
-    { n:'Boston Terrier',     ko:'보스턴테리어',    g:50, sz:'M',  t:'thick' },
-    { n:'Whippet',            ko:'휘핏',            g:60, sz:'L',  t:'slim'  }
+    { n:'Dachshund',          ko:'Dachshund',        g:44, sz:'S',  t:'long'  },
+    { n:'French Bulldog',     ko:'French Bulldog',      g:56, sz:'L',  t:'thick' },
+    { n:'Pug',                ko:'Pug',            g:52, sz:'M',  t:'thick' },
+    { n:'Italian Greyhound',  ko:'Italian Greyhound', g:40, sz:'S', t:'slim' },
+    { n:'Toy Poodle',         ko:'Toy Poodle',        g:38, sz:'S',  t:'slim'  },
+    { n:'Shih Tzu',           ko:'Shih Tzu',            g:47, sz:'M',  t:'thick' },
+    { n:'Corgi',              ko:'Welsh Corgi',        g:62, sz:'L',  t:'long'  },
+    { n:'Beagle',             ko:'Beagle',            g:58, sz:'L',  t:'slim'  },
+    { n:'Maltese',            ko:'Maltese',          g:35, sz:'XS', t:'slim'  },
+    { n:'Basset Hound',       ko:'Basset Hound',      g:70, sz:'XL', t:'long'  },
+    { n:'Boston Terrier',     ko:'Boston Terrier',    g:50, sz:'M',  t:'thick' },
+    { n:'Whippet',            ko:'Whippet',            g:60, sz:'L',  t:'slim'  }
   ];
 
   var FILTERS = [
     { k:'all',   label:'All bodies' },
-    { k:'slim',  label:'Deep chest · 탈출 위험' },
-    { k:'thick', label:'Thick neck · 단두종' },
-    { k:'long',  label:'Long back · 장구종' }
+    { k:'slim',  label:'Deep chest · escape risk' },
+    { k:'thick', label:'Thick neck · brachycephalic' },
+    { k:'long',  label:'Long back · elongated spine' }
   ];
 
   /* ---------------- scroll driver ---------------- */
   var progressScenes = [].slice.call(document.querySelectorAll('[data-scene]'));
-  var allScenes      = [].slice.call(document.querySelectorAll('[data-ground]'));
-  var nav            = document.getElementById('top');
   var barFill        = document.querySelector('#bar i');
-  var ticking = false, lastGround = '';
+  var ticking = false;
 
   function sceneProgress(sec){
     var r = sec.getBoundingClientRect();
@@ -1626,26 +1763,11 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     return clamp(-r.top / span, 0, 1);
   }
 
-  function paintGround(){
-    var y = 42, found = '';
-    for(var i=0;i<allScenes.length;i++){
-      if(allScenes[i].offsetParent === null) continue;
-      var r = allScenes[i].getBoundingClientRect();
-      if(r.top <= y && r.bottom > y){ found = allScenes[i].getAttribute('data-ground') || ''; break; }
-    }
-    if(!found) found = 'ink';
-    if(found !== lastGround){
-      lastGround = found;
-      nav.classList.toggle('on-bone', found === 'bone');
-    }
-  }
-
   function update(){
     ticking = false;
     var doc = document.documentElement;
     var max = doc.scrollHeight - window.innerHeight;
     barFill.style.width = (max > 0 ? clamp(window.scrollY / max, 0, 1) * 100 : 0).toFixed(2) + '%';
-    nav.classList.toggle('stuck', window.scrollY > 48);
 
     for(var i=0;i<progressScenes.length;i++){
       var sec = progressScenes[i];
@@ -1655,7 +1777,6 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       if(sec.id === 's2') paintPressure(p);
       if(sec.id === 's3') paintAnatomy(p);
     }
-    paintGround();
   }
 
   function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
@@ -1797,8 +1918,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       label.setAttribute('y', (topY - 44).toFixed(1));
       rows.forEach(function(tr,k){ tr.classList.toggle('on', k === i); });
       var near = nearestBreeds(g);
-      hint.innerHTML = '이 둘레는 <b>' + near[0].ko + '</b>(' + near[0].n + ') · <b>' +
-                       near[1].ko + '</b>(' + near[1].n + ') 평균에 가깝습니다. 권장 <b>' + SIZES[i].s + '</b>.';
+      hint.innerHTML = 'That girth sits close to the average <b>' + near[0].n + '</b> and <b>' +
+                       near[1].n + '</b>. Recommended size <b>' + SIZES[i].s + '</b>.';
     }
 
     input.addEventListener('input', render);
@@ -1841,7 +1962,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       el.setAttribute('data-t', b.t);
       el.innerHTML =
         '<div class="ph"><span class="sz">' + b.sz + '</span>' + dogIcon(b.t) + '</div>' +
-        '<div class="cap"><b>' + b.ko + '</b><span>' + b.n.toUpperCase() + ' · GIRTH ' + b.g + ' CM</span></div>';
+        '<div class="cap"><b>' + b.n + '</b><span>' + b.n.toUpperCase() + ' · GIRTH ' + b.g + ' CM</span></div>';
       rail.appendChild(el);
       cards.push(el);
     });
@@ -1909,13 +2030,13 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   /* ================= HOME : data ================= */
   var BRANDS = [
     { k:'puppia',  n:'PUPPIA',     v:'--b-puppia',  yr:'Since 2002', hero:'walk',    season:true,
-      d:'기능과 기본기. 소프트하네스가 태어난 곳이자 브랜드의 기준선.' },
+      d:'Function and fundamentals. Where the Soft Harness was born, and the baseline for everything else.' },
     { k:'olchi',   n:'OLCHI',      v:'--b-olchi',   yr:'Since 2016', hero:'apparel', season:true,
-      d:'컬러풀한 감성과 편안한 착용감. 일상에서 가볍게 쓰는 캐주얼 라인.' },
+      d:'Colour-led and easy to wear. The casual line for everyday walks.' },
     { k:'pinka',   n:'PINKAHOLIC', v:'--b-pinka',   yr:'Since 2006', hero:'apparel', season:false,
-      d:'뉴욕발 프리미엄 패션 라인. 유니크한 프린트와 마감이 특징입니다.' },
+      d:'The New York premium fashion line, known for its prints and finishing.' },
     { k:'catspia', n:'CATSPIA',    v:'--b-catspia', yr:'Since 2010', hero:'living',  season:false,
-      d:'고양이 전용 라인. 체형과 습성에 맞춘 하네스와 리빙 제품.' }
+      d:'Made for cats — harnesses and living pieces shaped around feline bodies and habits.' }
   ];
   var BMAP = {}; BRANDS.forEach(function(b){ BMAP[b.k] = b; });
 
@@ -1928,62 +2049,62 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
 
   var PRODUCTS = [
     { id:'soft-harness-a', b:'puppia',  c:'walk',    n:'Soft Harness A',     p:'32,000', std:true,  nw:false, cw:[0,1,2,4],
-      d:'가슴판 전체로 하중을 분산하는 기본형. 목을 누르지 않는 A자 등판 구조로 2002년부터 이어온 시그니처입니다.' },
+      d:'The original. An A-frame back panel spreads the load across the whole chest instead of pressing on the throat — our signature since 2002.' },
     { id:'soft-harness-b', b:'puppia',  c:'walk',    n:'Soft Harness B',     p:'34,000', std:true,  nw:true,  cw:[0,1,5],
-      d:'A형의 등판을 넓히고 버클을 이중 잠금으로 바꾼 세대. 활동량이 많은 견종에 맞습니다.' },
+      d:'A wider back panel and a double-locking buckle. Built for dogs that pull and play hard.' },
     { id:'ritefit-collar', b:'puppia',  c:'walk',    n:'Ritefit Collar',     p:'18,000', std:false, nw:false, cw:[0,2,4],
-      d:'소프트하네스와 컬러웨이를 맞춘 기본 칼라. 인식표 링이 봉제 보강되어 있습니다.' },
+      d:'An everyday collar matched to the Soft Harness colourways, with a reinforced ID-tag ring.' },
     { id:'two-tone-lead',  b:'puppia',  c:'walk',    n:'Two-Tone Lead',      p:'22,000', std:false, nw:true,  cw:[0,1,3],
-      d:'하네스와 세트로 쓰는 120cm 리드. 손잡이 안쪽에 미끄럼 방지 처리를 넣었습니다.' },
+      d:'A 120 cm lead made to pair with the harness. Non-slip lining inside the handle.' },
     { id:'mountaineer',    b:'puppia',  c:'apparel', n:'Mountaineer Coat',   p:'58,000', std:false, nw:false, cw:[0,1,3,4],
-      d:'발수 처리한 겉감에 경량 충전재를 넣은 겨울 아우터. 하네스 홀이 뚫려 있습니다.' },
+      d:'Water-repellent shell with light insulation, and a harness port through the back.' },
     { id:'gaspar-fleece',  b:'puppia',  c:'apparel', n:'Gaspar Fleece',      p:'44,000', std:false, nw:true,  cw:[2,3,4],
-      d:'환절기용 양면 플리스. 목둘레를 넉넉하게 잡아 단두종도 편하게 입습니다.' },
+      d:'A reversible mid-season fleece, cut wide at the neck so brachycephalic breeds can wear it comfortably.' },
     { id:'woven-mat',      b:'puppia',  c:'living',  n:'Woven Mat',          p:'46,000', std:false, nw:false, cw:[2,3,4],
-      d:'세탁기 사용이 가능한 평직 매트. 미끄럼 방지 백코팅.' },
+      d:'Machine-washable flat-weave mat with a non-slip backing.' },
     { id:'travel-bowl',    b:'puppia',  c:'acc',     n:'Travel Bowl',        p:'21,000', std:false, nw:false, cw:[0,1,2],
-      d:'접어서 가방에 넣는 실리콘 보울. 400ml 눈금 표시.' },
+      d:'A silicone bowl that folds flat into a bag. Marked to 400 ml.' },
     { id:'olchi-vest',     b:'olchi',   c:'walk',    n:'Olchi Vest Harness', p:'29,000', std:false, nw:true,  cw:[0,1,5],
-      d:'조끼형 하네스. 가슴 전체를 감싸 압력을 넓게 나눕니다.' },
+      d:'A vest-style harness that wraps the whole chest and shares the pressure widely.' },
     { id:'bold-lead',      b:'olchi',   c:'walk',    n:'Bold Lead',          p:'19,000', std:false, nw:false, cw:[0,3,5],
-      d:'굵은 웨빙과 컬러 대비가 특징인 리드.' },
+      d:'A lead with heavy webbing and high-contrast colour blocking.' },
     { id:'color-block-tee',b:'olchi',   c:'apparel', n:'Color Block Tee',    p:'26,000', std:false, nw:false, cw:[0,1,5],
-      d:'면 혼방 티셔츠. 시즌 컬러를 블록으로 배치했습니다.' },
+      d:'Cotton-blend tee with the season palette laid out in blocks.' },
     { id:'puffer-vest',    b:'olchi',   c:'apparel', n:'Puffer Vest',        p:'49,000', std:false, nw:true,  cw:[0,1,4],
-      d:'가벼운 패딩 베스트. 등판에 리드 연결 링이 있습니다.' },
+      d:'A light padded vest with a lead ring on the back panel.' },
     { id:'car-seat',       b:'olchi',   c:'living',  n:'2-Row Car Seat',     p:'89,000', std:false, nw:true,  cw:[2,4],
-      d:'뒷좌석 2줄 고정식 카시트. 안전벨트 클립 포함.' },
+      d:'A rear-seat car seat with a two-strap mount. Seatbelt clip included.' },
     { id:'snap-pouch',     b:'olchi',   c:'acc',     n:'Snap Pouch',         p:'16,000', std:false, nw:false, cw:[0,3,5],
-      d:'리드에 스냅으로 다는 소형 파우치.' },
+      d:'A small pouch that snaps onto the lead.' },
     { id:'lapel-harness',  b:'pinka',   c:'walk',    n:'Lapel Harness',      p:'42,000', std:false, nw:false, cw:[5,2,4],
-      d:'재킷 라펠 디테일을 얹은 패션 하네스.' },
+      d:'A fashion harness finished with a tailored jacket lapel.' },
     { id:'bijou-dress',    b:'pinka',   c:'apparel', n:'Bijou Dress',        p:'64,000', std:false, nw:false, cw:[5,2],
-      d:'튤 레이어드 드레스. 하네스 위에 겹쳐 입을 수 있습니다.' },
+      d:'A layered tulle dress that can be worn over a harness.' },
     { id:'fur-trim-coat',  b:'pinka',   c:'apparel', n:'Fur Trim Coat',      p:'78,000', std:false, nw:false, cw:[5,4,2],
-      d:'페이크 퍼 트리밍 코트. 안감은 기모 처리.' },
+      d:'A coat trimmed with faux fur and lined in brushed fleece.' },
     { id:'charm-collar',   b:'pinka',   c:'acc',     n:'Charm Collar',       p:'24,000', std:false, nw:false, cw:[5,2],
-      d:'참 장식을 달 수 있는 링이 있는 칼라.' },
+      d:'A collar with a ring for hanging charms.' },
     { id:'cat-vest',       b:'catspia', c:'walk',    n:'Cat Vest Harness',   p:'27,000', std:false, nw:false, cw:[1,3,4],
-      d:'고양이 어깨 구조에 맞춘 조끼형 하네스. 탈출 방지 이중 잠금.' },
+      d:'A vest harness shaped for feline shoulders, with a double lock against escapes.' },
     { id:'knit-cardigan',  b:'catspia', c:'apparel', n:'Knit Cardigan',      p:'31,000', std:false, nw:false, cw:[2,3],
-      d:'저자극 니트 카디건. 앞발 통과가 쉬운 오픈 구조.' },
+      d:'A low-irritation knit cardigan with an open front that is easy to step into.' },
     { id:'cat-cave',       b:'catspia', c:'living',  n:'Cat Cave',           p:'72,000', std:false, nw:false, cw:[2,3,4],
-      d:'펠트 소재 돔형 하우스. 입구 방향을 바꿔 쓸 수 있습니다.' },
+      d:'A felt dome house. The entrance can be turned to face either way.' },
     { id:'bell-collar',    b:'catspia', c:'acc',     n:'Bell Collar',        p:'14,000', std:false, nw:false, cw:[1,5],
-      d:'안전 버클과 방울이 달린 경량 칼라.' }
+      d:'A lightweight collar with a safety buckle and a bell.' }
   ];
   var PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
 
   /* H1 season slot rotates only across brands that still ship new product */
   var SEASON = {
-    puppia: { t:'Spring<br>Walk Kit', d:'하네스와 리드를 같은 컬러웨이로 맞춘 시즌 세트. 이 자리는 매 시즌 교체되는 캠페인 슬롯입니다.' },
-    olchi:  { t:'Color<br>Block SS26', d:'올치의 봄 컬러 팔레트. 히어로 슬롯은 시즌 신상이 나오는 브랜드가 순환합니다.' }
+    puppia: { t:'Spring<br>Walk Kit', d:'Harness and lead matched in one colourway. This block is the campaign slot that changes every season.' },
+    olchi:  { t:'Color<br>Block SS26', d:'The Olchi spring palette. The hero slot rotates across the labels shipping new product.' }
   };
   /* This Week: 2 rotating season slots + 1 evergreen slot (catalog) */
   var WEEK = [
     { kind:'season', b:'puppia', c:'walk',    n:'Two-Tone Lead',  l:'New in Walk' },
     { kind:'season', b:'olchi',  c:'living',  n:'2-Row Car Seat', l:'New in Living' },
-    { kind:'fixed',  b:'puppia', c:'apparel', n:'SS26 Catalog',   l:'웹북 · 상시', href:'#/catalog' }
+    { kind:'fixed',  b:'puppia', c:'apparel', n:'SS26 Catalog',   l:'Web book · always on', href:'#/catalog' }
   ];
 
   function art(cat, color){
@@ -2059,7 +2180,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   function renderWeek(){
     elWeek.innerHTML = WEEK.map(function(w){
       var br = BMAP[w.b];
-      var accent = w.kind === 'fixed' ? 'var(--ink2)' : 'var(' + br.v + ')';
+      var accent = w.kind === 'fixed' ? 'var(--red-dk)' : 'var(' + br.v + ')';
       var tag = w.kind === 'fixed'
         ? '<span class="blabel" style="--bd:var(--yellow)"><i></i>ALL BRANDS</span>'
         : '<span class="blabel" style="--bd:var(' + br.v + ')"><i></i>' + br.n + '</span>';
@@ -2075,7 +2196,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       return '<a class="house" href="#/shop?b=' + b.k + '" style="--bd:var(' + b.v + ')">' +
         '<span class="house-im">' + art(b.hero, 'var(' + b.v + ')') + '</span>' +
         '<span class="bar"></span><b>' + b.n + '</b><span class="yr">' + b.yr + '</span>' +
-        '<p>' + b.d + '</p><span class="more" style="margin-top:auto">제품 보기 ' + ARROW_SVG + '</span></a>';
+        '<p>' + b.d + '</p><span class="more" style="margin-top:auto">See products ' + ARROW_SVG + '</span></a>';
     }).join('');
   }
   [].forEach.call(document.querySelectorAll('.demobar button'), function(b){
@@ -2085,7 +2206,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
 
   /* ================= SHOP (listing) ================= */
   var shopCat = 'all', shopBrand = 'all', shopSort = 'new';
-  var SORTS = [{ k:'new', n:'신상순' }, { k:'low', n:'가격 낮은순' }, { k:'high', n:'가격 높은순' }];
+  var SORTS = [{ k:'new', n:'Newest' }, { k:'low', n:'Price low to high' }, { k:'high', n:'Price high to low' }];
 
   function shopList(){
     var l = PRODUCTS.filter(function(x){
@@ -2103,7 +2224,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     document.getElementById('shopTitle').textContent = label;
     document.getElementById('shopCrumb').textContent = label;
     document.getElementById('shopEyebrow').textContent =
-      shopBrand === 'all' ? 'Shop — 전체 브랜드' : 'Shop — ' + BMAP[shopBrand].n;
+      shopBrand === 'all' ? 'Shop — all brands' : 'Shop — ' + BMAP[shopBrand].n;
 
     document.getElementById('fCat').innerHTML =
       '<li><button class="fbtn" data-c="all">All products<em>' + PRODUCTS.length + '</em></button></li>' +
@@ -2136,7 +2257,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     document.getElementById('shopCount').textContent = list.length + ' products';
     document.getElementById('shopGrid').innerHTML = list.length
       ? list.map(card).join('')
-      : '<p class="empty">해당 조건의 제품이 없습니다.</p>';
+      : '<p class="empty">No products match these filters.</p>';
   }
   function setShop(o){
     if(o.c !== undefined) shopCat = o.c;
@@ -2194,30 +2315,30 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           return '<button type="button" class="sz" data-i="' + i + '" aria-pressed="' + (i === pdSz) + '">' +
                  '<b>' + z.s + '</b><small>' + z.min + '–' + z.max + '</small></button>';
         }).join('')
-      : '<p class="pd-desc" style="margin:0">단일 사이즈</p>';
-    document.getElementById('pdSzHint').textContent = sizable ? '가슴둘레 기준 (cm)' : 'One size';
+      : '<p class="pd-desc" style="margin:0">One size</p>';
+    document.getElementById('pdSzHint').textContent = sizable ? 'By chest girth (cm)' : 'One size';
     [].forEach.call(document.querySelectorAll('#pdSz .sz'), function(btn){
       btn.addEventListener('click', function(){ pdSz = +btn.dataset.i; renderProduct(id); });
     });
 
     document.getElementById('pdAcc').innerHTML =
-      '<details open><summary>소재 · 스펙</summary><div class="accbody"><table><tbody>' +
-      '<tr><td>브랜드</td><td>' + br.n + '</td></tr>' +
-      '<tr><td>카테고리</td><td>' + CATS.filter(function(c){ return c.k === x.c; })[0].n + '</td></tr>' +
-      '<tr><td>컬러웨이</td><td>' + x.cw.map(function(i){ return CW[i].n; }).join(' · ') + '</td></tr>' +
-      (x.std ? '<tr><td>구조</td><td>SoftMesh™ · FlexFit 분산 패턴</td></tr>' : '') +
-      '<tr><td>세탁</td><td>30℃ 이하 손세탁</td></tr>' +
+      '<details open><summary>Materials & spec</summary><div class="accbody"><table><tbody>' +
+      '<tr><td>Brand</td><td>' + br.n + '</td></tr>' +
+      '<tr><td>Category</td><td>' + CATS.filter(function(c){ return c.k === x.c; })[0].n + '</td></tr>' +
+      '<tr><td>Colourways</td><td>' + x.cw.map(function(i){ return CW[i].n; }).join(' · ') + '</td></tr>' +
+      (x.std ? '<tr><td>Structure</td><td>SoftMesh™ · FlexFit spread pattern</td></tr>' : '') +
+      '<tr><td>Care</td><td>Hand wash below 30°C</td></tr>' +
       '</tbody></table></div></details>' +
       (sizable
-        ? '<details><summary>사이즈 차트</summary><div class="accbody"><table><thead><tr>' +
+        ? '<details><summary>Size chart</summary><div class="accbody"><table><thead><tr>' +
           '<th>Size</th><th>Girth</th><th>Neck</th><th>Weight</th></tr></thead><tbody>' +
           SIZES.map(function(z, i){
             return '<tr class="' + (i === pdSz ? 'hit' : '') + '"><td>' + z.s + '</td><td>' + z.min + '–' + z.max +
                    ' cm</td><td>' + z.neck + ' cm</td><td>' + z.kg + ' kg</td></tr>';
           }).join('') + '</tbody></table></div></details>'
         : '') +
-      '<details><summary>배송 · 반품</summary><div class="accbody">국내 2–3 영업일, 해외는 지역별 상이. ' +
-      '착용 흔적이 없는 경우 수령 후 14일 이내 교환·반품이 가능합니다. 사이즈 교환은 왕복 배송비가 면제됩니다.</div></details>';
+      '<details><summary>Shipping &amp; returns</summary><div class="accbody">2–3 working days domestically; international varies by region. ' +
+      'Unworn items can be exchanged or returned within 14 days of delivery, and size exchanges ship both ways free.</div></details>';
 
     var rel = PRODUCTS.filter(function(y){ return y.id !== x.id && (y.c === x.c || y.b === x.b); }).slice(0, 4);
     document.getElementById('pdRel').innerHTML = rel.map(card).join('');
@@ -2230,7 +2351,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   document.getElementById('pdAdd').addEventListener('click', function(){
     if(!pdItem) return;
     var sizable = pdItem.c === 'walk' || pdItem.c === 'apparel';
-    toast(pdItem.n + ' · ' + CW[pdItem.cw[pdCw]].n + (sizable ? ' · ' + SIZES[pdSz].s : '') + ' 담았습니다');
+    addToCart(pdItem.id, pdCw, sizable ? SIZES[pdSz].s : '');
+    toast('Added — ' + pdItem.n + ' · ' + CW[pdItem.cw[pdCw]].n + (sizable ? ' · ' + SIZES[pdSz].s : ''));
   });
 
   /* ================= CATALOG · web book ================= */
@@ -2287,7 +2409,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
                '<li><b>Size chart</b><i></i><span>11</span></li>' +
                '<li><b>Order &amp; terms</b><i></i><span>12</span></li>' +
                '</ul><p style="margin-top:auto; font-size:11px; color:var(--on-bone-mute)">' +
-               'MOQ · 인코텀즈 · 리드타임은 12페이지를 참고하세요.</p></div>',
+               'MOQ, incoterms and lead times are on page 12.</p></div>',
       /* 2  */ divider('puppia', 'Since 2002 · The Soft Harness'),
       /* 3  */ gridPage('PUPPIA · Walk', 'Soft Harness<br>Series', pick('puppia', ['walk'], 6)),
       /* 4  */ gridPage('PUPPIA · Walk', 'Leads &amp;<br>Collars', pick('puppia', ['walk'], 6)),
@@ -2296,8 +2418,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       /* 7  */ divider('olchi', 'Since 2016 · Colourful everyday'),
       /* 8  */ gridPage('OLCHI · Walk', 'Vest Harness<br>&amp; Leads', pick('olchi', ['walk'], 6)),
       /* 9  */ gridPage('OLCHI · Apparel &amp; Living', 'Season<br>Colours', pick('olchi', ['apparel','living','acc'], 6)),
-      /* 10 */ divider('pinka', 'Archive · Last stock only'),
-      /* 11 */ gridPage('Archive · Last stock', 'Pinkaholic<br>&amp; Catspia', arc, true),
+      /* 10 */ divider('pinka', 'Archive · limited stock'),
+      /* 11 */ gridPage('Archive · limited stock', 'Pinkaholic<br>&amp; Catspia', arc, true),
       /* 12 */ '<div class="pg-in"><p class="pg-title">Size chart</p><h3 class="pg-h">Fit &amp;<br>Sizing</h3>' +
                '<table class="ctable"><thead><tr><th>Size</th><th>Girth</th><th>Neck</th><th>Weight</th></tr></thead><tbody>' +
                '<tr><td>XS</td><td>26–36 cm</td><td>20–26 cm</td><td>1.5–3 kg</td></tr>' +
@@ -2306,16 +2428,16 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
                '<tr><td>L</td><td>56–65 cm</td><td>36–44 cm</td><td>9–15 kg</td></tr>' +
                '<tr><td>XL</td><td>66–76 cm</td><td>43–52 cm</td><td>15–24 kg</td></tr>' +
                '</tbody></table><p style="margin-top:14px; font-size:11px; color:var(--on-bone-mute); line-height:1.6">' +
-               '흉위는 앞다리 뒤 가장 넓은 부위를 재고, 손가락 두 개가 들어갈 여유를 둡니다.</p></div>',
+               'Measure girth at the widest point behind the front legs, leaving room for two fingers.</p></div>',
       /* 13 */ '<div class="pg-in"><p class="pg-title">Order &amp; terms</p><h3 class="pg-h">Wholesale</h3>' +
                '<table class="ctable"><tbody>' +
-               '<tr><td>MOQ</td><td>USD 3,000 / 초도</td></tr>' +
+               '<tr><td>MOQ</td><td>USD 3,000 first order</td></tr>' +
                '<tr><td>Incoterms</td><td>FOB Busan</td></tr>' +
                '<tr><td>Lead time</td><td>30–45 days</td></tr>' +
                '<tr><td>Payment</td><td>T/T 30% deposit</td></tr>' +
                '<tr><td>Carton</td><td>PUPPIA standard</td></tr>' +
                '</tbody></table><p style="margin-top:auto; font-size:11px; color:var(--on-bone-mute); line-height:1.6">' +
-               '수치는 프로토타입 예시입니다. 실제 조건은 파트너 포털에서 계정별로 표시됩니다.</p></div>',
+               'Figures shown are prototype placeholders. Real terms appear per account inside the partner portal.</p></div>',
       /* 14 */ '<div class="cv" style="background:var(--red-dk)"><span class="top">Thank you</span>' +
                '<span></span><span><h2 style="font-size:clamp(1.2rem,3vw,2rem)">PUPPIA</h2>' +
                '<span class="btm" style="display:block;margin-top:10px">partners@puppia.com · puppia.com/partners</span></span></div>'
@@ -2404,6 +2526,143 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   var flagEl = document.getElementById('flag');
   if(flagEl) flagEl.addEventListener('click', function(){ flagEl.remove(); });
 
+  /* ================= overlays : search · cart · partner ================= */
+  var scrim = document.getElementById('scrim');
+  var panels = {
+    search:  document.getElementById('searchPanel'),
+    cart:    document.getElementById('cartDrawer'),
+    partner: document.getElementById('partnerModal')
+  };
+  var openPanel = null;
+
+  function closePanel(){
+    if(!openPanel) return;
+    var el = panels[openPanel];
+    el.classList.remove('on'); scrim.classList.remove('on');
+    var was = openPanel; openPanel = null;
+    document.body.classList.remove('locked');
+    setTimeout(function(){
+      if(openPanel) return;
+      el.hidden = true; scrim.hidden = true;
+    }, 300);
+    return was;
+  }
+  function open(name){
+    if(openPanel === name){ closePanel(); return; }
+    if(openPanel) closePanel();
+    openPanel = name;
+    var el = panels[name];
+    scrim.hidden = false; el.hidden = false;
+    document.body.classList.add('locked');
+    requestAnimationFrame(function(){ scrim.classList.add('on'); el.classList.add('on'); });
+    if(name === 'search') setTimeout(function(){ document.getElementById('searchInput').focus(); }, 60);
+    if(name === 'cart') renderCart();
+  }
+  scrim.addEventListener('click', closePanel);
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-close]');
+    if(t && openPanel){ if(t.tagName !== 'A') e.preventDefault(); closePanel(); }
+  });
+  window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePanel(); });
+  document.getElementById('btnSearch').addEventListener('click', function(){ open('search'); });
+  document.getElementById('btnCart').addEventListener('click', function(){ open('cart'); });
+  document.getElementById('btnPartner').addEventListener('click', function(){ open('partner'); });
+  document.getElementById('utilPartner').addEventListener('click', function(e){ e.preventDefault(); open('partner'); });
+
+  /* ---------- search ---------- */
+  var sInput = document.getElementById('searchInput');
+  var sCount = document.getElementById('searchCount');
+  var sRes   = document.getElementById('searchResults');
+  var SUGG = ['harness', 'lead', 'coat', 'puppia', 'olchi'];
+  document.getElementById('searchSugg').innerHTML =
+    SUGG.map(function(w){ return '<button type="button" data-q="' + w + '">' + w + '</button>'; }).join('');
+  [].forEach.call(document.querySelectorAll('#searchSugg button'), function(b){
+    b.addEventListener('click', function(){ sInput.value = b.dataset.q; runSearch(); sInput.focus(); });
+  });
+  function runSearch(){
+    var q = sInput.value.trim().toLowerCase();
+    if(!q){
+      sCount.textContent = 'Type to search';
+      sRes.innerHTML = PRODUCTS.filter(function(x){ return x.nw; }).slice(0, 4).map(card).join('');
+      return;
+    }
+    var hits = PRODUCTS.filter(function(x){
+      return (x.n + ' ' + BMAP[x.b].n + ' ' + x.c + ' ' + x.d).toLowerCase().indexOf(q) >= 0;
+    });
+    sCount.textContent = hits.length + (hits.length === 1 ? ' result' : ' results') + ' for “' + sInput.value.trim() + '”';
+    sRes.innerHTML = hits.length ? hits.map(card).join('')
+      : '<p class="empty" style="grid-column:1/-1">No products match that search. Try a category or a brand name.</p>';
+  }
+  sInput.addEventListener('input', runSearch);
+  sRes.addEventListener('click', function(e){ if(e.target.closest('.pcard')) closePanel(); });
+  runSearch();
+
+  /* ---------- cart ---------- */
+  var cart = [];
+  function cartCount(){ return cart.reduce(function(n, l){ return n + l.q; }, 0); }
+  function money(n){ return 'KRW ' + n.toLocaleString('en-US'); }
+  function paintDot(){
+    var d = document.getElementById('cartDot'), n = cartCount();
+    d.textContent = n; d.classList.toggle('on', n > 0);
+  }
+  function addToCart(id, cwIdx, size){
+    var line = cart.filter(function(l){ return l.id === id && l.cw === cwIdx && l.sz === size; })[0];
+    if(line) line.q++; else cart.push({ id:id, cw:cwIdx, sz:size, q:1 });
+    paintDot();
+  }
+  function renderCart(){
+    var body = document.getElementById('cartBody');
+    if(!cart.length){
+      body.innerHTML = '<p class="dw-empty">Your cart is empty.<br>Browse the collection to add products.</p>';
+      document.getElementById('cartTotal').textContent = money(0);
+      return;
+    }
+    body.innerHTML = cart.map(function(l, i){
+      var x = PMAP[l.id], colour = CW[x.cw[l.cw]];
+      return '<div class="ci"><span class="im">' + art(x.c, colour.h) + '</span>' +
+        '<span class="col"><span class="nm">' + x.n + '</span>' +
+        '<span class="op">' + BMAP[x.b].n + ' · ' + colour.n + (l.sz ? ' · ' + l.sz : '') + '</span>' +
+        '<span class="pr">' + money(price(x) * l.q) + '</span>' +
+        '<span class="qty"><button type="button" data-i="' + i + '" data-d="-1" aria-label="Decrease">−</button>' +
+        '<span>' + l.q + '</span>' +
+        '<button type="button" data-i="' + i + '" data-d="1" aria-label="Increase">+</button></span></span>' +
+        '<button class="rm" type="button" data-rm="' + i + '">Remove</button></div>';
+    }).join('');
+    var total = cart.reduce(function(n, l){ return n + price(PMAP[l.id]) * l.q; }, 0);
+    document.getElementById('cartTotal').textContent = money(total);
+    [].forEach.call(body.querySelectorAll('.qty button'), function(b){
+      b.addEventListener('click', function(){
+        var l = cart[+b.dataset.i];
+        l.q += +b.dataset.d;
+        if(l.q < 1) cart.splice(+b.dataset.i, 1);
+        paintDot(); renderCart();
+      });
+    });
+    [].forEach.call(body.querySelectorAll('.rm'), function(b){
+      b.addEventListener('click', function(){ cart.splice(+b.dataset.rm, 1); paintDot(); renderCart(); });
+    });
+  }
+  document.getElementById('cartCheckout').addEventListener('click', function(){
+    if(!cart.length){ toast('Your cart is empty'); return; }
+    closePanel();
+    toast('Checkout is out of scope for this prototype');
+  });
+
+  /* ---------- partner ---------- */
+  document.getElementById('pmForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('pmEmail').value.trim();
+    var note = document.getElementById('pmNote');
+    if(!email || email.indexOf('@') < 0){
+      note.textContent = 'Enter the work email your account was approved with.';
+      note.style.borderLeftColor = 'var(--red)';
+      document.getElementById('pmEmail').focus();
+      return;
+    }
+    note.textContent = 'No approved account found for ' + email + '. Apply below and we will verify your business within two working days.';
+    note.style.borderLeftColor = 'var(--yellow)';
+  });
+
   /* ================= router ================= */
   var VIEWS = {
     home:    document.getElementById('view-home'),
@@ -2446,6 +2705,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     return out;
   }
   function route(){
+    closePanel();
     var h = location.hash || '#/';
     var v = viewFor(h);
     setView(v);
