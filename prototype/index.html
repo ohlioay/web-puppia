@@ -1147,6 +1147,51 @@ body.has-ordbar .toast{bottom:104px}
 .rv-done{padding:clamp(30px,5vw,54px) clamp(18px,3vw,28px); text-align:center}
 .rv-done .po{font-family:"Martian Mono",monospace; font-size:1.5rem; color:var(--red); margin:14px 0 10px; letter-spacing:.04em}
 
+/* ---- PDP trade block ---- */
+.pd-trade{border:1px solid var(--bone3); border-radius:3px; padding:16px 16px 14px; background:#fff}
+.pd-trade.tradeonly{background:var(--bone2); border-color:transparent; border-left:3px solid var(--red)}
+.pd-trade.tradeonly p{margin:0; font-size:13.5px; line-height:1.65; color:var(--on-bone-mute)}
+.pd-trade-head{display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:12px}
+.pd-figs{display:flex; gap:18px}
+.pd-figs span{text-align:right}
+.pd-figs em{display:block; font-style:normal; font-family:"Martian Mono",monospace; font-size:8px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--on-bone-mute); margin-bottom:3px}
+.pd-figs b{font-family:"Martian Mono",monospace; font-size:11.5px; font-variant-numeric:tabular-nums; font-weight:500}
+.pd-line{margin:12px 0 0; font-size:12.5px; line-height:1.6; color:var(--on-bone-mute)}
+.pd-line b{color:var(--red)}
+
+/* ---- order drawer sku lines ---- */
+.skulist{display:flex; flex-direction:column; gap:5px; margin-top:9px; width:100%}
+.skuline{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.sku{font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.08em; color:var(--on-bone-mute)}
+.ci .qty{margin-top:0}
+
+/* ---- order detail ---- */
+.od-head{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  padding-bottom:20px; border-bottom:1px solid var(--bone3); margin-bottom:20px}
+.od-meta{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:16px 20px; margin-bottom:26px}
+.od-meta em{display:block; font-style:normal; font-family:"Martian Mono",monospace; font-size:8px;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--on-bone-mute); margin-bottom:5px}
+.od-meta b{font-size:14px; font-weight:600}
+.od-steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:1px;
+  background:var(--bone3); border:1px solid var(--bone3); border-radius:3px; overflow:hidden}
+.od-step{background:#fff; padding:14px 16px; display:block; opacity:.45}
+.od-step.on{opacity:1}
+.od-step i{display:block; width:9px; height:9px; border-radius:50%; background:var(--bone3); margin-bottom:9px}
+.od-step.on i{background:var(--red)}
+.od-step b{display:block; font-size:13px; font-weight:600}
+.od-step em{display:block; font-style:normal; font-family:"Martian Mono",monospace; font-size:9px;
+  letter-spacing:.1em; color:var(--on-bone-mute); margin-top:4px}
+.odline{display:flex; gap:12px; align-items:center}
+.odline .im{width:38px; height:38px; flex:0 0 auto; background:var(--bone2); border-radius:2px; display:grid; place-items:center}
+.odline .im svg{width:80%; height:auto}
+.odline b{display:block; font-size:14px}
+.odline .brk{display:block; font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--on-bone-mute); margin-top:4px}
+.pt-table tfoot th{background:var(--bone2); border-bottom:0; color:var(--on-bone); font-size:10px}
+.od-act{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:24px}
+.icon-btn[hidden]{display:none}
+
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
   :root{--navh:78px}
@@ -1210,7 +1255,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     </div>
     <div class="util-r">
       <a href="#/" class="hide-s">EN</a>
-      <a href="#/" class="hide-s">KRW</a>
+      <a href="#/" class="hide-s">USD</a>
       <a href="#partners" id="utilPartner">Partner Login</a>
     </div>
   </div>
@@ -1229,7 +1274,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       <button class="icon-btn" id="btnSearch" type="button" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
       </button>
-      <button class="icon-btn" id="btnCart" type="button" aria-label="Cart"><span class="cart-dot" id="cartDot">0</span>
+      <button class="icon-btn" id="btnCart" type="button" aria-label="Your order"><span class="cart-dot" id="cartDot">0</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
       </button>
       <button class="partner" id="btnPartner" type="button">Partner</button>
@@ -1441,14 +1486,12 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           <p class="opt-label"><span>Colourway</span><b id="pdCwName">—</b></p>
           <div class="cw-row" id="pdCw" role="group" aria-label="Colourway"></div>
         </div>
-        <div>
+        <div id="pdSzBlock">
           <p class="opt-label"><span>Size</span><b id="pdSzHint">By chest girth</b></p>
           <div class="sz-row" id="pdSz" role="group" aria-label="Size"></div>
         </div>
-        <div class="pd-buy">
-          <button class="btn-primary" type="button" id="pdAdd">Add to cart</button>
-          <a class="btn-ghost" href="#/soft-harness">Find my size</a>
-        </div>
+        <div id="pdOrder"></div>
+        <div class="pd-buy" id="pdBuy"></div>
         <div class="acc" id="pdAcc"></div>
       </div>
     </div>
@@ -1489,15 +1532,15 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   </div>
 </div>
 
-<aside class="drawer" id="cartDrawer" hidden role="dialog" aria-modal="true" aria-label="Cart">
+<aside class="drawer" id="cartDrawer" hidden role="dialog" aria-modal="true" aria-label="Your order">
   <div class="dw-head">
-    <h2 class="display">Cart</h2>
+    <h2 class="display">Your order</h2>
     <button class="sp-close" type="button" data-close>Close</button>
   </div>
   <div class="dw-body" id="cartBody"></div>
   <div class="dw-foot">
-    <p class="dw-sum"><span>Subtotal</span><b id="cartTotal">KRW 0</b></p>
-    <button class="btn-primary" style="width:100%" type="button" id="cartCheckout">Proceed to checkout</button>
+    <p class="dw-sum"><span>Order value</span><b id="cartTotal">$0.00</b></p>
+    <button class="btn-primary" style="width:100%" type="button" id="cartCheckout">Review order</button>
   </div>
 </aside>
 
@@ -2255,49 +2298,49 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   var CATS = [{ k:'walk', n:'Walk' }, { k:'apparel', n:'Apparel' }, { k:'living', n:'Living' }, { k:'acc', n:'Acc' }];
 
   var PRODUCTS = [
-    { id:'soft-harness-a', b:'puppia',  c:'walk',    n:'Soft Harness A',     p:'32,000', std:true,  nw:false, cw:[0,1,2,4],
+    { id:'soft-harness-a', b:'puppia',  c:'walk',    n:'Soft Harness A',     p:32, std:true,  nw:false, cw:[0,1,2,4],
       d:'The original. An A-frame back panel spreads the load across the whole chest instead of pressing on the throat — our signature since 2002.' },
-    { id:'soft-harness-b', b:'puppia',  c:'walk',    n:'Soft Harness B',     p:'34,000', std:true,  nw:true,  cw:[0,1,5],
+    { id:'soft-harness-b', b:'puppia',  c:'walk',    n:'Soft Harness B',     p:34, std:true,  nw:true,  cw:[0,1,5],
       d:'A wider back panel and a double-locking buckle. Built for dogs that pull and play hard.' },
-    { id:'ritefit-collar', b:'puppia',  c:'walk',    n:'Ritefit Collar',     p:'18,000', std:false, nw:false, cw:[0,2,4],
+    { id:'ritefit-collar', b:'puppia',  c:'walk',    n:'Ritefit Collar',     p:18, std:false, nw:false, cw:[0,2,4],
       d:'An everyday collar matched to the Soft Harness colourways, with a reinforced ID-tag ring.' },
-    { id:'two-tone-lead',  b:'puppia',  c:'walk',    n:'Two-Tone Lead',      p:'22,000', std:false, nw:true,  cw:[0,1,3],
+    { id:'two-tone-lead',  b:'puppia',  c:'walk',    n:'Two-Tone Lead',      p:22, std:false, nw:true,  cw:[0,1,3],
       d:'A 120 cm lead made to pair with the harness. Non-slip lining inside the handle.' },
-    { id:'mountaineer',    b:'puppia',  c:'apparel', n:'Mountaineer Coat',   p:'58,000', std:false, nw:false, cw:[0,1,3,4],
+    { id:'mountaineer',    b:'puppia',  c:'apparel', n:'Mountaineer Coat',   p:58, std:false, nw:false, cw:[0,1,3,4],
       d:'Water-repellent shell with light insulation, and a harness port through the back.' },
-    { id:'gaspar-fleece',  b:'puppia',  c:'apparel', n:'Gaspar Fleece',      p:'44,000', std:false, nw:true,  cw:[2,3,4],
+    { id:'gaspar-fleece',  b:'puppia',  c:'apparel', n:'Gaspar Fleece',      p:44, std:false, nw:true,  cw:[2,3,4],
       d:'A reversible mid-season fleece, cut wide at the neck so brachycephalic breeds can wear it comfortably.' },
-    { id:'woven-mat',      b:'puppia',  c:'living',  n:'Woven Mat',          p:'46,000', std:false, nw:false, cw:[2,3,4],
+    { id:'woven-mat',      b:'puppia',  c:'living',  n:'Woven Mat',          p:46, std:false, nw:false, cw:[2,3,4],
       d:'Machine-washable flat-weave mat with a non-slip backing.' },
-    { id:'travel-bowl',    b:'puppia',  c:'acc',     n:'Travel Bowl',        p:'21,000', std:false, nw:false, cw:[0,1,2],
+    { id:'travel-bowl',    b:'puppia',  c:'acc',     n:'Travel Bowl',        p:21, std:false, nw:false, cw:[0,1,2],
       d:'A silicone bowl that folds flat into a bag. Marked to 400 ml.' },
-    { id:'olchi-vest',     b:'olchi',   c:'walk',    n:'Olchi Vest Harness', p:'29,000', std:false, nw:true,  cw:[0,1,5],
+    { id:'olchi-vest',     b:'olchi',   c:'walk',    n:'Olchi Vest Harness', p:29, std:false, nw:true,  cw:[0,1,5],
       d:'A vest-style harness that wraps the whole chest and shares the pressure widely.' },
-    { id:'bold-lead',      b:'olchi',   c:'walk',    n:'Bold Lead',          p:'19,000', std:false, nw:false, cw:[0,3,5],
+    { id:'bold-lead',      b:'olchi',   c:'walk',    n:'Bold Lead',          p:19, std:false, nw:false, cw:[0,3,5],
       d:'A lead with heavy webbing and high-contrast colour blocking.' },
-    { id:'color-block-tee',b:'olchi',   c:'apparel', n:'Color Block Tee',    p:'26,000', std:false, nw:false, cw:[0,1,5],
+    { id:'color-block-tee',b:'olchi',   c:'apparel', n:'Color Block Tee',    p:26, std:false, nw:false, cw:[0,1,5],
       d:'Cotton-blend tee with the season palette laid out in blocks.' },
-    { id:'puffer-vest',    b:'olchi',   c:'apparel', n:'Puffer Vest',        p:'49,000', std:false, nw:true,  cw:[0,1,4],
+    { id:'puffer-vest',    b:'olchi',   c:'apparel', n:'Puffer Vest',        p:49, std:false, nw:true,  cw:[0,1,4],
       d:'A light padded vest with a lead ring on the back panel.' },
-    { id:'car-seat',       b:'olchi',   c:'living',  n:'2-Row Car Seat',     p:'89,000', std:false, nw:true,  cw:[2,4],
+    { id:'car-seat',       b:'olchi',   c:'living',  n:'2-Row Car Seat',     p:89, std:false, nw:true,  cw:[2,4],
       d:'A rear-seat car seat with a two-strap mount. Seatbelt clip included.' },
-    { id:'snap-pouch',     b:'olchi',   c:'acc',     n:'Snap Pouch',         p:'16,000', std:false, nw:false, cw:[0,3,5],
+    { id:'snap-pouch',     b:'olchi',   c:'acc',     n:'Snap Pouch',         p:16, std:false, nw:false, cw:[0,3,5],
       d:'A small pouch that snaps onto the lead.' },
-    { id:'lapel-harness',  b:'pinka',   c:'walk',    n:'Lapel Harness',      p:'42,000', std:false, nw:false, cw:[5,2,4],
+    { id:'lapel-harness',  b:'pinka',   c:'walk',    n:'Lapel Harness',      p:42, std:false, nw:false, cw:[5,2,4],
       d:'A fashion harness finished with a tailored jacket lapel.' },
-    { id:'bijou-dress',    b:'pinka',   c:'apparel', n:'Bijou Dress',        p:'64,000', std:false, nw:false, cw:[5,2],
+    { id:'bijou-dress',    b:'pinka',   c:'apparel', n:'Bijou Dress',        p:64, std:false, nw:false, cw:[5,2],
       d:'A layered tulle dress that can be worn over a harness.' },
-    { id:'fur-trim-coat',  b:'pinka',   c:'apparel', n:'Fur Trim Coat',      p:'78,000', std:false, nw:false, cw:[5,4,2],
+    { id:'fur-trim-coat',  b:'pinka',   c:'apparel', n:'Fur Trim Coat',      p:78, std:false, nw:false, cw:[5,4,2],
       d:'A coat trimmed with faux fur and lined in brushed fleece.' },
-    { id:'charm-collar',   b:'pinka',   c:'acc',     n:'Charm Collar',       p:'24,000', std:false, nw:false, cw:[5,2],
+    { id:'charm-collar',   b:'pinka',   c:'acc',     n:'Charm Collar',       p:24, std:false, nw:false, cw:[5,2],
       d:'A collar with a ring for hanging charms.' },
-    { id:'cat-vest',       b:'catspia', c:'walk',    n:'Cat Vest Harness',   p:'27,000', std:false, nw:false, cw:[1,3,4],
+    { id:'cat-vest',       b:'catspia', c:'walk',    n:'Cat Vest Harness',   p:27, std:false, nw:false, cw:[1,3,4],
       d:'A vest harness shaped for feline shoulders, with a double lock against escapes.' },
-    { id:'knit-cardigan',  b:'catspia', c:'apparel', n:'Knit Cardigan',      p:'31,000', std:false, nw:false, cw:[2,3],
+    { id:'knit-cardigan',  b:'catspia', c:'apparel', n:'Knit Cardigan',      p:31, std:false, nw:false, cw:[2,3],
       d:'A low-irritation knit cardigan with an open front that is easy to step into.' },
-    { id:'cat-cave',       b:'catspia', c:'living',  n:'Cat Cave',           p:'72,000', std:false, nw:false, cw:[2,3,4],
+    { id:'cat-cave',       b:'catspia', c:'living',  n:'Cat Cave',           p:72, std:false, nw:false, cw:[2,3,4],
       d:'A felt dome house. The entrance can be turned to face either way.' },
-    { id:'bell-collar',    b:'catspia', c:'acc',     n:'Bell Collar',        p:'14,000', std:false, nw:false, cw:[1,5],
+    { id:'bell-collar',    b:'catspia', c:'acc',     n:'Bell Collar',        p:14, std:false, nw:false, cw:[1,5],
       d:'A lightweight collar with a safety buckle and a bell.' }
   ];
   var PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
@@ -2358,9 +2401,10 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       art(x.c, 'var(' + br.v + ')') + '</span>' +
       '<span><span class="blabel" style="--bd:var(' + br.v + ')"><i></i>' + br.n + '</span>' +
       '<span class="name" style="display:block;margin-top:6px">' + x.n + '</span>' +
-      '<span class="price">KRW ' + x.p + '</span></span></a>';
+      '<span class="price">' + money(price(x)) + '</span></span></a>';
   }
-  function price(x){ return parseInt(x.p.replace(/,/g, ''), 10); }
+  function price(x){ return x.p; }
+  function money(n){ return '$' + n.toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
 
   /* ================= HOME : render ================= */
   var slotBrand = 'puppia';
@@ -2494,7 +2538,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     bw.style.setProperty('--bd', 'var(' + br.v + ')');
     bw.lastElementChild.textContent = br.n;
     document.getElementById('pdName').textContent = x.n;
-    document.getElementById('pdPrice').textContent = 'KRW ' + x.p;
+    document.getElementById('pdPrice').textContent = money(price(x));
     document.getElementById('pdDesc').textContent = x.d;
     document.getElementById('pdCwName').textContent = colour.n;
 
@@ -2517,6 +2561,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     });
 
     var sizable = x.c === 'walk' || x.c === 'apparel';
+    var trade = !!session;
+    document.getElementById('pdSzBlock').hidden = trade;
     document.getElementById('pdSz').innerHTML = sizable
       ? SIZES.map(function(z, i){
           return '<button type="button" class="sz" data-i="' + i + '" aria-pressed="' + (i === pdSz) + '">' +
@@ -2527,6 +2573,35 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     [].forEach.call(document.querySelectorAll('#pdSz .sz'), function(btn){
       btn.addEventListener('click', function(){ pdSz = +btn.dataset.i; renderProduct(id); });
     });
+
+    var ord = document.getElementById('pdOrder'), buy = document.getElementById('pdBuy');
+    if(trade){
+      var w = wholesale(x);
+      ord.innerHTML =
+        '<div class="pd-trade"><div class="pd-trade-head">' +
+        '<span class="opt-label" style="margin:0"><span>Order this style</span></span>' +
+        '<span class="pd-figs">' +
+        '<span><em>Wholesale</em><b>' + money(w) + '</b></span>' +
+        '<span><em>MSRP</em><b>' + money(price(x)) + '</b></span>' +
+        '<span><em>Margin</em><b>' + Math.round((1 - w / price(x)) * 100) + '%</b></span>' +
+        '</span></div>' + matrix(x) +
+        '<p class="pd-line" id="pdLine"></p></div>';
+      wireMatrix(ord);
+      paintPdLine();
+      buy.innerHTML =
+        '<button class="btn-primary" type="button" id="pdViewOrder">Review order</button>' +
+        '<a class="btn-ghost" href="#/soft-harness">Find my size</a>';
+      document.getElementById('pdViewOrder').addEventListener('click', function(){ open('cart'); });
+    } else {
+      ord.innerHTML =
+        '<div class="pd-trade tradeonly"><p class="opt-label" style="margin:0 0 8px"><span>Trade only</span></p>' +
+        '<p>PUPPIA sells through authorised retailers and distributors, not directly to consumers. ' +
+        'Sign in to the partner portal for wholesale prices and matrix ordering, or find a stockist near you.</p></div>';
+      buy.innerHTML =
+        '<button class="btn-primary" type="button" id="pdLogin">Partner login</button>' +
+        '<a class="btn-ghost" href="#h7">Where to buy</a>';
+      document.getElementById('pdLogin').addEventListener('click', function(){ open('partner'); });
+    }
 
     var accEl = document.getElementById('pdAcc');
     var accWas = [].map.call(accEl.querySelectorAll('details'), function(d){ return d.open; });
@@ -2542,7 +2617,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         ? '<details open><summary>Size chart</summary><div class="accbody"><table><thead><tr>' +
           '<th>Size</th><th>Girth</th><th>Neck</th><th>Weight</th></tr></thead><tbody>' +
           SIZES.map(function(z, i){
-            return '<tr class="' + (i === pdSz ? 'hit' : '') + '"><td>' + z.s + '</td><td>' + z.min + '–' + z.max +
+            return '<tr class="' + (!session && i === pdSz ? 'hit' : '') + '"><td>' + z.s + '</td><td>' + z.min + '–' + z.max +
                    ' cm</td><td>' + z.neck + ' cm</td><td>' + z.kg + ' kg</td></tr>';
           }).join('') + '</tbody></table></div></details>'
         : '') +
@@ -2561,12 +2636,15 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     toastEl.textContent = msg; toastEl.classList.add('on');
     clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove('on'); }, 2200);
   }
-  document.getElementById('pdAdd').addEventListener('click', function(){
-    if(!pdItem) return;
-    var sizable = pdItem.c === 'walk' || pdItem.c === 'apparel';
-    addToCart(pdItem.id, pdCw, sizable ? SIZES[pdSz].s : '');
-    toast('Added — ' + pdItem.n + ' · ' + CW[pdItem.cw[pdCw]].n + (sizable ? ' · ' + SIZES[pdSz].s : ''));
-  });
+  function paintPdLine(){
+    var el = document.getElementById('pdLine');
+    if(!el || !pdItem) return;
+    var n = unitsOf(pdItem), t = orderTotals();
+    el.innerHTML = n
+      ? '<b>' + n + ' units</b> of this style · ' + money(n * wholesale(pdItem)) +
+        ' · saved to your order (' + t.units + ' units, ' + money(t.value) + ')'
+      : 'Type quantities into the grid. They save straight to your order and appear in the line sheet.';
+  }
 
   /* ================= CATALOG · web book ================= */
   var SEASONS = [
@@ -2810,55 +2888,65 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   sRes.addEventListener('click', function(e){ if(e.target.closest('.pcard')) closePanel(); });
   runSearch();
 
-  /* ---------- cart ---------- */
-  var cart = [];
-  function cartCount(){ return cart.reduce(function(n, l){ return n + l.q; }, 0); }
-  function money(n){ return 'KRW ' + n.toLocaleString('en-US'); }
+  /* ---------- order drawer (the cart is the partner order) ---------- */
+  function cartCount(){ return orderTotals().units; }
   function paintDot(){
     var d = document.getElementById('cartDot'), n = cartCount();
+    if(!d) return;
     d.textContent = n; d.classList.toggle('on', n > 0);
-  }
-  function addToCart(id, cwIdx, size){
-    var line = cart.filter(function(l){ return l.id === id && l.cw === cwIdx && l.sz === size; })[0];
-    if(line) line.q++; else cart.push({ id:id, cw:cwIdx, sz:size, q:1 });
-    paintDot();
+    document.getElementById('btnCart').hidden = !session;
   }
   function renderCart(){
-    var body = document.getElementById('cartBody');
-    if(!cart.length){
-      body.innerHTML = '<p class="dw-empty">Your cart is empty.<br>Browse the collection to add products.</p>';
+    var body = document.getElementById('cartBody'), t = orderTotals();
+    if(!session){
+      body.innerHTML = '<p class="dw-empty">Ordering is open to approved partners.<br>Sign in to see wholesale prices.</p>';
       document.getElementById('cartTotal').textContent = money(0);
       return;
     }
-    body.innerHTML = cart.map(function(l, i){
-      var x = PMAP[l.id], colour = CW[x.cw[l.cw]];
-      return '<div class="ci"><span class="im">' + art(x.c, colour.h) + '</span>' +
+    if(!t.units){
+      body.innerHTML = '<p class="dw-empty">No quantities yet.<br>Open a style and key into the grid.</p>';
+      document.getElementById('cartTotal').textContent = money(0);
+      return;
+    }
+    body.innerHTML = PRODUCTS.map(function(x){
+      var n = unitsOf(x); if(!n) return '';
+      var rs = rowsOf(x), cells = '';
+      rs.forEach(function(z, si){
+        x.cw.forEach(function(ci, k){
+          var q = qtyOf(x.id, si, k); if(!q) return;
+          cells += '<span class="skuline"><span class="sku">' + z.s + ' / ' + CW[ci].n + '</span>' +
+            '<span class="qty"><button type="button" data-p="' + x.id + '" data-s="' + si + '" data-c="' + k + '" data-d="-1" aria-label="Decrease">−</button>' +
+            '<span>' + q + '</span>' +
+            '<button type="button" data-p="' + x.id + '" data-s="' + si + '" data-c="' + k + '" data-d="1" aria-label="Increase">+</button></span></span>';
+        });
+      });
+      return '<div class="ci"><span class="im">' + art(x.c, 'var(' + BMAP[x.b].v + ')') + '</span>' +
         '<span class="col"><span class="nm">' + x.n + '</span>' +
-        '<span class="op">' + BMAP[x.b].n + ' · ' + colour.n + (l.sz ? ' · ' + l.sz : '') + '</span>' +
-        '<span class="pr">' + money(price(x) * l.q) + '</span>' +
-        '<span class="qty"><button type="button" data-i="' + i + '" data-d="-1" aria-label="Decrease">−</button>' +
-        '<span>' + l.q + '</span>' +
-        '<button type="button" data-i="' + i + '" data-d="1" aria-label="Increase">+</button></span></span>' +
-        '<button class="rm" type="button" data-rm="' + i + '">Remove</button></div>';
+        '<span class="op">' + BMAP[x.b].n + ' · ' + n + ' units · ' + money(n * wholesale(x)) + '</span>' +
+        '<span class="skulist">' + cells + '</span></span>' +
+        '<button class="rm" type="button" data-clr="' + x.id + '">Clear</button></div>';
     }).join('');
-    var total = cart.reduce(function(n, l){ return n + price(PMAP[l.id]) * l.q; }, 0);
-    document.getElementById('cartTotal').textContent = money(total);
+    document.getElementById('cartTotal').textContent = money(t.value);
     [].forEach.call(body.querySelectorAll('.qty button'), function(b){
       b.addEventListener('click', function(){
-        var l = cart[+b.dataset.i];
-        l.q += +b.dataset.d;
-        if(l.q < 1) cart.splice(+b.dataset.i, 1);
-        paintDot(); renderCart();
+        var pid = b.dataset.p, si = +b.dataset.s, ci = +b.dataset.c;
+        var q = qtyOf(pid, si, ci) + (+b.dataset.d);
+        if(q > 0) ORDER[key(pid, si, ci)] = q; else delete ORDER[key(pid, si, ci)];
+        repaintProduct(pid); renderCart();
       });
     });
-    [].forEach.call(body.querySelectorAll('.rm'), function(b){
-      b.addEventListener('click', function(){ cart.splice(+b.dataset.rm, 1); paintDot(); renderCart(); });
+    [].forEach.call(body.querySelectorAll('[data-clr]'), function(b){
+      b.addEventListener('click', function(){
+        var x = PMAP[b.dataset.clr], rs = rowsOf(x);
+        rs.forEach(function(z, si){ x.cw.forEach(function(ci, k){ delete ORDER[key(x.id, si, k)]; }); });
+        repaintProduct(x.id); renderCart();
+      });
     });
   }
   document.getElementById('cartCheckout').addEventListener('click', function(){
-    if(!cart.length){ toast('Your cart is empty'); return; }
-    closePanel();
-    toast('Checkout is out of scope for this prototype');
+    if(!session){ closePanel(); open('partner'); return; }
+    if(!orderTotals().units){ toast('No quantities yet'); return; }
+    closePanel(); setTimeout(openReview, 260);
   });
 
   /* ---------- partner ---------- */
@@ -2878,7 +2966,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       note.textContent = 'Signed in as ' + DEMO.company + '.';
       note.style.borderLeftColor = '#4CC38A';
       closePanel();
-      ptTab = 'linesheet';
+      ptTab = 'linesheet'; ptOrderPO = null;
+      paintDot();
       if(location.hash.indexOf('#/partners') === 0) renderPortal(); else location.hash = '#/partners';
       toast('Welcome back, ' + DEMO.company);
       return;
@@ -2900,13 +2989,22 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   /* ================= PARTNER PORTAL ================= */
   var DEMO = { email:'buyer@demo-partner.com', pass:'puppia2026',
                company:'Hundwerk GmbH', country:'Germany', terms:'FOB Busan', season:'SS26' };
-  var MOQ = 4000000;               /* KRW — roughly USD 3,000 */
+  var MOQ = 3000;                  /* USD, matches the catalog terms page */
   var WS  = 0.5;                   /* wholesale = 50% of MSRP */
-  var session = null, ptTab = 'linesheet', ptBrand = 'all', ptCat = 'all';
+  var session = null, ptTab = 'linesheet', ptOrderPO = null, ptBrand = 'all', ptCat = 'all';
   var ORDER = {};                  /* 'pid|si|ci' -> qty */
   var ORDERS = [
-    { po:'PO-FW25-0118', date:'2025-09-12', season:'FW25', units:642, value:9860000, status:'shp' },
-    { po:'PO-FW25-0203', date:'2025-11-04', season:'FW25', units:288, value:4420000, status:'cfm' }
+    { po:'PO-FW25-0118', date:'2025-09-12', season:'FW25', status:'shp',
+      ship:'2025-10-28', lines:[
+        { id:'soft-harness-a', si:1, ci:0, q:96 }, { id:'soft-harness-a', si:2, ci:0, q:144 },
+        { id:'soft-harness-a', si:3, ci:1, q:72 }, { id:'mountaineer',    si:2, ci:0, q:120 },
+        { id:'gaspar-fleece',  si:1, ci:2, q:96 }, { id:'woven-mat',      si:0, ci:1, q:60 },
+        { id:'travel-bowl',    si:0, ci:0, q:54 } ] },
+    { po:'PO-FW25-0203', date:'2025-11-04', season:'FW25', status:'cfm',
+      ship:'', lines:[
+        { id:'olchi-vest',   si:2, ci:0, q:72 }, { id:'olchi-vest',   si:3, ci:2, q:48 },
+        { id:'puffer-vest',  si:2, ci:1, q:60 }, { id:'car-seat',     si:0, ci:0, q:24 },
+        { id:'bijou-dress',  si:1, ci:0, q:84 } ] }
   ];
   var ASSETS = [
     { n:'SS26 line sheet', f:'PDF', s:'8.4 MB' },
@@ -2918,7 +3016,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   ];
   var ptWrap = document.getElementById('ptWrap');
 
-  function wholesale(x){ return Math.round(price(x) * WS / 500) * 500; }
+  function wholesale(x){ return Math.round(price(x) * WS * 2) / 2; }
   function rowsOf(x){ return (x.c === 'walk' || x.c === 'apparel') ? SIZES : [{ s:'OS', min:0, max:0 }]; }
   function stockOf(x, si, ci){
     var h = (x.id.length * 17 + x.id.charCodeAt(1) * 5 + si * 29 + ci * 13) % 12;
@@ -2948,7 +3046,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   /* ---------- matrix ---------- */
   function matrix(x){
     var rs = rowsOf(x), cw = x.cw;
-    var h = '<div class="mtx-wrap"><table class="mtx"><thead><tr><th>Size</th>' +
+    var h = '<div class="mtxbox" data-mtx="' + x.id + '"><div class="mtx-wrap"><table class="mtx"><thead><tr><th>Size</th>' +
       cw.map(function(ci){
         return '<th><span class="sw" style="background:' + CW[ci].h + '"></span>' + CW[ci].n + '</th>';
       }).join('') + '<th>Total</th></tr></thead><tbody>';
@@ -2972,7 +3070,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       '<span><i class="x"></i>Out of stock</span><span>“avl” = units available</span>' +
       '<span>↑ ↓ or Enter to move down a row</span></div>' +
       '<div class="ls-sub"><span>Units<b data-su>' + unitsOf(x) + '</b></span>' +
-      '<span>Line value<b data-sv>' + money(unitsOf(x) * wholesale(x)) + '</b></span></div>';
+      '<span>Line value<b data-sv>' + money(unitsOf(x) * wholesale(x)) + '</b></span></div></div>';
     return h;
   }
   function rowTotal(x, si){
@@ -2981,23 +3079,59 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   function colTotal(x, ci){
     var n = 0, rs = rowsOf(x); for(var si = 0; si < rs.length; si++) n += qtyOf(x.id, si, ci); return n;
   }
-  function repaintRow(pid){
-    var x = PMAP[pid], row = ptWrap.querySelector('.lsrow[data-p="' + pid + '"]');
-    if(!row) return;
-    var rs = rowsOf(x);
-    rs.forEach(function(z, si){
-      var c = row.querySelector('[data-rt="' + si + '"]');
-      if(c) c.textContent = rowTotal(x, si);
+  /* every matrix on the page for this style repaints together — line sheet and PDP stay in sync */
+  function repaintProduct(pid){
+    var x = PMAP[pid], n = unitsOf(x), rs = rowsOf(x);
+    [].forEach.call(document.querySelectorAll('[data-mtx="' + pid + '"]'), function(box){
+      rs.forEach(function(z, si){
+        var c = box.querySelector('[data-rt="' + si + '"]');
+        if(c) c.textContent = rowTotal(x, si);
+      });
+      var foot = box.querySelectorAll('.mtx tfoot td');
+      x.cw.forEach(function(ci, k){ if(foot[k]) foot[k].textContent = colTotal(x, k); });
+      if(foot[x.cw.length]) foot[x.cw.length].textContent = n;
+      var su = box.querySelector('[data-su]'), sv = box.querySelector('[data-sv]');
+      if(su) su.textContent = n;
+      if(sv) sv.textContent = money(n * wholesale(x));
+      [].forEach.call(box.querySelectorAll('.mtx input'), function(i){
+        var v = qtyOf(pid, +i.dataset.s, +i.dataset.c);
+        if(document.activeElement !== i) i.value = v || '';
+        var td = i.parentNode, ats = stockOf(x, +i.dataset.s, +i.dataset.c);
+        td.classList.toggle('has', v > 0);
+        td.classList.toggle('over', v > ats);
+      });
     });
-    var foot = row.querySelectorAll('.mtx tfoot td');
-    x.cw.forEach(function(ci, k){ if(foot[k]) foot[k].textContent = colTotal(x, k); });
-    if(foot[x.cw.length]) foot[x.cw.length].textContent = unitsOf(x);
-    var n = unitsOf(x);
-    row.querySelector('[data-su]').textContent = n;
-    row.querySelector('[data-sv]').textContent = money(n * wholesale(x));
-    row.querySelector('.ls-units b').textContent = n;
-    row.classList.toggle('filled', n > 0);
-    paintOrderBar();
+    var row = document.querySelector('.lsrow[data-p="' + pid + '"]');
+    if(row){
+      row.querySelector('.ls-units b').textContent = n;
+      row.classList.toggle('filled', n > 0);
+    }
+    var pdl = document.getElementById('pdLine');
+    if(pdl && pdItem && pdItem.id === pid) paintPdLine();
+    paintOrderBar(); paintDot();
+  }
+
+  /* wires every matrix input inside a root — used by the line sheet and the product page */
+  function wireMatrix(root){
+    [].forEach.call(root.querySelectorAll('.mtx input'), function(inp){
+      inp.addEventListener('focus', function(){ inp.select(); });
+      inp.addEventListener('input', function(){
+        var v = Math.max(0, parseInt(inp.value, 10) || 0);
+        var pid = inp.dataset.p, si = +inp.dataset.s, ci = +inp.dataset.c;
+        if(v) ORDER[key(pid, si, ci)] = v; else delete ORDER[key(pid, si, ci)];
+        var td = inp.parentNode, ats = stockOf(PMAP[pid], si, ci);
+        td.title = v > ats ? 'Above available stock (' + ats + ') — we will confirm the balance' : '';
+        repaintProduct(pid);
+      });
+      inp.addEventListener('keydown', function(e){
+        var dir = e.key === 'ArrowDown' || e.key === 'Enter' ? 1 : (e.key === 'ArrowUp' ? -1 : 0);
+        if(!dir) return;
+        e.preventDefault();
+        var pid = inp.dataset.p, ci = inp.dataset.c, si = +inp.dataset.s;
+        var next = root.querySelector('.mtx input[data-p="' + pid + '"][data-s="' + (si + dir) + '"][data-c="' + ci + '"]');
+        if(next) next.focus();
+      });
+    });
   }
   function paintOrderBar(){
     var t = orderTotals(), bar = document.getElementById('ordbar');
@@ -3048,7 +3182,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       '<div class="ordbar" id="ordbar" hidden><div class="ob-figs">' +
       '<div><em>Units</em><b id="obUnits">0</b></div>' +
       '<div><em>Styles</em><b id="obLines">0</b></div>' +
-      '<div><em>Order value</em><b id="obValue">KRW 0</b></div>' +
+      '<div><em>Order value</em><b id="obValue">$0.00</b></div>' +
       '<div class="moq" id="obMoq"><em id="obMoqLabel">MOQ</em><span class="track"><i id="obTrack"></i></span></div>' +
       '</div><div class="ob-act">' +
       '<button class="btn-ghost-d" type="button" id="obClear">Clear</button>' +
@@ -3082,21 +3216,78 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       '<span class="ls-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>' +
       '</button><div class="ls-body">' + matrix(x) + '</div></article>';
   }
+  function addDays(d, n){
+    var t = new Date(d + 'T00:00:00Z');
+    t.setUTCDate(t.getUTCDate() + n);
+    return t.toISOString().slice(0, 10);
+  }
+  function orderUnits(o){ return o.lines.reduce(function(n, l){ return n + l.q; }, 0); }
+  function orderValue(o){ return o.lines.reduce(function(n, l){ return n + l.q * wholesale(PMAP[l.id]); }, 0); }
+  var STATUS = { sub:'Submitted', cfm:'Confirmed', shp:'Shipped' };
+
   function ordersHTML(){
     return '<p class="pt-note"><b>Orders</b> placed through the portal appear here with their status. ' +
-      'Confirmed orders can be reordered into a new season with one click.</p>' +
+      'Open one to see the full size and colourway breakdown, shipping terms and progress.</p>' +
       '<div class="tw" style="border:1px solid var(--bone3); border-radius:3px; overflow-x:auto">' +
       '<table class="pt-table"><thead><tr><th>PO number</th><th>Date</th><th>Season</th>' +
       '<th>Units</th><th>Value</th><th>Status</th><th></th></tr></thead><tbody>' +
       ORDERS.map(function(o){
-        var lbl = { sub:'Submitted', cfm:'Confirmed', shp:'Shipped' }[o.status];
         return '<tr><td class="num"><b>' + o.po + '</b></td><td class="num">' + o.date + '</td>' +
-          '<td class="num">' + o.season + '</td><td class="num">' + o.units + '</td>' +
-          '<td class="num">' + money(o.value) + '</td>' +
-          '<td><span class="pill ' + o.status + '">' + lbl + '</span></td>' +
-          '<td style="text-align:right"><button class="btn-mini" data-reorder="' + o.po + '">Reorder</button></td></tr>';
+          '<td class="num">' + o.season + '</td><td class="num">' + orderUnits(o) + '</td>' +
+          '<td class="num">' + money(orderValue(o)) + '</td>' +
+          '<td><span class="pill ' + o.status + '">' + STATUS[o.status] + '</span></td>' +
+          '<td style="text-align:right"><a class="btn-mini" href="#/partners/orders/' + o.po + '">View</a></td></tr>';
       }).join('') + '</tbody></table></div>';
   }
+  function orderDetailHTML(po){
+    var o = ORDERS.filter(function(x){ return x.po === po; })[0];
+    if(!o) return '<p class="pt-note">That order could not be found. <a href="#/partners/orders">Back to orders</a></p>';
+    var units = orderUnits(o), value = orderValue(o);
+    var steps = [
+      { n:'Submitted',     d:o.date },
+      { n:'Confirmed',     d:addDays(o.date, 2) },
+      { n:'In production', d:addDays(o.date, 9) },
+      { n:'Shipped',       d:o.ship || '' }
+    ];
+    var reached = o.status === 'shp' ? 4 : (o.status === 'cfm' ? 2 : 1);
+
+    /* group lines by style */
+    var byId = {};
+    o.lines.forEach(function(l){ (byId[l.id] = byId[l.id] || []).push(l); });
+    var rows = Object.keys(byId).map(function(pid){
+      var x = PMAP[pid], ls = byId[pid], rs = rowsOf(x);
+      var n = ls.reduce(function(a, l){ return a + l.q; }, 0);
+      var brk = ls.map(function(l){ return rs[l.si].s + '/' + CW[x.cw[l.ci]].n + ' ×' + l.q; }).join('  ·  ');
+      return '<tr><td><span class="odline"><span class="im">' + art(x.c, 'var(' + BMAP[x.b].v + ')') + '</span>' +
+        '<span><b>' + x.n + '</b><span class="brk">' + BMAP[x.b].n + ' · ' + brk + '</span></span></span></td>' +
+        '<td class="num">' + n + '</td><td class="num">' + money(wholesale(x)) + '</td>' +
+        '<td class="num">' + money(n * wholesale(x)) + '</td></tr>';
+    }).join('');
+
+    return '<p class="crumb" style="margin-bottom:16px"><a href="#/partners/orders">Orders</a><span>/</span><span>' + o.po + '</span></p>' +
+      '<div class="od-head"><div><p class="eyebrow" style="color:var(--on-bone-mute)">Purchase order</p>' +
+      '<h1 class="display" style="margin:10px 0 0; font-size:clamp(1.7rem,4vw,2.6rem)">' + o.po + '</h1></div>' +
+      '<span class="pill ' + o.status + '" style="font-size:9px; padding:7px 14px">' + STATUS[o.status] + '</span></div>' +
+      '<div class="od-meta">' +
+      '<span><em>Account</em><b>' + DEMO.company + '</b></span>' +
+      '<span><em>Ship to</em><b>' + DEMO.country + '</b></span>' +
+      '<span><em>Season</em><b>' + o.season + '</b></span>' +
+      '<span><em>Incoterms</em><b>' + DEMO.terms + '</b></span>' +
+      '<span><em>Payment</em><b>T/T 30% deposit</b></span>' +
+      '<span><em>Lead time</em><b>30–45 days</b></span></div>' +
+      '<div class="od-steps">' + steps.map(function(st, i){
+        return '<span class="od-step' + (i < reached ? ' on' : '') + '"><i></i><b>' + st.n + '</b>' +
+               '<em>' + (i < reached && st.d ? st.d : '—') + '</em></span>';
+      }).join('') + '</div>' +
+      '<div class="tw" style="border:1px solid var(--bone3); border-radius:3px; overflow-x:auto; margin-top:22px">' +
+      '<table class="pt-table"><thead><tr><th>Style &amp; breakdown</th><th>Units</th><th>Unit</th><th>Value</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody>' +
+      '<tfoot><tr><th style="text-align:right">Total</th><th class="num">' + units + '</th><th></th>' +
+      '<th class="num">' + money(value) + '</th></tr></tfoot></table></div>' +
+      '<div class="od-act"><button class="btn-primary" type="button" id="odDup">Copy into current order</button>' +
+      '<button class="btn-mini" type="button" id="odPdf">Download PO (PDF)</button></div>';
+  }
+
   function assetsHTML(){
     return '<p class="pt-note"><b>Brand assets</b> for your own channels — photography, spec sheets, ' +
       'logos and certificates. Everything here is cleared for retailer use.</p>' +
@@ -3115,15 +3306,26 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     }
     ptWrap.innerHTML = portalHTML();
     var body = document.getElementById('ptBody');
-    body.innerHTML = ptTab === 'orders' ? ordersHTML() : (ptTab === 'assets' ? assetsHTML() : lineSheetHTML());
+    body.innerHTML = ptOrderPO ? orderDetailHTML(ptOrderPO)
+      : (ptTab === 'orders' ? ordersHTML() : (ptTab === 'assets' ? assetsHTML() : lineSheetHTML()));
     [].forEach.call(ptWrap.querySelectorAll('.pt-tab'), function(b){
       b.setAttribute('aria-pressed', b.dataset.t === ptTab ? 'true' : 'false');
-      b.addEventListener('click', function(){ ptTab = b.dataset.t; renderPortal(); });
+      b.addEventListener('click', function(){ location.hash = '#/partners/' + b.dataset.t; });
     });
+    if(ptOrderPO){
+      var dup = document.getElementById('odDup'), pdf = document.getElementById('odPdf');
+      if(dup) dup.addEventListener('click', function(){
+        var o = ORDERS.filter(function(x){ return x.po === ptOrderPO; })[0];
+        o.lines.forEach(function(l){ ORDER[key(l.id, l.si, l.ci)] = (ORDER[key(l.id, l.si, l.ci)] || 0) + l.q; });
+        toast(o.po + ' copied into your current order');
+        location.hash = '#/partners/linesheet';
+      });
+      if(pdf) pdf.addEventListener('click', function(){ toast('PO document — file delivery is out of scope for this prototype'); });
+    }
     document.getElementById('ptOut').addEventListener('click', function(){
-      session = null; ORDER = {}; ptTab = 'linesheet';
+      session = null; ORDER = {}; ptTab = 'linesheet'; ptOrderPO = null;
       document.body.classList.remove('has-ordbar');
-      renderPortal(); toast('Signed out');
+      paintDot(); renderPortal(); toast('Signed out');
     });
     var obR = document.getElementById('obReview'), obC = document.getElementById('obClear');
     if(obR) obR.addEventListener('click', openReview);
@@ -3132,11 +3334,6 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       ORDER = {}; renderPortal(); toast('Order cleared');
     });
     if(ptTab === 'linesheet') wireLineSheet();
-    if(ptTab === 'orders'){
-      [].forEach.call(body.querySelectorAll('[data-reorder]'), function(b){
-        b.addEventListener('click', function(){ toast('Reorder — ' + b.dataset.reorder + ' copied into ' + DEMO.season); });
-      });
-    }
     if(ptTab === 'assets'){
       [].forEach.call(body.querySelectorAll('[data-dl]'), function(b){
         b.addEventListener('click', function(){ toast('“' + b.dataset.dl + '” — file delivery is out of scope for this prototype'); });
@@ -3170,27 +3367,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         r.classList.remove('open'); r.querySelector('.ls-head').setAttribute('aria-expanded', 'false');
       });
     });
-    [].forEach.call(ptWrap.querySelectorAll('.mtx input'), function(inp){
-      inp.addEventListener('focus', function(){ inp.select(); });
-      inp.addEventListener('input', function(){
-        var v = Math.max(0, parseInt(inp.value, 10) || 0);
-        var pid = inp.dataset.p, si = +inp.dataset.s, ci = +inp.dataset.c;
-        if(v) ORDER[key(pid, si, ci)] = v; else delete ORDER[key(pid, si, ci)];
-        var td = inp.parentNode, ats = stockOf(PMAP[pid], si, ci);
-        td.classList.toggle('has', v > 0);
-        td.classList.toggle('over', v > ats);
-        td.title = v > ats ? 'Above available stock (' + ats + ') — we will confirm the balance' : '';
-        repaintRow(pid);
-      });
-      inp.addEventListener('keydown', function(e){
-        var dir = e.key === 'ArrowDown' || e.key === 'Enter' ? 1 : (e.key === 'ArrowUp' ? -1 : 0);
-        if(!dir) return;
-        e.preventDefault();
-        var pid = inp.dataset.p, ci = inp.dataset.c, si = +inp.dataset.s;
-        var next = ptWrap.querySelector('.mtx input[data-p="' + pid + '"][data-s="' + (si + dir) + '"][data-c="' + ci + '"]');
-        if(next) next.focus();
-      });
-    });
+    wireMatrix(ptWrap);
   }
 
   /* ---------- review & submit ---------- */
@@ -3242,8 +3419,17 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   function submitOrder(){
     var t = orderTotals();
     var po = 'PO-' + DEMO.season + '-' + ('000' + (ORDERS.length + 41)).slice(-4);
+    var lines = [];
+    PRODUCTS.forEach(function(x){
+      rowsOf(x).forEach(function(z, si){
+        x.cw.forEach(function(ci, k){
+          var q = qtyOf(x.id, si, k);
+          if(q) lines.push({ id:x.id, si:si, ci:k, q:q });
+        });
+      });
+    });
     ORDERS.unshift({ po:po, date:new Date().toISOString().slice(0, 10), season:DEMO.season,
-                     units:t.units, value:t.value, status:'sub' });
+                     status:'sub', ship:'', lines:lines });
     ORDER = {};
     document.getElementById('rvTitle').textContent = 'Order submitted';
     document.getElementById('rvBody').innerHTML =
@@ -3254,7 +3440,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     document.getElementById('rvFoot').innerHTML =
       '<button class="btn-primary" style="width:100%" type="button" id="rvDone">See my orders</button>';
     document.getElementById('rvDone').addEventListener('click', function(){
-      closePanel(); ptTab = 'orders'; renderPortal();
+      closePanel(); location.hash = '#/partners/orders/' + po;
     });
   }
 
@@ -3284,6 +3470,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     if(demob) demob.hidden = (v !== 'home');
     var fl = document.getElementById('flag');
     if(fl) fl.hidden = (v === 'partners');
+    document.body.classList.toggle('has-ordbar', v === 'partners' && orderTotals().units > 0);
     var shopish = (v === 'shop' || v === 'product');
     [].forEach.call(document.querySelectorAll('.navitem'), function(n){
       var isSig = n.classList.contains('signature');
@@ -3316,6 +3503,9 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     } else if(v === 'product'){
       renderProduct(h.replace('#/product/', '').split('?')[0]);
     } else if(v === 'partners'){
+      var seg = h.split('?')[0].split('/');   /* #, partners, tab, po */
+      ptTab = (seg[2] === 'orders' || seg[2] === 'assets') ? seg[2] : 'linesheet';
+      ptOrderPO = seg[3] ? decodeURIComponent(seg[3]) : null;
       renderPortal();
     }
     requestAnimationFrame(function(){
@@ -3327,6 +3517,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   window.addEventListener('hashchange', route);
 
   /* ---------------- go ---------------- */
+  paintDot();
   route();
   update();
 })();
