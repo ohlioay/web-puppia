@@ -1192,6 +1192,90 @@ body.has-ordbar .toast{bottom:104px}
 .od-act{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:24px}
 .icon-btn[hidden]{display:none}
 
+/* ================= MESSAGES ================= */
+.msg-layout{display:grid; gap:1px; background:var(--bone3); border:1px solid var(--bone3);
+  border-radius:3px; overflow:hidden; height:min(74vh,640px)}
+@media(min-width:880px){.msg-layout{grid-template-columns:320px minmax(0,1fr)}}
+.thlist{background:#fff; overflow-y:auto; min-height:0}
+.thlist-head{padding:14px 16px; border-bottom:1px solid var(--bone3); display:flex;
+  align-items:center; justify-content:space-between; gap:10px; position:sticky; top:0; background:#fff; z-index:2}
+.thlist-head span{font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--on-bone-mute)}
+.thitem{
+  display:block; width:100%; text-align:left; background:transparent; border:0; cursor:pointer;
+  padding:15px 16px; border-bottom:1px solid var(--bone3); color:inherit; font:inherit; transition:background .16s;
+}
+.thitem:hover{background:var(--bone)}
+.thitem.on{background:var(--bone2); box-shadow:inset 3px 0 0 var(--red)}
+.thitem .tsub{display:flex; align-items:baseline; gap:8px; font-size:14px; font-weight:600; line-height:1.35}
+.thitem .tdot{width:7px; height:7px; border-radius:50%; background:var(--red); flex:0 0 auto; margin-top:5px}
+.thitem .tsnip{display:block; font-size:12.5px; color:var(--on-bone-mute); margin-top:5px; line-height:1.5;
+  overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical}
+.thitem .tmeta{display:flex; gap:9px; align-items:center; margin-top:8px;
+  font-family:"Martian Mono",monospace; font-size:8px; letter-spacing:.12em; text-transform:uppercase; color:var(--on-bone-mute)}
+.thview{background:var(--bone); display:flex; flex-direction:column; min-height:0; overflow:hidden}
+.thview-head{padding:16px 18px; border-bottom:1px solid var(--bone3); background:#fff;
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.thview-head h3{margin:0; font-size:1.05rem; font-weight:600; letter-spacing:-.01em}
+.thview-head .sub{display:flex; gap:10px; margin-top:6px; align-items:center; flex-wrap:wrap;
+  font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--on-bone-mute)}
+.thback{display:none}
+@media(max-width:879px){
+  .msg-layout.reading .thlist{display:none}
+  .msg-layout:not(.reading) .thview{display:none}
+  .thback{display:inline-block}
+}
+.bubbles{flex:1; min-height:0; overflow-y:auto; padding:20px 18px; display:flex; flex-direction:column; gap:16px}
+.bub{max-width:min(74%,520px); display:flex; flex-direction:column; gap:6px}
+.bub.me{align-self:flex-end; align-items:flex-end}
+.bub .who{font-family:"Martian Mono",monospace; font-size:8px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--on-bone-mute)}
+.bub .body{background:#fff; border:1px solid var(--bone3); border-radius:3px; padding:13px 15px;
+  font-size:13.5px; line-height:1.65; white-space:pre-wrap}
+.bub.me .body{background:var(--red); color:#fff; border-color:var(--red)}
+.composer{border-top:1px solid var(--bone3); background:#fff; padding:14px 16px}
+.composer{flex:0 0 auto}
+.composer textarea{
+  width:100%; border:1px solid var(--bone3); border-radius:3px; padding:11px 13px; font:inherit;
+  font-size:13.5px; color:inherit; resize:vertical; min-height:74px; outline:none; background:var(--bone);
+}
+.composer textarea:focus{border-color:var(--red)}
+.composer-row{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:10px; flex-wrap:wrap}
+.composer-row .hint{font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--on-bone-mute)}
+.msg-empty{flex:1; display:grid; place-items:center; padding:40px 20px; text-align:center; color:var(--on-bone-mute); font-size:14px}
+
+/* ================= EXPORT ================= */
+.exp{
+  position:fixed; z-index:82; left:50%; top:50%; transform:translate(-50%,-46%) scale(.98);
+  width:min(720px,calc(100% - 24px)); max-height:86vh; background:var(--bone); color:var(--on-bone);
+  border-radius:4px; opacity:0; transition:opacity .26s ease, transform .26s ease;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.55); display:flex; flex-direction:column;
+}
+.exp.on{opacity:1; transform:translate(-50%,-50%) scale(1)}
+.exp[hidden]{display:none}
+.exp-head{padding:22px clamp(18px,3vw,28px) 16px; border-bottom:1px solid var(--bone3);
+  display:flex; align-items:center; justify-content:space-between; gap:12px}
+.exp-head h2{margin:0; font-size:1.25rem; font-stretch:112%}
+.exp-body{flex:1; overflow-y:auto; padding:18px clamp(18px,3vw,28px)}
+.exp-opts{display:grid; gap:14px; margin-bottom:18px}
+@media(min-width:620px){.exp-opts{grid-template-columns:1fr 1fr}}
+.exp-opts fieldset{border:0; padding:0; margin:0}
+.exp-opts legend{font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--on-bone-mute); margin-bottom:8px; padding:0}
+.exp-opts .row{display:flex; gap:7px; flex-wrap:wrap}
+.exp-pre{
+  background:var(--ink); color:var(--on-ink); border-radius:3px; padding:14px 16px; overflow:auto;
+  font-family:"Martian Mono",monospace; font-size:9.5px; line-height:1.85; max-height:220px; white-space:pre;
+}
+.exp-meta{display:flex; gap:20px; flex-wrap:wrap; margin-top:12px;
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--on-bone-mute)}
+.exp-foot{padding:16px clamp(18px,3vw,28px) 22px; border-top:1px solid var(--bone3);
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.exp-foot .btn-primary{flex:1 1 200px}
+.exp-note{width:100%; margin:0; font-size:12px; line-height:1.6; color:var(--on-bone-mute)}
+.exp-note b{color:var(--on-bone)}
+
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
   :root{--navh:78px}
@@ -1515,6 +1599,20 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   <div class="rv-foot" id="rvFoot"></div>
 </div>
 
+<div class="exp" id="exportModal" hidden role="dialog" aria-modal="true" aria-labelledby="expTitle">
+  <div class="exp-head"><h2 class="display" id="expTitle">Export line sheet</h2>
+    <button class="sp-close" type="button" data-close>Close</button></div>
+  <div class="exp-body">
+    <div class="exp-opts">
+      <fieldset><legend>What to export</legend><div class="row" id="expScope"></div></fieldset>
+      <fieldset><legend>Format</legend><div class="row" id="expFormat"></div></fieldset>
+    </div>
+    <pre class="exp-pre" id="expPreview"></pre>
+    <p class="exp-meta"><span id="expRows">—</span><span id="expName">—</span></p>
+  </div>
+  <div class="exp-foot" id="expFoot"></div>
+</div>
+
 <div class="scrim" id="scrim" hidden></div>
 
 <div class="searchpanel" id="searchPanel" hidden role="dialog" aria-modal="true" aria-label="Search">
@@ -1541,6 +1639,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   <div class="dw-foot">
     <p class="dw-sum"><span>Order value</span><b id="cartTotal">$0.00</b></p>
     <button class="btn-primary" style="width:100%" type="button" id="cartCheckout">Review order</button>
+    <button class="btn-mini" style="width:100%; margin-top:9px" type="button" id="cartExport">Export order</button>
   </div>
 </aside>
 
@@ -2943,6 +3042,11 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       });
     });
   }
+  document.getElementById('cartExport').addEventListener('click', function(){
+    if(!session){ closePanel(); open('partner'); return; }
+    if(!orderTotals().units){ toast('No quantities yet'); return; }
+    expScope = 'order'; closePanel(); setTimeout(openExport, 260);
+  });
   document.getElementById('cartCheckout').addEventListener('click', function(){
     if(!session){ closePanel(); open('partner'); return; }
     if(!orderTotals().units){ toast('No quantities yet'); return; }
@@ -3177,6 +3281,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       '<div class="pt-tabs" role="group" aria-label="Portal sections">' +
       '<button class="pt-tab" data-t="linesheet">Line sheet' + (t.lines ? '<span class="b">' + t.lines + '</span>' : '') + '</button>' +
       '<button class="pt-tab" data-t="orders">Orders</button>' +
+      '<button class="pt-tab" data-t="messages">Messages' +
+        (unreadCount() ? '<span class="b">' + unreadCount() + '</span>' : '') + '</button>' +
       '<button class="pt-tab" data-t="assets">Brand assets</button>' +
       '</div><div class="pt-body" id="ptBody"></div>' +
       '<div class="ordbar" id="ordbar" hidden><div class="ob-figs">' +
@@ -3199,7 +3305,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       'rows are sizes, columns are colourways. Row, column and line totals update as you type, so a full size run is a few keystrokes rather than a dozen add-to-cart clicks.</p>' +
       '<div class="pt-tools"><div class="pt-filters">' + brands + '</div><div class="pt-filters">' + cats + '</div>' +
       '<div class="pt-filters"><button class="btn-mini" id="ptExpand">Expand all</button>' +
-      '<button class="btn-mini" id="ptCollapse">Collapse all</button></div></div>' +
+      '<button class="btn-mini" id="ptCollapse">Collapse all</button>' +
+      '<button class="btn-mini" id="ptExport" style="border-color:var(--red); color:var(--red)">Export</button></div></div>' +
       '<div id="lsList">' + list.map(lsRowHTML).join('') + '</div>';
   }
   function lsRowHTML(x){
@@ -3285,6 +3392,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       '<tfoot><tr><th style="text-align:right">Total</th><th class="num">' + units + '</th><th></th>' +
       '<th class="num">' + money(value) + '</th></tr></tfoot></table></div>' +
       '<div class="od-act"><button class="btn-primary" type="button" id="odDup">Copy into current order</button>' +
+      '<button class="btn-mini" type="button" id="odMsg">Message us about this order</button>' +
       '<button class="btn-mini" type="button" id="odPdf">Download PO (PDF)</button></div>';
   }
 
@@ -3307,7 +3415,9 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     ptWrap.innerHTML = portalHTML();
     var body = document.getElementById('ptBody');
     body.innerHTML = ptOrderPO ? orderDetailHTML(ptOrderPO)
-      : (ptTab === 'orders' ? ordersHTML() : (ptTab === 'assets' ? assetsHTML() : lineSheetHTML()));
+      : (ptTab === 'orders'   ? ordersHTML()
+      : (ptTab === 'messages' ? messagesHTML()
+      : (ptTab === 'assets'   ? assetsHTML() : lineSheetHTML())));
     [].forEach.call(ptWrap.querySelectorAll('.pt-tab'), function(b){
       b.setAttribute('aria-pressed', b.dataset.t === ptTab ? 'true' : 'false');
       b.addEventListener('click', function(){ location.hash = '#/partners/' + b.dataset.t; });
@@ -3321,6 +3431,11 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         location.hash = '#/partners/linesheet';
       });
       if(pdf) pdf.addEventListener('click', function(){ toast('PO document — file delivery is out of scope for this prototype'); });
+      var msg = document.getElementById('odMsg');
+      if(msg) msg.addEventListener('click', function(){
+        var ex = THREADS.filter(function(t){ return t.po === ptOrderPO; })[0];
+        if(ex) location.hash = '#/partners/messages/' + ex.id; else newThread(ptOrderPO);
+      });
     }
     document.getElementById('ptOut').addEventListener('click', function(){
       session = null; ORDER = {}; ptTab = 'linesheet'; ptOrderPO = null;
@@ -3334,6 +3449,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       ORDER = {}; renderPortal(); toast('Order cleared');
     });
     if(ptTab === 'linesheet') wireLineSheet();
+    if(ptTab === 'messages' && !ptOrderPO) wireMessages(body);
     if(ptTab === 'assets'){
       [].forEach.call(body.querySelectorAll('[data-dl]'), function(b){
         b.addEventListener('click', function(){ toast('“' + b.dataset.dl + '” — file delivery is out of scope for this prototype'); });
@@ -3362,6 +3478,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         r.classList.add('open'); r.querySelector('.ls-head').setAttribute('aria-expanded', 'true');
       });
     });
+    document.getElementById('ptExport').addEventListener('click', openExport);
     document.getElementById('ptCollapse').addEventListener('click', function(){
       [].forEach.call(ptWrap.querySelectorAll('.lsrow'), function(r){
         r.classList.remove('open'); r.querySelector('.ls-head').setAttribute('aria-expanded', 'false');
@@ -3369,6 +3486,255 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     });
     wireMatrix(ptWrap);
   }
+
+  /* ================= MESSAGES ================= */
+  var THREADS = [
+    { id:'t1', subj:'PO-FW25-0203 — confirming the delivery window', po:'PO-FW25-0203',
+      status:'open', unread:true, msgs:[
+      { who:'me',   name:'You', t:'2025-11-05 16:40',
+        b:'Hi — our Christmas floor set goes in on 5 December. Can PO-FW25-0203 land before the end of November?' },
+      { who:'them', name:'Jiwon Park · PUPPIA Sales', t:'2025-11-06 09:12',
+        b:'It can. Production closes on the 18th and we can book the vessel for the 21st, which puts it in Hamburg around the 27th.\n\nOne thing to flag: the Puffer Vest in Navy M is short by 12 units against your order. I can either split the shipment or swap those to Ink — your call.' }
+    ] },
+    { id:'t2', subj:'SS26 Soft Harness B — availability for M / Navy', po:'',
+      status:'answered', unread:false, msgs:[
+      { who:'me',   name:'You', t:'2025-10-22 11:02',
+        b:'The grid shows M / Navy as out of stock for Soft Harness B. Is that permanent or is a run coming?' },
+      { who:'them', name:'Jiwon Park · PUPPIA Sales', t:'2025-10-22 14:31',
+        b:'A run is coming — the next batch lands mid-January. If you key the quantity in now it will be flagged as above-stock and confirmed against that batch, so you keep your place in the queue.' },
+      { who:'me',   name:'You', t:'2025-10-22 15:08', b:'Understood, thank you. I will put 48 in.' }
+    ] },
+    { id:'t3', subj:'Spring campaign assets for our shop windows', po:'',
+      status:'closed', unread:false, msgs:[
+      { who:'me',   name:'You', t:'2025-09-30 10:15',
+        b:'Do you have the SS26 campaign stills in print resolution? We print two 1.2 m window panels.' },
+      { who:'them', name:'Marie Lefèvre · PUPPIA Marketing', t:'2025-09-30 17:44',
+        b:'Yes — everything in Brand assets is cleared for retailer print use, including 300 dpi TIFFs. Grab “SS26 product photography”; the window crops are in the /panels folder inside the zip.' }
+    ] }
+  ];
+  var TMAP = {}; THREADS.forEach(function(t){ TMAP[t.id] = t; });
+  var ptThread = null;
+  function unreadCount(){ return THREADS.filter(function(t){ return t.unread; }).length; }
+  function lastMsg(t){ return t.msgs[t.msgs.length - 1]; }
+  function esc(x){ return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  var TSTATUS = { open:'Awaiting you', answered:'Answered', closed:'Closed' };
+
+  function messagesHTML(){
+    var open = ptThread ? TMAP[ptThread] : null;
+    var list = '<div class="thlist"><div class="thlist-head"><span>' + THREADS.length + ' threads</span>' +
+      '<button class="btn-mini" type="button" id="msgNew">New message</button></div>' +
+      THREADS.map(function(t){
+        var m = lastMsg(t);
+        return '<button class="thitem' + (open && open.id === t.id ? ' on' : '') + '" type="button" data-th="' + t.id + '">' +
+          '<span class="tsub">' + (t.unread ? '<span class="tdot"></span>' : '') + esc(t.subj) + '</span>' +
+          '<span class="tsnip">' + esc(m.b.split('\n')[0]) + '</span>' +
+          '<span class="tmeta"><span>' + m.t.slice(0, 10) + '</span>' +
+          (t.po ? '<span>· ' + t.po + '</span>' : '') +
+          '<span>· ' + TSTATUS[t.status] + '</span></span></button>';
+      }).join('') + '</div>';
+
+    var view = ptThread === 'new' ? composeHTML() : (open
+      ? '<div class="thview"><div class="thview-head"><div>' +
+        '<button class="btn-mini thback" type="button" id="msgBack" style="margin-bottom:9px">← All threads</button>' +
+        '<h3>' + esc(open.subj) + '</h3><div class="sub"><span>' + TSTATUS[open.status] + '</span>' +
+        (open.po ? '<span>·</span><a href="#/partners/orders/' + open.po + '">' + open.po + '</a>' : '') +
+        '<span>·</span><span>' + open.msgs.length + ' messages</span></div></div></div>' +
+        '<div class="bubbles" id="bubbles">' + open.msgs.map(function(m){
+          return '<div class="bub ' + m.who + '"><span class="who">' + esc(m.name) + ' · ' + m.t + '</span>' +
+                 '<span class="body">' + esc(m.b) + '</span></div>';
+        }).join('') + '</div>' +
+        '<div class="composer"><label class="sr" for="msgBox">Your reply</label>' +
+        '<textarea id="msgBox" placeholder="Write a reply…"></textarea>' +
+        '<div class="composer-row"><span class="hint">Ctrl + Enter to send · replies usually within one business day</span>' +
+        '<button class="btn-primary" type="button" id="msgSend" style="flex:0 0 auto">Send</button></div></div></div>'
+      : '<div class="thview"><p class="msg-empty">Pick a thread on the left,<br>or start a new message.</p></div>');
+
+    return '<p class="pt-note"><b>Messages</b> keep everything about an order in one place — no lost email chains. ' +
+      'Threads can be tied to a purchase order, so both sides always know which shipment is being discussed.</p>' +
+      '<div class="msg-layout' + (open || ptThread === 'new' ? ' reading' : '') + '">' + list + view + '</div>';
+  }
+
+  function wireMessages(body){
+    [].forEach.call(body.querySelectorAll('[data-th]'), function(b){
+      b.addEventListener('click', function(){ location.hash = '#/partners/messages/' + b.dataset.th; });
+    });
+    var back = document.getElementById('msgBack');
+    if(back) back.addEventListener('click', function(){ location.hash = '#/partners/messages'; });
+    var nw = document.getElementById('msgNew');
+    if(nw) nw.addEventListener('click', function(){ newThread(''); });
+    var nmSend = document.getElementById('nmSend');
+    if(nmSend) nmSend.addEventListener('click', function(){
+      var subj = document.getElementById('nmSubj').value.trim();
+      var po   = document.getElementById('nmPo').value;
+      var bodyv = document.getElementById('nmBody').value.trim();
+      if(!subj){ document.getElementById('nmSubj').focus(); toast('Give the thread a subject'); return; }
+      if(!bodyv){ document.getElementById('nmBody').focus(); toast('Write a message first'); return; }
+      var id = 't' + (THREADS.length + 1 + Math.floor(Math.random() * 90));
+      var t = { id:id, subj:subj, po:po, status:'answered', unread:false,
+                msgs:[{ who:'me', name:'You', t:new Date().toISOString().slice(0, 16).replace('T', ' '), b:bodyv }] };
+      THREADS.unshift(t); TMAP[id] = t; newPO = '';
+      location.hash = '#/partners/messages/' + id;
+      toast('Message sent');
+    });
+
+    var box = document.getElementById('msgBox'), send = document.getElementById('msgSend');
+    if(send){
+      var post = function(){
+        var v = box.value.trim();
+        if(!v){ box.focus(); return; }
+        var t = TMAP[ptThread];
+        t.msgs.push({ who:'me', name:'You', t:new Date().toISOString().slice(0, 16).replace('T', ' '), b:v });
+        t.status = 'answered'; t.unread = false;
+        renderPortal();
+        var bb = document.getElementById('bubbles');
+        if(bb) bb.scrollTop = bb.scrollHeight;
+        toast('Message sent');
+      };
+      send.addEventListener('click', post);
+      box.addEventListener('keydown', function(e){ if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)) post(); });
+    }
+    var bb = document.getElementById('bubbles');
+    if(bb) bb.scrollTop = bb.scrollHeight;
+  }
+  var newPO = '';
+  function newThread(po){ newPO = po || ''; location.hash = '#/partners/messages/new'; }
+  function composeHTML(){
+    return '<div class="thview"><div class="thview-head"><div>' +
+      '<button class="btn-mini thback" type="button" id="msgBack" style="margin-bottom:9px">← All threads</button>' +
+      '<h3>New message</h3><div class="sub"><span>To PUPPIA sales</span></div></div></div>' +
+      '<div class="bubbles" style="display:block">' +
+      '<div class="field" style="max-width:560px"><label for="nmSubj">Subject</label>' +
+      '<input id="nmSubj" type="text" placeholder="What is this about?" value="' +
+        (newPO ? esc(newPO) + ' — ' : '') + '"></div>' +
+      '<div class="field" style="max-width:560px"><label for="nmPo">Related order (optional)</label>' +
+      '<select id="nmPo" style="width:100%; border:1px solid var(--bone3); border-radius:3px; padding:12px 13px; font:inherit; font-size:14px; background:#fff">' +
+      '<option value="">No related order</option>' +
+      ORDERS.map(function(o){
+        return '<option value="' + o.po + '"' + (o.po === newPO ? ' selected' : '') + '>' + o.po + ' · ' + o.season + '</option>';
+      }).join('') + '</select></div></div>' +
+      '<div class="composer"><label class="sr" for="nmBody">Message</label>' +
+      '<textarea id="nmBody" placeholder="Write your message…"></textarea>' +
+      '<div class="composer-row"><span class="hint">Replies usually within one business day</span>' +
+      '<button class="btn-primary" type="button" id="nmSend" style="flex:0 0 auto">Send message</button></div></div></div>';
+  }
+
+  /* ================= EXPORT ================= */
+  panels['export'] = document.getElementById('exportModal');
+  var expScope = 'sheet', expFormat = 'csv';
+  var SCOPES  = [{ k:'sheet', n:'Line sheet (current filters)' }, { k:'order', n:'Current order only' }];
+  var FORMATS = [{ k:'csv', n:'CSV (UTF-8)' }, { k:'xls', n:'Excel (.xls)' }];
+
+  function exportRows(){
+    var head = ['Brand', 'Style', 'Code', 'Category', 'Size', 'Colourway', 'SKU',
+                'Wholesale USD', 'MSRP USD', 'Available', 'Order qty', 'Line value USD'];
+    var out = [head], list = expScope === 'order'
+      ? PRODUCTS.filter(function(x){ return unitsOf(x) > 0; })
+      : ptList();
+    list.forEach(function(x){
+      var br = BMAP[x.b], w = wholesale(x), code = x.c.slice(0, 2).toUpperCase() + '-' + (1000 + x.n.length * 37);
+      rowsOf(x).forEach(function(z, si){
+        x.cw.forEach(function(ci, k){
+          var q = qtyOf(x.id, si, k), ats = stockOf(x, si, k);
+          if(expScope === 'order' && !q) return;
+          out.push([br.n, x.n, code, x.c, z.s, CW[ci].n, code + '-' + z.s + '-' + CW[ci].n.toUpperCase().slice(0, 3),
+                    w.toFixed(2), price(x).toFixed(2), ats, q, (q * w).toFixed(2)]);
+        });
+      });
+    });
+    return out;
+  }
+  function toCSV(rows){
+    return rows.map(function(r){
+      return r.map(function(c){
+        c = String(c);
+        return /[",\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c;
+      }).join(',');
+    }).join('\r\n');
+  }
+  function toXLS(rows){
+    var cell = function(c, i){
+      var num = i > 6 && c !== '' && !isNaN(c);
+      return '<Cell><Data ss:Type="' + (num ? 'Number' : 'String') + '">' +
+             esc(c) + '</Data></Cell>';
+    };
+    var body = rows.map(function(r, ri){
+      return '<Row' + (ri === 0 ? ' ss:StyleID="h"' : '') + '>' +
+             r.map(function(c, i){ return ri === 0 ? '<Cell ss:StyleID="h"><Data ss:Type="String">' + esc(c) + '</Data></Cell>' : cell(c, i); }).join('') +
+             '</Row>';
+    }).join('');
+    return '<?xml version="1.0"?>\n<?mso-application progid="Excel.Sheet"?>\n' +
+      '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">' +
+      '<Styles><Style ss:ID="h"><Font ss:Bold="1"/><Interior ss:Color="#E9E3D4" ss:Pattern="Solid"/></Style></Styles>' +
+      '<Worksheet ss:Name="' + DEMO.season + ' line sheet"><Table>' + body + '</Table></Worksheet></Workbook>';
+  }
+  function exportPayload(){
+    var rows = exportRows();
+    var text = expFormat === 'csv' ? toCSV(rows) : toXLS(rows);
+    var name = 'puppia-' + DEMO.season.toLowerCase() + '-' +
+               (expScope === 'order' ? 'order' : 'linesheet') + '.' + (expFormat === 'csv' ? 'csv' : 'xls');
+    var mime = expFormat === 'csv' ? 'text/csv;charset=utf-8' : 'application/vnd.ms-excel;charset=utf-8';
+    return { rows:rows, text:text, name:name, mime:mime };
+  }
+  var sandboxed = (function(){ try { return window.self !== window.top; } catch(e){ return true; } })();
+
+  function renderExport(){
+    document.getElementById('expScope').innerHTML = SCOPES.map(function(o){
+      return '<button type="button" class="chip-btn" data-sc="' + o.k + '" aria-pressed="' + (o.k === expScope) + '">' + o.n + '</button>';
+    }).join('');
+    document.getElementById('expFormat').innerHTML = FORMATS.map(function(o){
+      return '<button type="button" class="chip-btn" data-fm="' + o.k + '" aria-pressed="' + (o.k === expFormat) + '">' + o.n + '</button>';
+    }).join('');
+    var pay = exportPayload();
+    var preview = expFormat === 'csv'
+      ? pay.text.split('\r\n').slice(0, 12).join('\n')
+      : pay.text.split('\n').slice(0, 6).join('\n');
+    document.getElementById('expPreview').textContent =
+      preview + (pay.rows.length > 12 ? '\n… ' + (pay.rows.length - 12) + ' more rows' : '');
+    document.getElementById('expRows').textContent = (pay.rows.length - 1) + ' SKU rows';
+    document.getElementById('expName').textContent = pay.name;
+    document.getElementById('expFoot').innerHTML =
+      (sandboxed
+        ? '<button class="btn-primary" type="button" id="expCopy">Copy to clipboard</button>' +
+          '<button class="btn-mini" type="button" id="expDl">Download ' + pay.name.split('.').pop().toUpperCase() + '</button>' +
+          '<p class="exp-note"><b>Heads up:</b> this prototype is running inside an embedded preview, which blocks ' +
+          'file downloads. Copy works here and pastes straight into Excel or Sheets; the download button works when ' +
+          'the page is opened on its own.</p>'
+        : '<button class="btn-primary" type="button" id="expDl">Download ' + pay.name + '</button>' +
+          '<button class="btn-mini" type="button" id="expCopy">Copy to clipboard</button>');
+    [].forEach.call(document.querySelectorAll('#expScope .chip-btn'), function(b){
+      b.addEventListener('click', function(){ expScope = b.dataset.sc; renderExport(); });
+    });
+    [].forEach.call(document.querySelectorAll('#expFormat .chip-btn'), function(b){
+      b.addEventListener('click', function(){ expFormat = b.dataset.fm; renderExport(); });
+    });
+    var dl = document.getElementById('expDl');
+    if(dl) dl.addEventListener('click', function(){
+      var pl = exportPayload();
+      try {
+        var blob = new Blob(['﻿' + pl.text], { type:pl.mime });
+        var url = URL.createObjectURL(blob), a = document.createElement('a');
+        a.href = url; a.download = pl.name; document.body.appendChild(a); a.click();
+        setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 400);
+        toast('Exporting ' + pl.name);
+      } catch(e){ toast('Download blocked here — use Copy to clipboard'); }
+    });
+    var cp = document.getElementById('expCopy');
+    if(cp) cp.addEventListener('click', function(){
+      var pl = exportPayload();
+      var done = function(){ toast((pl.rows.length - 1) + ' rows copied — paste into Excel or Sheets'); };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(pl.text).then(done, fallback);
+      } else fallback();
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = pl.text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch(e){ toast('Could not copy — select the preview text instead'); }
+        ta.remove();
+      }
+    });
+  }
+  function openExport(){ renderExport(); open('export'); }
 
   /* ---------- review & submit ---------- */
   panels.review = document.getElementById('reviewModal');
@@ -3504,8 +3870,11 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       renderProduct(h.replace('#/product/', '').split('?')[0]);
     } else if(v === 'partners'){
       var seg = h.split('?')[0].split('/');   /* #, partners, tab, po */
-      ptTab = (seg[2] === 'orders' || seg[2] === 'assets') ? seg[2] : 'linesheet';
-      ptOrderPO = seg[3] ? decodeURIComponent(seg[3]) : null;
+      ptTab = (seg[2] === 'orders' || seg[2] === 'assets' || seg[2] === 'messages') ? seg[2] : 'linesheet';
+      ptOrderPO = (ptTab === 'orders' && seg[3]) ? decodeURIComponent(seg[3]) : null;
+      ptThread = (ptTab === 'messages' && seg[3])
+        ? (seg[3] === 'new' ? 'new' : (TMAP[seg[3]] ? seg[3] : null)) : null;
+      if(ptThread && ptThread !== 'new') TMAP[ptThread].unread = false;
       renderPortal();
     }
     requestAnimationFrame(function(){
