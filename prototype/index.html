@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="PUPPIA global site prototype — home, navigation, seasonal catalog web-book and the Soft Harness signature page.">
+<meta name="description" content="PUPPIA global site prototype — home, shop, product detail, seasonal catalog web-book and the Soft Harness signature page.">
 <title>PUPPIA Soft Harness</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -586,7 +586,7 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
 .door svg{width:15px; height:15px}
 
 /* --- S5 houses --- */
-.houses{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:clamp(12px,1.6vw,20px)}
+.houses{display:grid; grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); gap:clamp(12px,1.6vw,20px)}
 .house{border:1px solid var(--bone3); border-radius:3px; padding:20px 20px 22px; display:flex; flex-direction:column; gap:12px;
   text-decoration:none; color:inherit; transition:border-color .2s ease, transform .2s ease}
 .house:hover{transform:translateY(-3px); border-color:var(--on-bone)}
@@ -603,27 +603,12 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
 .hglobe{display:grid; gap:clamp(20px,3vw,44px); align-items:center}
 @media(min-width:900px){.hglobe{grid-template-columns:minmax(240px,.85fr) minmax(0,1.15fr)}}
 
-/* ---- archive hierarchy ---- */
-.houses-group + .houses-group{margin-top:clamp(22px,3vw,34px)}
-.hg-label{
-  display:flex; align-items:center; gap:12px; margin-bottom:14px;
-  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--on-bone-mute);
+/* ---- houses ---- */
+.house .house-im{
+  aspect-ratio:16/10; border-radius:2px; display:grid; place-items:center; overflow:hidden;
+  background:var(--bone2); margin-bottom:4px;
 }
-.hg-label::after{content:""; flex:1; height:1px; background:var(--bone3)}
-.hg-label em{font-style:normal; color:var(--red)}
-.houses.sm{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-.house.arch{background:var(--bone2); border-color:transparent}
-.house.arch b{font-size:1rem}
-.house.arch p{font-size:12.5px}
-.badge-arch{
-  display:inline-block; font-family:"Martian Mono",monospace; font-size:8px; letter-spacing:.16em;
-  text-transform:uppercase; background:var(--yellow); color:var(--ink); padding:2px 6px; border-radius:2px;
-}
-.note-strip{
-  display:flex; gap:12px; align-items:flex-start; margin-top:18px; padding:14px 16px;
-  border-left:3px solid var(--yellow); background:var(--bone2); font-size:13.5px; color:var(--on-bone-mute); line-height:1.6;
-}
-.note-strip b{color:var(--on-bone); font-weight:600}
+.house .house-im svg{width:52%; height:auto; overflow:visible}
 
 /* ---- prototype slot preview ---- */
 .demobar{
@@ -746,6 +731,129 @@ footer{background:var(--ink2); padding:clamp(40px,6vw,80px) clamp(20px,4vw,64px)
   .leaf{left:0; width:100%}
 }
 
+/* ================= SHOP (listing) ================= */
+#view-shop{background:var(--bone); color:var(--on-bone); min-height:100vh}
+.shop-wrap{padding:calc(var(--navh) + 30px) clamp(20px,4vw,64px) 70px; max-width:1400px; margin:0 auto}
+.crumb{
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--on-bone-mute); display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px;
+}
+.crumb a{color:inherit; text-decoration:none} .crumb a:hover{color:var(--on-bone)}
+.crumb span{opacity:.45}
+.shop-head{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  padding-bottom:22px; border-bottom:1px solid var(--bone3); margin-bottom:26px}
+.shop-head h1{margin:0; font-size:clamp(2rem,5vw,3.4rem)}
+.shop-count{font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-bone-mute)}
+.shop-body{display:grid; gap:clamp(22px,3vw,44px); align-items:start}
+@media(min-width:900px){.shop-body{grid-template-columns:196px minmax(0,1fr)}}
+.filters{display:flex; flex-direction:column; gap:26px}
+@media(min-width:900px){.filters{position:sticky; top:calc(var(--navh) + 24px)}}
+.fgroup h4{
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--on-bone-mute); margin:0 0 10px; padding-bottom:8px; border-bottom:1px solid var(--bone3); font-weight:500;
+}
+.fgroup ul{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:7px}
+@media(min-width:900px){.fgroup ul{flex-direction:column; gap:2px}}
+.fbtn{
+  appearance:none; background:transparent; border:0; cursor:pointer; color:var(--on-bone-mute);
+  font:inherit; font-size:13.5px; padding:6px 10px 6px 0; text-align:left; width:100%;
+  display:flex; align-items:center; gap:8px; transition:color .16s;
+}
+@media(max-width:899px){
+  .fbtn{border:1px solid var(--bone3); border-radius:99px; padding:7px 13px; width:auto;
+    font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase}
+  .fbtn[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:#fff}
+}
+.fbtn i{width:7px; height:7px; border-radius:50%; background:var(--bd,transparent); flex:0 0 auto}
+.fbtn:hover{color:var(--on-bone)}
+.fbtn[aria-pressed="true"]{color:var(--red); font-weight:600}
+.fbtn em{margin-left:auto; font-style:normal; font-family:"Martian Mono",monospace; font-size:9px; opacity:.55}
+@media(max-width:899px){.fbtn em{display:none}}
+.shop-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:clamp(14px,1.8vw,26px)}
+.sortbar{display:flex; justify-content:flex-end; margin-bottom:16px; gap:16px;
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase}
+.sortbar button{appearance:none; background:transparent; border:0; cursor:pointer; color:var(--on-bone-mute);
+  font:inherit; padding:4px 0; border-bottom:1.5px solid transparent}
+.sortbar button[aria-pressed="true"]{color:var(--red); border-bottom-color:var(--red)}
+
+/* ================= PRODUCT DETAIL ================= */
+#view-product{background:var(--bone); color:var(--on-bone); min-height:100vh}
+.pd-wrap{padding:calc(var(--navh) + 30px) clamp(20px,4vw,64px) 70px; max-width:1300px; margin:0 auto}
+.pd-main{display:grid; gap:clamp(26px,4vw,60px); align-items:start}
+@media(min-width:920px){.pd-main{grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr)}}
+.pd-gal{display:flex; flex-direction:column; gap:10px}
+.pd-hero{position:relative; aspect-ratio:1/1; background:var(--bone2); border-radius:3px; display:grid; place-items:center; overflow:hidden}
+.pd-hero svg{width:64%; height:auto; overflow:visible; transition:opacity .2s}
+.pd-hero .sealwrap{position:absolute; top:16px; right:16px; background:var(--bone); border-radius:50%; padding:6px; display:grid}
+.pd-hero .sealwrap .seal{width:22px; height:22px}
+.pd-hero .sealwrap .seal circle{stroke:var(--red)} .pd-hero .sealwrap .seal path{fill:var(--red)}
+.pd-thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:10px}
+.pd-thumbs button{
+  appearance:none; cursor:pointer; aspect-ratio:1/1; background:var(--bone2); border:1.5px solid transparent;
+  border-radius:2px; display:grid; place-items:center; padding:8px; transition:border-color .18s;
+}
+.pd-thumbs button svg{width:78%; height:auto}
+.pd-thumbs button[aria-pressed="true"]{border-color:var(--on-bone)}
+.pd-info > * + *{margin-top:18px}
+.pd-name{font-size:clamp(1.8rem,4vw,2.8rem); margin:10px 0 0}
+.pd-price{font-family:"Martian Mono",monospace; font-size:1.15rem; font-variant-numeric:tabular-nums}
+.pd-desc{font-size:14.5px; line-height:1.7; color:var(--on-bone-mute); max-width:44ch}
+.opt-label{
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--on-bone-mute); display:flex; justify-content:space-between; gap:10px; margin-bottom:9px;
+}
+.opt-label b{color:var(--on-bone); font-weight:600}
+.cw-row{display:flex; gap:9px; flex-wrap:wrap}
+.cw{appearance:none; cursor:pointer; width:34px; height:34px; border-radius:50%; border:1.5px solid var(--bone3);
+  padding:3px; background:transparent; transition:border-color .18s, transform .18s}
+.cw span{display:block; width:100%; height:100%; border-radius:50%; background:var(--c)}
+.cw:hover{transform:translateY(-2px)}
+.cw[aria-pressed="true"]{border-color:var(--on-bone); border-width:2px}
+.sz-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(62px,1fr)); gap:8px}
+.sz{appearance:none; cursor:pointer; background:transparent; border:1px solid var(--bone3); border-radius:2px;
+  padding:11px 6px; text-align:center; transition:all .16s; color:var(--on-bone)}
+.sz b{display:block; font-family:"Martian Mono",monospace; font-size:11px; letter-spacing:.1em}
+.sz small{display:block; font-family:"Martian Mono",monospace; font-size:8px; color:var(--on-bone-mute); margin-top:4px}
+.sz:hover{border-color:var(--on-bone)}
+.sz[aria-pressed="true"]{background:var(--on-bone); border-color:var(--on-bone); color:var(--bone)}
+.sz[aria-pressed="true"] small{color:rgba(244,240,230,.7)}
+.pd-buy{display:flex; gap:10px; flex-wrap:wrap}
+.btn-primary{
+  flex:1 1 200px; appearance:none; cursor:pointer; border:0; background:var(--red); color:#fff;
+  padding:17px 22px; border-radius:99px; transition:background .18s;
+  font-family:"Martian Mono",monospace; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+}
+.btn-primary:hover{background:var(--red-lt)}
+.btn-ghost{
+  flex:0 1 auto; appearance:none; cursor:pointer; background:transparent; color:inherit; text-decoration:none;
+  border:1px solid var(--on-bone); padding:16px 20px; border-radius:99px; display:inline-flex; align-items:center; gap:10px;
+  font-family:"Martian Mono",monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; transition:all .18s;
+}
+.btn-ghost:hover{background:var(--on-bone); color:var(--bone)}
+.acc{border-top:1px solid var(--bone3)}
+.acc details{border-bottom:1px solid var(--bone3)}
+.acc summary{
+  cursor:pointer; list-style:none; padding:15px 0; display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+"; font-size:15px; color:var(--on-bone-mute)}
+.acc details[open] summary::after{content:"–"}
+.acc .accbody{padding:0 0 18px; font-size:13.5px; line-height:1.75; color:var(--on-bone-mute)}
+.acc table{width:100%; border-collapse:collapse; font-family:"Martian Mono",monospace; font-size:10px}
+.acc th{text-align:left; padding:6px 6px 6px 0; color:var(--on-bone-mute); font-weight:500; letter-spacing:.1em;
+  text-transform:uppercase; font-size:8.5px; border-bottom:1px solid var(--bone3)}
+.acc td{padding:7px 6px 7px 0; border-bottom:1px solid var(--bone3); font-variant-numeric:tabular-nums}
+.acc tr.hit td{color:var(--red); font-weight:700}
+.pd-rel{margin-top:clamp(48px,7vw,88px); padding-top:30px; border-top:1px solid var(--bone3)}
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translate(-50%,20px); z-index:70;
+  background:var(--ink); color:var(--on-ink); padding:13px 20px; border-radius:99px; opacity:0;
+  font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  transition:opacity .25s ease, transform .25s ease; pointer-events:none;
+}
+.toast.on{opacity:1; transform:translate(-50%,0)}
+
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
   :root{--navh:78px}
@@ -818,10 +926,10 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     <div class="nav-mid">
       <div class="navitem signature"><a href="#/soft-harness"><svg class="seal" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.6"/><circle cx="12" cy="12" r="8.1" opacity=".45"/><path d="M8.6 9.6 h6.8 a1.5 1.5 0 0 1 1.5 1.5 v1.8 a1.5 1.5 0 0 1 -1.5 1.5 h-6.8 a1.5 1.5 0 0 1 -1.5 -1.5 v-1.8 a1.5 1.5 0 0 1 1.5 -1.5 z"/><path d="M10.4 11.6 h3.2" stroke-width="0" opacity="0"/></svg>Soft Harness®</a></div>
       <span class="navdiv"></span>
-      <div class="navitem"><a href="#/shop?c=walk">Walk</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=walk">Harness</a></li><li><a href="#/shop?c=walk">Leash</a></li><li><a href="#/shop?c=walk">Collar</a></li><li><a href="#/shop?c=walk">Walk Set</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-puppia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Walk Kit</b><span>WALK · 자세히 보기</span></span></div></div></div></div></div>
-      <div class="navitem"><a href="#/shop?c=apparel">Apparel</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=apparel">Outerwear</a></li><li><a href="#/shop?c=apparel">Tee & Knit</a></li><li><a href="#/shop?c=apparel">Dress</a></li><li><a href="#/shop?c=apparel">Rainwear</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-pinka)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Outerwear</b><span>APPAREL · 자세히 보기</span></span></div></div></div></div></div>
-      <div class="navitem"><a href="#/shop?c=living">Living</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=living">Bed & Mat</a></li><li><a href="#/shop?c=living">House</a></li><li><a href="#/shop?c=living">Carrier</a></li><li><a href="#/shop?c=living">Car Seat</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-olchi)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>2-Row Car Seat</b><span>LIVING · 자세히 보기</span></span></div></div></div></div></div>
-      <div class="navitem"><a href="#/shop?c=acc">Acc</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=acc">Bowl</a></li><li><a href="#/shop?c=acc">Pouch</a></li><li><a href="#/shop?c=acc">Charm</a></li><li><a href="#/shop?c=acc">Grooming</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-catspia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>Bell & Charm</b><span>ACC · 자세히 보기</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="walk"><a href="#/shop?c=walk">Walk</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=walk">Harness</a></li><li><a href="#/shop?c=walk">Leash</a></li><li><a href="#/shop?c=walk">Collar</a></li><li><a href="#/shop?c=walk">Walk Set</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-puppia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Walk Kit</b><span>WALK · 자세히 보기</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="apparel"><a href="#/shop?c=apparel">Apparel</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=apparel">Outerwear</a></li><li><a href="#/shop?c=apparel">Tee & Knit</a></li><li><a href="#/shop?c=apparel">Dress</a></li><li><a href="#/shop?c=apparel">Rainwear</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-pinka)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>SS26 Outerwear</b><span>APPAREL · 자세히 보기</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="living"><a href="#/shop?c=living">Living</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=living">Bed & Mat</a></li><li><a href="#/shop?c=living">House</a></li><li><a href="#/shop?c=living">Carrier</a></li><li><a href="#/shop?c=living">Car Seat</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-olchi)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>2-Row Car Seat</b><span>LIVING · 자세히 보기</span></span></div></div></div></div></div>
+      <div class="navitem" data-cat="acc"><a href="#/shop?c=acc">Acc</a><div class="mega"><div class="mega-in"><div><h5>Category</h5><ul><li><a href="#/shop?c=acc">Bowl</a></li><li><a href="#/shop?c=acc">Pouch</a></li><li><a href="#/shop?c=acc">Charm</a></li><li><a href="#/shop?c=acc">Grooming</a></li></ul></div><div><h5>By brand</h5><ul><li><a href="#/shop?b=puppia" class="blabel" style="--bd:var(--b-puppia)"><i></i>PUPPIA</a></li><li><a href="#/shop?b=olchi" class="blabel" style="--bd:var(--b-olchi)"><i></i>OLCHI</a></li><li><a href="#/shop?b=pinkaholic" class="blabel" style="--bd:var(--b-pinka)"><i></i>PINKAHOLIC</a></li><li><a href="#/shop?b=catspia" class="blabel" style="--bd:var(--b-catspia)"><i></i>CATSPIA</a></li></ul></div><div><h5>This season</h5><div class="mega-feat"><span class="tile" style="background:var(--b-catspia)"><svg viewBox="0 0 300 300" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" fill="#fff" stroke="none" opacity=".2"/><path d="M78 108 h144 a26 26 0 0 1 26 26 v44 a26 26 0 0 1 -26 26 h-144 a26 26 0 0 1 -26 -26 v-44 a26 26 0 0 1 26 -26 z" stroke="#fff" stroke-width="5"/><path d="M98 108 v-40 a14 14 0 0 1 14 -14 h76 a14 14 0 0 1 14 14 v40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><path d="M98 204 v40 a14 14 0 0 0 14 14 h76 a14 14 0 0 0 14 -14 v-40" stroke="rgba(255,255,255,.62)" stroke-width="4.5" opacity=".8"/><rect x="132" y="140" width="36" height="32" rx="7" fill="rgba(255,255,255,.62)" opacity=".9"/><path d="M141 156 h18" stroke="rgba(0,0,0,.25)" stroke-width="3"/></g></svg></span><span><b>Bell & Charm</b><span>ACC · 자세히 보기</span></span></div></div></div></div></div>
       <div class="navitem"><a href="#/catalog">Catalog</a></div>
     </div>
     <div class="nav-r">
@@ -934,10 +1042,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
           <p class="eyebrow" style="color:var(--on-bone-mute)">Shop — 4 brands, one catalog</p>
           <h2 class="display d-md">New<br>arrivals.</h2>
         </div>
-        <a class="more" href="#/shop">전체 카탈로그 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="more" href="#/shop">전체 제품 보기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
-      <div class="tabs" id="brandTabs" role="group" aria-label="브랜드 필터"></div>
-      <div class="subchips" id="catChips" role="group" aria-label="카테고리 필터"></div>
       <div class="pgrid" id="pgrid"></div>
     </div>
   </section>
@@ -961,9 +1067,9 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       <div class="hhead">
         <div class="t">
           <p class="eyebrow" style="color:var(--on-bone-mute)">The Houses</p>
-          <h2 class="display d-md">One site.<br>Four labels.</h2>
+          <h2 class="display d-md">Four<br>labels.</h2>
         </div>
-        <p class="lede" style="color:var(--on-bone-mute); margin:0">로고를 나열하지 않습니다. 같은 서체·같은 크기의 라벨과 점 하나로 구분합니다. 그래서 브랜드가 늘어도 그리드는 하나의 시스템으로 남습니다.</p>
+        <p class="lede" style="color:var(--on-bone-mute); margin:0">한 사이트 안에 네 개의 라벨이 있습니다. 로고를 나열하는 대신 같은 서체·같은 크기의 라벨과 점 하나로 구분합니다.</p>
       </div>
       <div class="houses" id="houses"></div>
     </div>
@@ -1007,7 +1113,68 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
 
 </div>
 
-<div id="view-catalog" hidden>
+<div id="view-shop" data-ground="bone" hidden>
+  <div class="shop-wrap">
+    <p class="crumb"><a href="#/">Home</a><span>/</span><span id="shopCrumb">All products</span></p>
+    <div class="shop-head">
+      <div>
+        <p class="eyebrow" style="color:var(--on-bone-mute)" id="shopEyebrow">Shop</p>
+        <h1 class="display" id="shopTitle">All products</h1>
+      </div>
+      <span class="shop-count" id="shopCount">—</span>
+    </div>
+    <div class="shop-body">
+      <aside class="filters">
+        <div class="fgroup"><h4>Category</h4><ul id="fCat"></ul></div>
+        <div class="fgroup"><h4>Brand</h4><ul id="fBrand"></ul></div>
+      </aside>
+      <div>
+        <div class="sortbar" id="sortbar" role="group" aria-label="정렬"></div>
+        <div class="shop-grid" id="shopGrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="view-product" data-ground="bone" hidden>
+  <div class="pd-wrap">
+    <p class="crumb"><a href="#/">Home</a><span>/</span><a id="pdCrumbCat" href="#/shop">Shop</a><span>/</span><span id="pdCrumbName">—</span></p>
+    <div class="pd-main">
+      <div class="pd-gal">
+        <div class="pd-hero" id="pdHero"></div>
+        <div class="pd-thumbs" id="pdThumbs" role="group" aria-label="이미지 선택"></div>
+      </div>
+      <div class="pd-info">
+        <span class="blabel" id="pdBrand"><i></i><span></span></span>
+        <h1 class="display pd-name" id="pdName">—</h1>
+        <p class="pd-price" id="pdPrice">—</p>
+        <p class="pd-desc" id="pdDesc">—</p>
+        <div>
+          <p class="opt-label"><span>Colourway</span><b id="pdCwName">—</b></p>
+          <div class="cw-row" id="pdCw" role="group" aria-label="컬러웨이"></div>
+        </div>
+        <div>
+          <p class="opt-label"><span>Size</span><b id="pdSzHint">가슴둘레 기준</b></p>
+          <div class="sz-row" id="pdSz" role="group" aria-label="사이즈"></div>
+        </div>
+        <div class="pd-buy">
+          <button class="btn-primary" type="button" id="pdAdd">장바구니 담기</button>
+          <a class="btn-ghost" href="#/soft-harness">사이즈 찾기</a>
+        </div>
+        <div class="acc" id="pdAcc"></div>
+      </div>
+    </div>
+    <div class="pd-rel">
+      <div class="hhead"><div class="t"><p class="eyebrow" style="color:var(--on-bone-mute)">함께 보면 좋은</p>
+        <h2 class="display d-md">Related.</h2></div></div>
+      <div class="shop-grid" id="pdRel"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div id="view-catalog" data-ground="ink" hidden>
   <div class="cat-wrap">
     <div class="cat-head">
       <div>
@@ -1741,48 +1908,76 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
 
   /* ================= HOME : data ================= */
   var BRANDS = [
-    { k:'puppia',  n:'PUPPIA',     v:'--b-puppia',  yr:'Since 2002', active:true,
+    { k:'puppia',  n:'PUPPIA',     v:'--b-puppia',  yr:'Since 2002', hero:'walk',    season:true,
       d:'기능과 기본기. 소프트하네스가 태어난 곳이자 브랜드의 기준선.' },
-    { k:'olchi',   n:'OLCHI',      v:'--b-olchi',   yr:'Since 2016', active:true,
+    { k:'olchi',   n:'OLCHI',      v:'--b-olchi',   yr:'Since 2016', hero:'apparel', season:true,
       d:'컬러풀한 감성과 편안한 착용감. 일상에서 가볍게 쓰는 캐주얼 라인.' },
-    { k:'pinka',   n:'PINKAHOLIC', v:'--b-pinka',   yr:'2006–2024', active:false,
-      d:'뉴욕발 프리미엄 패션 라인. 신규 시즌은 종료되었고 스테디셀러와 잔여 재고로 운영합니다.' },
-    { k:'catspia', n:'CATSPIA',    v:'--b-catspia', yr:'2010–2023', active:false,
-      d:'고양이 전용 라인. 신규 생산은 종료, 대표 품목만 재고 소진까지 유지합니다.' }
+    { k:'pinka',   n:'PINKAHOLIC', v:'--b-pinka',   yr:'Since 2006', hero:'apparel', season:false,
+      d:'뉴욕발 프리미엄 패션 라인. 유니크한 프린트와 마감이 특징입니다.' },
+    { k:'catspia', n:'CATSPIA',    v:'--b-catspia', yr:'Since 2010', hero:'living',  season:false,
+      d:'고양이 전용 라인. 체형과 습성에 맞춘 하네스와 리빙 제품.' }
   ];
   var BMAP = {}; BRANDS.forEach(function(b){ BMAP[b.k] = b; });
-  var ACTIVE = BRANDS.filter(function(b){ return b.active; });
+
+  var CW = [
+    { n:'Red',  h:'#E13B26' }, { n:'Navy', h:'#1B4FD8' }, { n:'Sand', h:'#C9A96B' },
+    { n:'Moss', h:'#4C6B45' }, { n:'Ink',  h:'#2C2B31' }, { n:'Rose', h:'#B8446B' }
+  ];
 
   var CATS = [{ k:'walk', n:'Walk' }, { k:'apparel', n:'Apparel' }, { k:'living', n:'Living' }, { k:'acc', n:'Acc' }];
 
   var PRODUCTS = [
-    { b:'puppia',  c:'walk',    n:'Soft Harness A',     p:'32,000', std:true,  nw:false },
-    { b:'puppia',  c:'walk',    n:'Soft Harness B',     p:'34,000', std:true,  nw:true  },
-    { b:'puppia',  c:'walk',    n:'Ritefit Collar',     p:'18,000', std:false, nw:false },
-    { b:'puppia',  c:'walk',    n:'Two-Tone Lead',      p:'22,000', std:false, nw:true  },
-    { b:'puppia',  c:'apparel', n:'Mountaineer Coat',   p:'58,000', std:false, nw:false },
-    { b:'puppia',  c:'apparel', n:'Gaspar Fleece',      p:'44,000', std:false, nw:true  },
-    { b:'puppia',  c:'living',  n:'Woven Mat',          p:'46,000', std:false, nw:false },
-    { b:'puppia',  c:'acc',     n:'Travel Bowl',        p:'21,000', std:false, nw:false },
-    { b:'olchi',   c:'walk',    n:'Olchi Vest Harness', p:'29,000', std:false, nw:true  },
-    { b:'olchi',   c:'walk',    n:'Bold Lead',          p:'19,000', std:false, nw:false },
-    { b:'olchi',   c:'apparel', n:'Color Block Tee',    p:'26,000', std:false, nw:false },
-    { b:'olchi',   c:'apparel', n:'Puffer Vest',        p:'49,000', std:false, nw:true  },
-    { b:'olchi',   c:'living',  n:'2-Row Car Seat',     p:'89,000', std:false, nw:true  },
-    { b:'olchi',   c:'acc',     n:'Snap Pouch',         p:'16,000', std:false, nw:false },
-    { b:'pinka',   c:'walk',    n:'Lapel Harness',      p:'42,000', std:false, nw:false, last:true },
-    { b:'pinka',   c:'apparel', n:'Bijou Dress',        p:'64,000', std:false, nw:false, last:true },
-    { b:'pinka',   c:'apparel', n:'Fur Trim Coat',      p:'78,000', std:false, nw:false },
-    { b:'pinka',   c:'acc',     n:'Charm Collar',       p:'24,000', std:false, nw:false },
-    { b:'catspia', c:'walk',    n:'Cat Vest Harness',   p:'27,000', std:false, nw:false, last:true },
-    { b:'catspia', c:'apparel', n:'Knit Cardigan',      p:'31,000', std:false, nw:false },
-    { b:'catspia', c:'living',  n:'Cat Cave',           p:'72,000', std:false, nw:false, last:true }
+    { id:'soft-harness-a', b:'puppia',  c:'walk',    n:'Soft Harness A',     p:'32,000', std:true,  nw:false, cw:[0,1,2,4],
+      d:'가슴판 전체로 하중을 분산하는 기본형. 목을 누르지 않는 A자 등판 구조로 2002년부터 이어온 시그니처입니다.' },
+    { id:'soft-harness-b', b:'puppia',  c:'walk',    n:'Soft Harness B',     p:'34,000', std:true,  nw:true,  cw:[0,1,5],
+      d:'A형의 등판을 넓히고 버클을 이중 잠금으로 바꾼 세대. 활동량이 많은 견종에 맞습니다.' },
+    { id:'ritefit-collar', b:'puppia',  c:'walk',    n:'Ritefit Collar',     p:'18,000', std:false, nw:false, cw:[0,2,4],
+      d:'소프트하네스와 컬러웨이를 맞춘 기본 칼라. 인식표 링이 봉제 보강되어 있습니다.' },
+    { id:'two-tone-lead',  b:'puppia',  c:'walk',    n:'Two-Tone Lead',      p:'22,000', std:false, nw:true,  cw:[0,1,3],
+      d:'하네스와 세트로 쓰는 120cm 리드. 손잡이 안쪽에 미끄럼 방지 처리를 넣었습니다.' },
+    { id:'mountaineer',    b:'puppia',  c:'apparel', n:'Mountaineer Coat',   p:'58,000', std:false, nw:false, cw:[0,1,3,4],
+      d:'발수 처리한 겉감에 경량 충전재를 넣은 겨울 아우터. 하네스 홀이 뚫려 있습니다.' },
+    { id:'gaspar-fleece',  b:'puppia',  c:'apparel', n:'Gaspar Fleece',      p:'44,000', std:false, nw:true,  cw:[2,3,4],
+      d:'환절기용 양면 플리스. 목둘레를 넉넉하게 잡아 단두종도 편하게 입습니다.' },
+    { id:'woven-mat',      b:'puppia',  c:'living',  n:'Woven Mat',          p:'46,000', std:false, nw:false, cw:[2,3,4],
+      d:'세탁기 사용이 가능한 평직 매트. 미끄럼 방지 백코팅.' },
+    { id:'travel-bowl',    b:'puppia',  c:'acc',     n:'Travel Bowl',        p:'21,000', std:false, nw:false, cw:[0,1,2],
+      d:'접어서 가방에 넣는 실리콘 보울. 400ml 눈금 표시.' },
+    { id:'olchi-vest',     b:'olchi',   c:'walk',    n:'Olchi Vest Harness', p:'29,000', std:false, nw:true,  cw:[0,1,5],
+      d:'조끼형 하네스. 가슴 전체를 감싸 압력을 넓게 나눕니다.' },
+    { id:'bold-lead',      b:'olchi',   c:'walk',    n:'Bold Lead',          p:'19,000', std:false, nw:false, cw:[0,3,5],
+      d:'굵은 웨빙과 컬러 대비가 특징인 리드.' },
+    { id:'color-block-tee',b:'olchi',   c:'apparel', n:'Color Block Tee',    p:'26,000', std:false, nw:false, cw:[0,1,5],
+      d:'면 혼방 티셔츠. 시즌 컬러를 블록으로 배치했습니다.' },
+    { id:'puffer-vest',    b:'olchi',   c:'apparel', n:'Puffer Vest',        p:'49,000', std:false, nw:true,  cw:[0,1,4],
+      d:'가벼운 패딩 베스트. 등판에 리드 연결 링이 있습니다.' },
+    { id:'car-seat',       b:'olchi',   c:'living',  n:'2-Row Car Seat',     p:'89,000', std:false, nw:true,  cw:[2,4],
+      d:'뒷좌석 2줄 고정식 카시트. 안전벨트 클립 포함.' },
+    { id:'snap-pouch',     b:'olchi',   c:'acc',     n:'Snap Pouch',         p:'16,000', std:false, nw:false, cw:[0,3,5],
+      d:'리드에 스냅으로 다는 소형 파우치.' },
+    { id:'lapel-harness',  b:'pinka',   c:'walk',    n:'Lapel Harness',      p:'42,000', std:false, nw:false, cw:[5,2,4],
+      d:'재킷 라펠 디테일을 얹은 패션 하네스.' },
+    { id:'bijou-dress',    b:'pinka',   c:'apparel', n:'Bijou Dress',        p:'64,000', std:false, nw:false, cw:[5,2],
+      d:'튤 레이어드 드레스. 하네스 위에 겹쳐 입을 수 있습니다.' },
+    { id:'fur-trim-coat',  b:'pinka',   c:'apparel', n:'Fur Trim Coat',      p:'78,000', std:false, nw:false, cw:[5,4,2],
+      d:'페이크 퍼 트리밍 코트. 안감은 기모 처리.' },
+    { id:'charm-collar',   b:'pinka',   c:'acc',     n:'Charm Collar',       p:'24,000', std:false, nw:false, cw:[5,2],
+      d:'참 장식을 달 수 있는 링이 있는 칼라.' },
+    { id:'cat-vest',       b:'catspia', c:'walk',    n:'Cat Vest Harness',   p:'27,000', std:false, nw:false, cw:[1,3,4],
+      d:'고양이 어깨 구조에 맞춘 조끼형 하네스. 탈출 방지 이중 잠금.' },
+    { id:'knit-cardigan',  b:'catspia', c:'apparel', n:'Knit Cardigan',      p:'31,000', std:false, nw:false, cw:[2,3],
+      d:'저자극 니트 카디건. 앞발 통과가 쉬운 오픈 구조.' },
+    { id:'cat-cave',       b:'catspia', c:'living',  n:'Cat Cave',           p:'72,000', std:false, nw:false, cw:[2,3,4],
+      d:'펠트 소재 돔형 하우스. 입구 방향을 바꿔 쓸 수 있습니다.' },
+    { id:'bell-collar',    b:'catspia', c:'acc',     n:'Bell Collar',        p:'14,000', std:false, nw:false, cw:[1,5],
+      d:'안전 버클과 방울이 달린 경량 칼라.' }
   ];
+  var PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
 
   /* H1 season slot rotates only across brands that still ship new product */
   var SEASON = {
     puppia: { t:'Spring<br>Walk Kit', d:'하네스와 리드를 같은 컬러웨이로 맞춘 시즌 세트. 이 자리는 매 시즌 교체되는 캠페인 슬롯입니다.' },
-    olchi:  { t:'Color<br>Block SS26', d:'올치의 봄 컬러 팔레트. 히어로 슬롯은 퍼피아와 올치 두 브랜드만 순환합니다.' }
+    olchi:  { t:'Color<br>Block SS26', d:'올치의 봄 컬러 팔레트. 히어로 슬롯은 시즌 신상이 나오는 브랜드가 순환합니다.' }
   };
   /* This Week: 2 rotating season slots + 1 evergreen slot (catalog) */
   var WEEK = [
@@ -1825,65 +2020,29 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   var ARROW_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
+  /* ================= shared : product card ================= */
+  function card(x){
+    var br = BMAP[x.b];
+    var tag = x.nw ? '<span class="new">New</span>' : '<span></span>';
+    return '<a class="pcard" href="#/product/' + x.id + '"><span class="thumb">' +
+      '<span class="flagrow">' + tag +
+      (x.std ? '<span class="sealwrap">' + SEAL_SVG + '</span>' : '') + '</span>' +
+      art(x.c, 'var(' + br.v + ')') + '</span>' +
+      '<span><span class="blabel" style="--bd:var(' + br.v + ')"><i></i>' + br.n + '</span>' +
+      '<span class="name" style="display:block;margin-top:6px">' + x.n + '</span>' +
+      '<span class="price">KRW ' + x.p + '</span></span></a>';
+  }
+  function price(x){ return parseInt(x.p.replace(/,/g, ''), 10); }
+
   /* ================= HOME : render ================= */
-  var slotBrand = 'puppia', fTab = 'new', fCat = 'all';
+  var slotBrand = 'puppia';
   var elGrid   = document.getElementById('pgrid');
-  var elTabs   = document.getElementById('brandTabs');
-  var elChips  = document.getElementById('catChips');
   var elWeek   = document.getElementById('weekStrip');
   var elHouses = document.getElementById('houses');
 
-  var TABS = [
-    { k:'new',     label:'New arrivals' },
-    { k:'puppia',  label:'PUPPIA',  v:'--b-puppia' },
-    { k:'olchi',   label:'OLCHI',   v:'--b-olchi' },
-    { k:'archive', label:'Archive', v:'--yellow' }
-  ];
-
-  function matchTab(x){
-    if(fTab === 'new')     return !!x.nw;
-    if(fTab === 'archive') return !BMAP[x.b].active;
-    return x.b === fTab;
-  }
-  function renderGrid(){
-    var list = PRODUCTS.filter(function(x){
-      return matchTab(x) && (fCat === 'all' || x.c === fCat);
-    });
-    list.sort(function(a,b){ return (b.nw ? 1 : 0) - (a.nw ? 1 : 0); });
-    if(!list.length){
-      elGrid.innerHTML = '<p class="empty">해당 조건의 제품이 없습니다. 필터를 바꿔보세요.</p>';
-      return;
-    }
-    elGrid.innerHTML = list.map(function(x){
-      var br = BMAP[x.b];
-      var tag = x.nw ? '<span class="new">New</span>'
-              : (x.last ? '<span class="last">Last stock</span>' : '<span></span>');
-      return '<a class="pcard" href="#/shop"><span class="thumb">' +
-        '<span class="flagrow">' + tag +
-        (x.std ? '<span class="sealwrap">' + SEAL_SVG + '</span>' : '') + '</span>' +
-        art(x.c, 'var(' + br.v + ')') + '</span>' +
-        '<span><span class="blabel" style="--bd:var(' + br.v + ')"><i></i>' + br.n + '</span>' +
-        '<span class="name" style="display:block;margin-top:6px">' + x.n + '</span>' +
-        '<span class="price">KRW ' + x.p + '</span></span></a>';
-    }).join('');
-  }
-  function renderTabs(){
-    elTabs.innerHTML = TABS.map(function(t){
-      return '<button type="button" class="tab" data-t="' + t.k + '"' +
-        (t.v ? ' style="--bd:var(' + t.v + ')"' : '') + '>' + (t.v ? '<i></i>' : '') + t.label + '</button>';
-    }).join('');
-    [].forEach.call(elTabs.children, function(btn){
-      btn.setAttribute('aria-pressed', btn.dataset.t === fTab ? 'true' : 'false');
-      btn.addEventListener('click', function(){ fTab = btn.dataset.t; renderTabs(); renderGrid(); });
-    });
-  }
-  function renderChips(){
-    elChips.innerHTML = '<button type="button" class="subchip" data-c="all">All</button>' +
-      CATS.map(function(c){ return '<button type="button" class="subchip" data-c="' + c.k + '">' + c.n + '</button>'; }).join('');
-    [].forEach.call(elChips.children, function(btn){
-      btn.setAttribute('aria-pressed', btn.dataset.c === fCat ? 'true' : 'false');
-      btn.addEventListener('click', function(){ fCat = btn.dataset.c; renderChips(); renderGrid(); });
-    });
+  function renderHomeGrid(){
+    var list = PRODUCTS.slice().sort(function(a, b){ return (b.nw ? 1 : 0) - (a.nw ? 1 : 0); }).slice(0, 8);
+    elGrid.innerHTML = list.map(card).join('');
   }
   function renderSeason(){
     var br = BMAP[slotBrand], sn = SEASON[slotBrand];
@@ -1911,29 +2070,168 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         '<span class="price" style="color:var(--on-bone-mute)">' + w.l + '</span></span></a>';
     }).join('');
   }
-  function houseCard(b, arch){
-    return '<a class="house' + (arch ? ' arch' : '') + '" href="#/shop?b=' + b.k + '" style="--bd:var(' + b.v + ')">' +
-      '<span class="bar"></span><b>' + b.n + '</b>' +
-      '<span class="yr">' + b.yr + (arch ? ' · <span class="badge-arch">Archive</span>' : ' · 매 시즌 신상') + '</span>' +
-      '<p>' + b.d + '</p><span class="more" style="margin-top:auto">제품 보기 ' + ARROW_SVG + '</span></a>';
-  }
   function renderHouses(){
-    var act = BRANDS.filter(function(b){ return b.active; });
-    var arc = BRANDS.filter(function(b){ return !b.active; });
-    elHouses.innerHTML =
-      '<div class="houses-group"><p class="hg-label"><em>Active</em> — 매 시즌 신상이 나옵니다</p>' +
-      '<div class="houses">' + act.map(function(b){ return houseCard(b, false); }).join('') + '</div></div>' +
-      '<div class="houses-group"><p class="hg-label">Archive — 신규 시즌 종료, 재고 소진까지</p>' +
-      '<div class="houses sm">' + arc.map(function(b){ return houseCard(b, true); }).join('') + '</div>' +
-      '<p class="note-strip"><b>왜 나눠 두었나:</b> 신상이 나오지 않는 브랜드에 “신상” 슬롯을 주면 매 시즌 비는 자리가 됩니다. ' +
-      '그래서 아카이브는 별도 축으로 묶고 <b>Last stock</b> 라벨로 희소성을 살립니다. 운영자가 매 시즌 채워야 할 칸은 두 개뿐입니다.</p></div>';
+    elHouses.innerHTML = BRANDS.map(function(b){
+      return '<a class="house" href="#/shop?b=' + b.k + '" style="--bd:var(' + b.v + ')">' +
+        '<span class="house-im">' + art(b.hero, 'var(' + b.v + ')') + '</span>' +
+        '<span class="bar"></span><b>' + b.n + '</b><span class="yr">' + b.yr + '</span>' +
+        '<p>' + b.d + '</p><span class="more" style="margin-top:auto">제품 보기 ' + ARROW_SVG + '</span></a>';
+    }).join('');
   }
-
   [].forEach.call(document.querySelectorAll('.demobar button'), function(b){
     b.addEventListener('click', function(){ slotBrand = b.dataset.slotb; renderSeason(); });
   });
+  renderSeason(); renderWeek(); renderHouses(); renderHomeGrid();
 
-  renderSeason(); renderWeek(); renderHouses(); renderTabs(); renderChips(); renderGrid();
+  /* ================= SHOP (listing) ================= */
+  var shopCat = 'all', shopBrand = 'all', shopSort = 'new';
+  var SORTS = [{ k:'new', n:'신상순' }, { k:'low', n:'가격 낮은순' }, { k:'high', n:'가격 높은순' }];
+
+  function shopList(){
+    var l = PRODUCTS.filter(function(x){
+      return (shopCat === 'all' || x.c === shopCat) && (shopBrand === 'all' || x.b === shopBrand);
+    });
+    if(shopSort === 'low')  l.sort(function(a, b){ return price(a) - price(b); });
+    else if(shopSort === 'high') l.sort(function(a, b){ return price(b) - price(a); });
+    else l.sort(function(a, b){ return (b.nw ? 1 : 0) - (a.nw ? 1 : 0); });
+    return l;
+  }
+  function countBy(fn){ return PRODUCTS.filter(fn).length; }
+  function renderShop(){
+    var cur = CATS.filter(function(c){ return c.k === shopCat; })[0];
+    var label = cur ? cur.n : 'All products';
+    document.getElementById('shopTitle').textContent = label;
+    document.getElementById('shopCrumb').textContent = label;
+    document.getElementById('shopEyebrow').textContent =
+      shopBrand === 'all' ? 'Shop — 전체 브랜드' : 'Shop — ' + BMAP[shopBrand].n;
+
+    document.getElementById('fCat').innerHTML =
+      '<li><button class="fbtn" data-c="all">All products<em>' + PRODUCTS.length + '</em></button></li>' +
+      CATS.map(function(c){
+        return '<li><button class="fbtn" data-c="' + c.k + '">' + c.n +
+               '<em>' + countBy(function(x){ return x.c === c.k; }) + '</em></button></li>';
+      }).join('');
+    document.getElementById('fBrand').innerHTML =
+      '<li><button class="fbtn" data-b="all">All brands<em>' + PRODUCTS.length + '</em></button></li>' +
+      BRANDS.map(function(b){
+        return '<li><button class="fbtn" data-b="' + b.k + '" style="--bd:var(' + b.v + ')"><i></i>' + b.n +
+               '<em>' + countBy(function(x){ return x.b === b.k; }) + '</em></button></li>';
+      }).join('');
+    [].forEach.call(document.querySelectorAll('#fCat .fbtn'), function(btn){
+      btn.setAttribute('aria-pressed', btn.dataset.c === shopCat ? 'true' : 'false');
+      btn.addEventListener('click', function(){ setShop({ c: btn.dataset.c }); });
+    });
+    [].forEach.call(document.querySelectorAll('#fBrand .fbtn'), function(btn){
+      btn.setAttribute('aria-pressed', btn.dataset.b === shopBrand ? 'true' : 'false');
+      btn.addEventListener('click', function(){ setShop({ b: btn.dataset.b }); });
+    });
+    document.getElementById('sortbar').innerHTML = SORTS.map(function(o){
+      return '<button type="button" data-s="' + o.k + '" aria-pressed="' + (o.k === shopSort) + '">' + o.n + '</button>';
+    }).join('');
+    [].forEach.call(document.querySelectorAll('#sortbar button'), function(btn){
+      btn.addEventListener('click', function(){ shopSort = btn.dataset.s; renderShop(); });
+    });
+
+    var list = shopList();
+    document.getElementById('shopCount').textContent = list.length + ' products';
+    document.getElementById('shopGrid').innerHTML = list.length
+      ? list.map(card).join('')
+      : '<p class="empty">해당 조건의 제품이 없습니다.</p>';
+  }
+  function setShop(o){
+    if(o.c !== undefined) shopCat = o.c;
+    if(o.b !== undefined) shopBrand = o.b;
+    var q = [];
+    if(shopCat !== 'all') q.push('c=' + shopCat);
+    if(shopBrand !== 'all') q.push('b=' + shopBrand);
+    location.hash = '#/shop' + (q.length ? '?' + q.join('&') : '');
+  }
+
+  /* ================= PRODUCT detail ================= */
+  var pdItem = null, pdCw = 0, pdSz = 2, pdView = 0;
+  var VIEWS_OF = ['front', 'back', 'detail', 'worn'];
+
+  function renderProduct(id){
+    var x = PMAP[id];
+    if(!x){ location.hash = '#/shop'; return; }
+    if(pdItem !== x){ pdItem = x; pdCw = 0; pdSz = 2; pdView = 0; }
+    var br = BMAP[x.b], colour = CW[x.cw[pdCw]];
+
+    document.getElementById('pdCrumbName').textContent = x.n;
+    var cl = document.getElementById('pdCrumbCat');
+    cl.textContent = CATS.filter(function(c){ return c.k === x.c; })[0].n;
+    cl.href = '#/shop?c=' + x.c;
+
+    var bw = document.getElementById('pdBrand');
+    bw.style.setProperty('--bd', 'var(' + br.v + ')');
+    bw.lastElementChild.textContent = br.n;
+    document.getElementById('pdName').textContent = x.n;
+    document.getElementById('pdPrice').textContent = 'KRW ' + x.p;
+    document.getElementById('pdDesc').textContent = x.d;
+    document.getElementById('pdCwName').textContent = colour.n;
+
+    document.getElementById('pdHero').innerHTML =
+      art(x.c, colour.h) + (x.std ? '<span class="sealwrap">' + SEAL_SVG + '</span>' : '');
+    document.getElementById('pdThumbs').innerHTML = VIEWS_OF.map(function(v, i){
+      return '<button type="button" data-v="' + i + '" aria-pressed="' + (i === pdView) + '" aria-label="' + v + '">' +
+             art(x.c, i === pdView ? colour.h : 'var(--bone3)') + '</button>';
+    }).join('');
+    [].forEach.call(document.querySelectorAll('#pdThumbs button'), function(btn){
+      btn.addEventListener('click', function(){ pdView = +btn.dataset.v; renderProduct(id); });
+    });
+
+    document.getElementById('pdCw').innerHTML = x.cw.map(function(ci, i){
+      return '<button type="button" class="cw" data-i="' + i + '" aria-pressed="' + (i === pdCw) +
+             '" style="--c:' + CW[ci].h + '" aria-label="' + CW[ci].n + '"><span></span></button>';
+    }).join('');
+    [].forEach.call(document.querySelectorAll('#pdCw .cw'), function(btn){
+      btn.addEventListener('click', function(){ pdCw = +btn.dataset.i; renderProduct(id); });
+    });
+
+    var sizable = x.c === 'walk' || x.c === 'apparel';
+    document.getElementById('pdSz').innerHTML = sizable
+      ? SIZES.map(function(z, i){
+          return '<button type="button" class="sz" data-i="' + i + '" aria-pressed="' + (i === pdSz) + '">' +
+                 '<b>' + z.s + '</b><small>' + z.min + '–' + z.max + '</small></button>';
+        }).join('')
+      : '<p class="pd-desc" style="margin:0">단일 사이즈</p>';
+    document.getElementById('pdSzHint').textContent = sizable ? '가슴둘레 기준 (cm)' : 'One size';
+    [].forEach.call(document.querySelectorAll('#pdSz .sz'), function(btn){
+      btn.addEventListener('click', function(){ pdSz = +btn.dataset.i; renderProduct(id); });
+    });
+
+    document.getElementById('pdAcc').innerHTML =
+      '<details open><summary>소재 · 스펙</summary><div class="accbody"><table><tbody>' +
+      '<tr><td>브랜드</td><td>' + br.n + '</td></tr>' +
+      '<tr><td>카테고리</td><td>' + CATS.filter(function(c){ return c.k === x.c; })[0].n + '</td></tr>' +
+      '<tr><td>컬러웨이</td><td>' + x.cw.map(function(i){ return CW[i].n; }).join(' · ') + '</td></tr>' +
+      (x.std ? '<tr><td>구조</td><td>SoftMesh™ · FlexFit 분산 패턴</td></tr>' : '') +
+      '<tr><td>세탁</td><td>30℃ 이하 손세탁</td></tr>' +
+      '</tbody></table></div></details>' +
+      (sizable
+        ? '<details><summary>사이즈 차트</summary><div class="accbody"><table><thead><tr>' +
+          '<th>Size</th><th>Girth</th><th>Neck</th><th>Weight</th></tr></thead><tbody>' +
+          SIZES.map(function(z, i){
+            return '<tr class="' + (i === pdSz ? 'hit' : '') + '"><td>' + z.s + '</td><td>' + z.min + '–' + z.max +
+                   ' cm</td><td>' + z.neck + ' cm</td><td>' + z.kg + ' kg</td></tr>';
+          }).join('') + '</tbody></table></div></details>'
+        : '') +
+      '<details><summary>배송 · 반품</summary><div class="accbody">국내 2–3 영업일, 해외는 지역별 상이. ' +
+      '착용 흔적이 없는 경우 수령 후 14일 이내 교환·반품이 가능합니다. 사이즈 교환은 왕복 배송비가 면제됩니다.</div></details>';
+
+    var rel = PRODUCTS.filter(function(y){ return y.id !== x.id && (y.c === x.c || y.b === x.b); }).slice(0, 4);
+    document.getElementById('pdRel').innerHTML = rel.map(card).join('');
+  }
+  var toastEl = document.getElementById('toast'), toastT = null;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add('on');
+    clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove('on'); }, 2200);
+  }
+  document.getElementById('pdAdd').addEventListener('click', function(){
+    if(!pdItem) return;
+    var sizable = pdItem.c === 'walk' || pdItem.c === 'apparel';
+    toast(pdItem.n + ' · ' + CW[pdItem.cw[pdCw]].n + (sizable ? ' · ' + SIZES[pdSz].s : '') + ' 담았습니다');
+  });
 
   /* ================= CATALOG · web book ================= */
   var SEASONS = [
@@ -1943,10 +2241,6 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   ];
   var season = SEASONS[0], PAGES = [], spread = 0, turning = false;
 
-  var CW = [
-    { n:'Red',  h:'#E13B26' }, { n:'Navy', h:'#1B4FD8' }, { n:'Sand', h:'#C9A96B' },
-    { n:'Moss', h:'#4C6B45' }, { n:'Ink',  h:'#2C2B31' }, { n:'Rose', h:'#B8446B' }
-  ];
   function cell(x){
     var br = BMAP[x.b];
     return '<div class="ccell"><span class="im">' + art(x.c, x.cw.h) + '</span>' +
@@ -2111,25 +2405,31 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   if(flagEl) flagEl.addEventListener('click', function(){ flagEl.remove(); });
 
   /* ================= router ================= */
-  var vHome = document.getElementById('view-home');
-  var vHarn = document.getElementById('view-harness');
-  var vCat  = document.getElementById('view-catalog');
+  var VIEWS = {
+    home:    document.getElementById('view-home'),
+    shop:    document.getElementById('view-shop'),
+    product: document.getElementById('view-product'),
+    catalog: document.getElementById('view-catalog'),
+    harness: document.getElementById('view-harness')
+  };
   var demob = document.getElementById('demobar');
   var header = document.getElementById('top');
 
   function viewFor(h){
     if(h.indexOf('#/soft-harness') === 0) return 'harness';
     if(h.indexOf('#/catalog') === 0) return 'catalog';
+    if(h.indexOf('#/product/') === 0) return 'product';
+    if(h.indexOf('#/shop') === 0) return 'shop';
     if(h.indexOf('#/') === 0) return 'home';
     return /^#s[1-9]$/.test(h) ? 'harness' : 'home';
   }
   function setView(v){
-    vHome.hidden = (v !== 'home');
-    vHarn.hidden = (v !== 'harness');
-    vCat.hidden  = (v !== 'catalog');
+    Object.keys(VIEWS).forEach(function(k){ VIEWS[k].hidden = (k !== v); });
     if(demob) demob.hidden = (v !== 'home');
+    var shopish = (v === 'shop' || v === 'product');
     [].forEach.call(document.querySelectorAll('.navitem'), function(n){
-      n.classList.toggle('on', n.classList.contains('signature') === (v === 'harness'));
+      var isSig = n.classList.contains('signature');
+      n.classList.toggle('on', isSig ? v === 'harness' : (shopish && n.dataset.cat === shopCat));
     });
   }
   function scrollToEl(el){
@@ -2137,27 +2437,29 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     var top = el.getBoundingClientRect().top + window.scrollY - header.offsetHeight + 1;
     window.scrollTo({ top: Math.max(0, top), behavior:'auto' });
   }
-  function applyQuery(h){
-    var q = h.split('?')[1] || '';
-    var got = false;
+  function parseQuery(h){
+    var out = {}, q = h.split('?')[1] || '';
     q.split('&').forEach(function(kv){
       var pair = kv.split('=');
-      if(pair[0] === 'b' && BMAP[pair[1]]){
-        fTab = BMAP[pair[1]].active ? pair[1] : 'archive'; got = true;
-      }
-      if(pair[0] === 'c'){ fCat = pair[1]; got = true; }
+      if(pair[0]) out[pair[0]] = decodeURIComponent(pair[1] || '');
     });
-    if(!got){ fTab = 'new'; fCat = 'all'; }
-    renderTabs(); renderChips(); renderGrid();
+    return out;
   }
   function route(){
     var h = location.hash || '#/';
-    setView(viewFor(h));
+    var v = viewFor(h);
+    setView(v);
+    if(v === 'shop'){
+      var q = parseQuery(h);
+      shopCat   = (q.c && CATS.some(function(c){ return c.k === q.c; })) ? q.c : 'all';
+      shopBrand = (q.b && BMAP[q.b]) ? q.b : 'all';
+      renderShop();
+    } else if(v === 'product'){
+      renderProduct(h.replace('#/product/', '').split('?')[0]);
+    }
     requestAnimationFrame(function(){
-      if(h.indexOf('#/shop') === 0){ applyQuery(h); scrollToEl(document.getElementById('h3')); }
-      else if(h.indexOf('#/catalog') === 0){ window.scrollTo(0, 0); }
-      else if(h.indexOf('#/') === 0){ window.scrollTo(0, 0); }
-      else { scrollToEl(document.getElementById(h.slice(1))); }
+      if(h.indexOf('#/') === 0) window.scrollTo(0, 0);
+      else scrollToEl(document.getElementById(h.slice(1)));
       update();
     });
   }
