@@ -3622,7 +3622,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   panels['export'] = document.getElementById('exportModal');
   var expScope = 'sheet', expFormat = 'csv';
   var SCOPES  = [{ k:'sheet', n:'Line sheet (current filters)' }, { k:'order', n:'Current order only' }];
-  var FORMATS = [{ k:'csv', n:'CSV (UTF-8)' }, { k:'xls', n:'Excel (.xls)' }];
+  var FORMATS = [{ k:'csv', n:'CSV (Excel, Sheets)' }, { k:'xls', n:'Excel XML (.xls)' }];
 
   function exportRows(){
     var head = ['Brand', 'Style', 'Code', 'Category', 'Size', 'Colourway', 'SKU',
@@ -3675,7 +3675,54 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     var mime = expFormat === 'csv' ? 'text/csv;charset=utf-8' : 'application/vnd.ms-excel;charset=utf-8';
     return { rows:rows, text:text, name:name, mime:mime };
   }
-  var sandboxed = (function(){ try { return window.self !== window.top; } catch(e){ return true; } })();
+  /* the viewer grants file saves through the downloads capability; a plain
+     anchor download is the fallback for when this page is served directly */
+  var saver = null, saverReady = false;
+  function withSaver(cb){
+    if(saverReady){ cb(saver); return; }
+    if(window.claude && typeof window.claude.use === 'function'){
+      window.claude.use('downloads').then(function(d){ saver = d; saverReady = true; cb(saver); },
+                                          function(){ saverReady = true; cb(null); });
+    } else { saverReady = true; cb(null); }
+  }
+  var BOM = '\ufeff';
+  var DL_MSG = {
+    rejected_extension:    'This format cannot be saved from the preview — use Copy, or open the page directly.',
+    extension_not_enabled: 'This format cannot be saved from the preview — use Copy, or open the page directly.',
+    too_large:             'That export is too large to save here — narrow the filters and try again.',
+    rate_limited:          'A save prompt is already open. Try again in a moment.'
+  };
+  function anchorSave(pl){
+    try {
+      var blob = new Blob([BOM + pl.text], { type:pl.mime });
+      var url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = pl.name; document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 400);
+      toast('Exporting ' + pl.name);
+    } catch(e){ toast('Could not start the download — use Copy to clipboard.'); }
+  }
+  function saveFailed(err){
+    var code = (err && err.code) || 'unavailable';
+    if(code === 'declined') return;
+    toast(DL_MSG[code] || 'Could not save the file — use Copy to clipboard.');
+  }
+  function runExport(){
+    var pl = exportPayload();
+    withSaver(function(dl){
+      if(!dl){ anchorSave(pl); return; }
+      dl.save({ filename:pl.name, data:BOM + pl.text }).then(function(){
+        toast('Saved ' + pl.name);
+      }, function(err){
+        if(err && err.code === 'extension_not_enabled' && expFormat === 'csv'){
+          dl.save({ filename:pl.name.replace(/\.csv$/, '.txt'), data:BOM + pl.text }).then(function(){
+            toast('Saved as .txt — rename it to .csv to open in Excel');
+          }, saveFailed);
+          return;
+        }
+        saveFailed(err);
+      });
+    });
+  }
 
   function renderExport(){
     document.getElementById('expScope').innerHTML = SCOPES.map(function(o){
@@ -3693,14 +3740,12 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     document.getElementById('expRows').textContent = (pay.rows.length - 1) + ' SKU rows';
     document.getElementById('expName').textContent = pay.name;
     document.getElementById('expFoot').innerHTML =
-      (sandboxed
-        ? '<button class="btn-primary" type="button" id="expCopy">Copy to clipboard</button>' +
-          '<button class="btn-mini" type="button" id="expDl">Download ' + pay.name.split('.').pop().toUpperCase() + '</button>' +
-          '<p class="exp-note"><b>Heads up:</b> this prototype is running inside an embedded preview, which blocks ' +
-          'file downloads. Copy works here and pastes straight into Excel or Sheets; the download button works when ' +
-          'the page is opened on its own.</p>'
-        : '<button class="btn-primary" type="button" id="expDl">Download ' + pay.name + '</button>' +
-          '<button class="btn-mini" type="button" id="expCopy">Copy to clipboard</button>');
+      '<button class="btn-primary" type="button" id="expDl">Download ' + pay.name + '</button>' +
+      '<button class="btn-mini" type="button" id="expCopy">Copy to clipboard</button>' +
+      (expFormat === 'xls'
+        ? '<p class="exp-note"><b>Excel XML</b> keeps formatting and typed number cells. If a save is refused, copy ' +
+          'instead — or pick CSV, which every spreadsheet opens.</p>'
+        : '<p class="exp-note">CSV opens directly in Excel, Numbers and Google Sheets, and pastes into a sheet as-is.</p>');
     [].forEach.call(document.querySelectorAll('#expScope .chip-btn'), function(b){
       b.addEventListener('click', function(){ expScope = b.dataset.sc; renderExport(); });
     });
@@ -3708,16 +3753,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       b.addEventListener('click', function(){ expFormat = b.dataset.fm; renderExport(); });
     });
     var dl = document.getElementById('expDl');
-    if(dl) dl.addEventListener('click', function(){
-      var pl = exportPayload();
-      try {
-        var blob = new Blob(['﻿' + pl.text], { type:pl.mime });
-        var url = URL.createObjectURL(blob), a = document.createElement('a');
-        a.href = url; a.download = pl.name; document.body.appendChild(a); a.click();
-        setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 400);
-        toast('Exporting ' + pl.name);
-      } catch(e){ toast('Download blocked here — use Copy to clipboard'); }
-    });
+    if(dl) dl.addEventListener('click', runExport);
     var cp = document.getElementById('expCopy');
     if(cp) cp.addEventListener('click', function(){
       var pl = exportPayload();
