@@ -169,6 +169,7 @@ nav{
 }
 .blabel i{width:6px; height:6px; border-radius:50%; flex:0 0 auto; background:var(--bd,var(--b-puppia))}
 
+.flag[hidden]{display:none}
 .flag{
   appearance:none; cursor:pointer; text-align:left; font-family:"Martian Mono",monospace;
   position:fixed; left:clamp(16px,3vw,32px); bottom:16px; z-index:50;
@@ -951,6 +952,200 @@ footer{background:var(--red); color:var(--on-red); padding:clamp(40px,6vw,80px) 
 }
 .md-x:hover{color:var(--on-bone)}
 body.locked{overflow:hidden}
+body.has-ordbar .toast{bottom:104px}
+
+/* ================= PARTNER PORTAL ================= */
+#view-partners{background:var(--bone); color:var(--on-bone); min-height:100vh}
+.pt-wrap{padding:calc(var(--navh) + 0px) 0 0; max-width:1500px; margin:0 auto}
+
+/* gate */
+.gate{padding:clamp(50px,8vw,110px) clamp(20px,4vw,64px) 90px; display:grid; gap:clamp(28px,4vw,60px)}
+@media(min-width:900px){.gate{grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr); align-items:center}}
+.gate h1{margin:14px 0 18px; font-size:clamp(2.2rem,5.6vw,4rem)}
+.gate-list{list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:1px;
+  background:var(--bone3); border:1px solid var(--bone3); border-radius:3px; overflow:hidden}
+.gate-list li{background:var(--bone); padding:15px 18px; display:grid; grid-template-columns:26px 1fr; gap:14px; align-items:baseline}
+.gate-list b{font-size:14.5px; display:block}
+.gate-list span.n{font-family:"Martian Mono",monospace; font-size:9px; color:var(--red)}
+.gate-list p{margin:4px 0 0; font-size:13px; color:var(--on-bone-mute); line-height:1.55}
+.demo-card{border:1px solid var(--red); border-radius:3px; padding:22px 24px; background:#fff}
+.demo-card h3{margin:0 0 4px; font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--red)}
+.demo-card p{margin:0 0 16px; font-size:13px; color:var(--on-bone-mute); line-height:1.6}
+.cred{display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-family:"Martian Mono",monospace;
+  font-size:11.5px; margin-bottom:18px; align-items:baseline}
+.cred dt{font-size:8.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-bone-mute)}
+.cred dd{margin:0; -webkit-user-select:all; user-select:all}
+
+/* portal chrome */
+.pt-bar{
+  background:var(--red-dk); color:var(--on-red); display:flex; align-items:center; justify-content:space-between;
+  gap:14px; flex-wrap:wrap; padding:11px clamp(16px,3vw,32px);
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
+}
+.pt-bar .acct{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+.pt-bar .acct b{font-weight:700}
+.pt-bar .acct em{font-style:normal; opacity:.62}
+.pt-bar button{appearance:none; background:transparent; border:1px solid rgba(255,255,255,.5); color:inherit;
+  cursor:pointer; border-radius:99px; padding:5px 12px; font:inherit; letter-spacing:.14em; transition:all .18s}
+.pt-bar button:hover{background:#fff; color:var(--red-dk)}
+.pt-tabs{display:flex; gap:0; border-bottom:1px solid var(--bone3); padding:0 clamp(16px,3vw,32px); background:var(--bone);
+  position:sticky; top:var(--navh); z-index:30; overflow-x:auto}
+.pt-tab{
+  appearance:none; background:transparent; border:0; cursor:pointer; color:var(--on-bone-mute); font:inherit;
+  font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  padding:16px 18px; border-bottom:2px solid transparent; white-space:nowrap; transition:color .18s;
+}
+.pt-tab:hover{color:var(--on-bone)}
+.pt-tab[aria-pressed="true"]{color:var(--red); border-bottom-color:var(--red)}
+.pt-tab .b{display:inline-grid; place-items:center; min-width:17px; height:17px; border-radius:99px;
+  background:var(--red); color:#fff; font-size:8px; margin-left:7px; padding:0 4px}
+.pt-body{padding:clamp(20px,3vw,34px) clamp(16px,3vw,32px) 140px}
+
+/* toolbar */
+.pt-tools{display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-bottom:20px}
+.pt-filters{display:flex; gap:7px; flex-wrap:wrap}
+.pt-note{
+  display:block; padding:13px 16px; background:var(--bone2);
+  border-left:3px solid var(--red); font-size:13px; line-height:1.6; color:var(--on-bone-mute); margin-bottom:20px;
+}
+.pt-note b{color:var(--on-bone)}
+
+/* line sheet rows */
+.lsrow{border:1px solid var(--bone3); border-radius:3px; background:#fff; margin-bottom:10px; overflow:hidden}
+.lsrow.filled{border-color:var(--red)}
+.ls-head{
+  display:grid; gap:14px; align-items:center; padding:12px 14px; cursor:pointer; width:100%;
+  background:transparent; border:0; text-align:left; color:inherit; font:inherit;
+  grid-template-columns:46px minmax(0,1fr) auto;
+}
+@media(min-width:840px){.ls-head{grid-template-columns:46px minmax(0,1.6fr) repeat(3,88px) 92px 30px}}
+.ls-head:hover{background:var(--bone)}
+.ls-im{aspect-ratio:1; background:var(--bone2); border-radius:2px; display:grid; place-items:center; overflow:hidden}
+.ls-im svg{width:80%; height:auto}
+.ls-id b{display:block; font-size:14.5px; font-weight:600; letter-spacing:-.005em; line-height:1.3}
+.ls-id span{display:block; font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--on-bone-mute); margin-top:4px}
+.ls-fig{display:none}
+@media(min-width:840px){.ls-fig{display:block; text-align:right}}
+.ls-fig em{display:block; font-style:normal; font-family:"Martian Mono",monospace; font-size:8px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--on-bone-mute); margin-bottom:4px}
+.ls-fig b{font-family:"Martian Mono",monospace; font-size:11.5px; font-variant-numeric:tabular-nums; font-weight:500}
+.ls-units{text-align:right}
+.ls-units b{font-family:"Martian Mono",monospace; font-size:1.05rem; font-variant-numeric:tabular-nums}
+.lsrow.filled .ls-units b{color:var(--red); font-weight:700}
+.ls-chev{display:grid; place-items:center; opacity:.4; transition:transform .2s}
+.lsrow.open .ls-chev{transform:rotate(180deg); opacity:.8}
+.ls-chev svg{width:14px; height:14px}
+.ls-body{display:none; border-top:1px solid var(--bone3); padding:16px 14px 18px; background:var(--bone)}
+.lsrow.open .ls-body{display:block}
+
+/* matrix */
+.mtx-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.mtx{border-collapse:collapse; font-family:"Martian Mono",monospace; font-size:10px; width:auto}
+.mtx th, .mtx td{border:1px solid var(--bone3); padding:0; text-align:center; background:#fff}
+.mtx thead th{
+  background:var(--bone2); font-weight:500; letter-spacing:.1em; text-transform:uppercase; font-size:8.5px;
+  padding:9px 6px; color:var(--on-bone-mute); white-space:nowrap;
+}
+.mtx thead th .sw{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:-1px}
+.mtx tbody th{
+  background:var(--bone2); font-weight:700; letter-spacing:.1em; padding:0 10px; text-align:left;
+  font-size:10px; white-space:nowrap; width:1%;
+}
+.mtx td.cell{position:relative; width:84px}
+.mtx input{
+  width:100%; border:0; background:transparent; text-align:center; color:inherit; outline:none;
+  font:inherit; font-size:12px; padding:11px 4px 14px; font-variant-numeric:tabular-nums;
+  -moz-appearance:textfield;
+}
+.mtx input::-webkit-outer-spin-button, .mtx input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+.mtx input:focus{box-shadow:inset 0 0 0 2px var(--red)}
+.mtx td.has{background:rgba(225,59,38,.07)}
+.mtx td.has input{color:var(--red); font-weight:700}
+.mtx td.over{background:rgba(237,178,48,.22)}
+.mtx td.oos{background:var(--bone2)}
+.mtx td.oos::after{content:"—"; color:var(--bone3); font-size:11px}
+.ats{position:absolute; right:6px; bottom:3px; font-size:7.5px; letter-spacing:.04em; color:var(--on-bone-mute); opacity:.65}
+.mtx tfoot th, .mtx tfoot td{background:var(--bone2); font-weight:700; padding:9px 6px; font-variant-numeric:tabular-nums}
+.mtx .rowtot, .mtx tfoot td{font-variant-numeric:tabular-nums; font-size:11px}
+.mtx .rowtot{background:var(--bone2); font-weight:700; padding:9px 8px; width:1%}
+.mtx-legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:12px;
+  font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--on-bone-mute)}
+.mtx-legend span{display:flex; align-items:center; gap:6px}
+.mtx-legend i{width:11px; height:11px; border:1px solid var(--bone3); display:block}
+.mtx-legend i.h{background:rgba(225,59,38,.14)} .mtx-legend i.o{background:rgba(237,178,48,.3)} .mtx-legend i.x{background:var(--bone2)}
+.ls-sub{display:flex; justify-content:flex-end; gap:26px; margin-top:14px; flex-wrap:wrap;
+  font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase}
+.ls-sub b{font-size:12.5px; letter-spacing:0; font-variant-numeric:tabular-nums; margin-left:8px}
+
+/* sticky order summary */
+.ordbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:45; background:var(--ink); color:var(--on-ink);
+  padding:14px clamp(16px,3vw,32px); display:flex; align-items:center; justify-content:space-between;
+  gap:16px; flex-wrap:wrap; transform:translateY(100%); transition:transform .3s cubic-bezier(.3,.8,.3,1);
+}
+.ordbar.on{transform:none}
+.ordbar[hidden]{display:none}
+.ob-figs{display:flex; gap:clamp(16px,3vw,36px); flex-wrap:wrap; align-items:center}
+.ob-figs div em{display:block; font-style:normal; font-family:"Martian Mono",monospace; font-size:8px;
+  letter-spacing:.16em; text-transform:uppercase; opacity:.55; margin-bottom:3px}
+.ob-figs div b{font-family:"Martian Mono",monospace; font-size:1.05rem; font-variant-numeric:tabular-nums}
+.moq{min-width:150px}
+.moq .track{height:4px; background:rgba(255,255,255,.16); border-radius:99px; overflow:hidden; margin-top:6px}
+.moq .track i{display:block; height:100%; background:var(--yellow); transition:width .3s ease}
+.moq.met .track i{background:#4CC38A}
+.ob-act{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.btn-ghost-d{
+  appearance:none; cursor:pointer; background:transparent; color:inherit; border:1px solid rgba(255,255,255,.4);
+  border-radius:99px; padding:13px 18px; font-family:"Martian Mono",monospace; font-size:9.5px;
+  letter-spacing:.16em; text-transform:uppercase; transition:all .18s;
+}
+.btn-ghost-d:hover{background:#fff; color:var(--ink); border-color:#fff}
+
+/* orders / assets tables */
+.pt-table{width:100%; border-collapse:collapse; font-size:13.5px}
+.pt-table th{
+  text-align:left; padding:11px 12px; background:var(--bone2); border-bottom:1px solid var(--bone3);
+  font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--on-bone-mute); font-weight:500; white-space:nowrap;
+}
+.pt-table td{padding:13px 12px; border-bottom:1px solid var(--bone3); vertical-align:middle}
+.pt-table td.num{font-family:"Martian Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+.pt-table tr:hover td{background:var(--bone2)}
+.pill{
+  display:inline-block; font-family:"Martian Mono",monospace; font-size:8px; letter-spacing:.14em;
+  text-transform:uppercase; padding:4px 9px; border-radius:99px; white-space:nowrap;
+}
+.pill.sub{background:var(--bone3); color:var(--on-bone)}
+.pill.cfm{background:rgba(27,79,216,.14); color:var(--blue)}
+.pill.shp{background:rgba(76,195,138,.2); color:#1F6B4F}
+.btn-mini{
+  appearance:none; cursor:pointer; background:transparent; border:1px solid var(--bone3); color:inherit;
+  border-radius:99px; padding:7px 13px; font-family:"Martian Mono",monospace; font-size:9px;
+  letter-spacing:.14em; text-transform:uppercase; transition:all .18s;
+}
+.btn-mini:hover{border-color:var(--red); color:var(--red)}
+
+/* review modal */
+.review{
+  position:fixed; z-index:82; left:50%; top:50%; transform:translate(-50%,-46%) scale(.98);
+  width:min(760px,calc(100% - 24px)); max-height:86vh; background:var(--bone); color:var(--on-bone);
+  border-radius:4px; opacity:0; transition:opacity .26s ease, transform .26s ease;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.55); display:flex; flex-direction:column;
+}
+.review.on{opacity:1; transform:translate(-50%,-50%) scale(1)}
+.review[hidden]{display:none}
+.rv-head{padding:22px clamp(18px,3vw,28px) 16px; border-bottom:1px solid var(--bone3);
+  display:flex; align-items:center; justify-content:space-between; gap:12px}
+.rv-head h2{margin:0; font-size:1.3rem; font-stretch:112%}
+.rv-body{flex:1; overflow-y:auto; padding:0 clamp(18px,3vw,28px)}
+.rv-foot{padding:18px clamp(18px,3vw,28px) 24px; border-top:1px solid var(--bone3)}
+.rv-terms{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:14px; margin-bottom:16px;
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--on-bone-mute)}
+.rv-terms b{display:block; color:var(--on-bone); font-size:11.5px; letter-spacing:0; margin-top:4px; text-transform:none}
+.rv-done{padding:clamp(30px,5vw,54px) clamp(18px,3vw,28px); text-align:center}
+.rv-done .po{font-family:"Martian Mono",monospace; font-size:1.5rem; color:var(--red); margin:14px 0 10px; letter-spacing:.04em}
 
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
@@ -1266,6 +1461,17 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
 </div>
 
 
+<div id="view-partners" data-ground="bone" hidden>
+  <div class="pt-wrap" id="ptWrap"></div>
+</div>
+
+<div class="review" id="reviewModal" hidden role="dialog" aria-modal="true" aria-label="Review order">
+  <div class="rv-head"><h2 class="display" id="rvTitle">Review order</h2>
+    <button class="sp-close" type="button" data-close>Close</button></div>
+  <div class="rv-body" id="rvBody"></div>
+  <div class="rv-foot" id="rvFoot"></div>
+</div>
+
 <div class="scrim" id="scrim" hidden></div>
 
 <div class="searchpanel" id="searchPanel" hidden role="dialog" aria-modal="true" aria-label="Search">
@@ -1307,7 +1513,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       <button class="btn-primary" style="width:100%" type="submit">Sign in</button>
     </form>
     <p class="md-note" id="pmNote">Accounts are approval-based. New buyers apply first; access opens once the account is verified.</p>
-    <p class="md-alt"><a href="#partners" data-close>Apply for an account &rarr;</a></p>
+    <p class="md-alt"><button class="btn-mini" type="button" id="pmFill">Use the demo account</button></p>
+    <p class="md-alt"><a href="#/partners" data-close>What is inside the portal &rarr;</a></p>
   </div>
 </div>
 
@@ -1657,7 +1864,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     <div>
       <h4>For buyers</h4>
       <p class="lede mute" style="font-size:14.5px">Line sheets, matrix ordering and brand assets — all behind one login. Accounts are approval-based.</p>
-      <a class="foot-cta" href="#partners">Partner login
+      <a class="foot-cta" href="#/partners">Partner login
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -2321,7 +2528,9 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       btn.addEventListener('click', function(){ pdSz = +btn.dataset.i; renderProduct(id); });
     });
 
-    document.getElementById('pdAcc').innerHTML =
+    var accEl = document.getElementById('pdAcc');
+    var accWas = [].map.call(accEl.querySelectorAll('details'), function(d){ return d.open; });
+    accEl.innerHTML =
       '<details open><summary>Materials & spec</summary><div class="accbody"><table><tbody>' +
       '<tr><td>Brand</td><td>' + br.n + '</td></tr>' +
       '<tr><td>Category</td><td>' + CATS.filter(function(c){ return c.k === x.c; })[0].n + '</td></tr>' +
@@ -2330,7 +2539,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       '<tr><td>Care</td><td>Hand wash below 30°C</td></tr>' +
       '</tbody></table></div></details>' +
       (sizable
-        ? '<details><summary>Size chart</summary><div class="accbody"><table><thead><tr>' +
+        ? '<details open><summary>Size chart</summary><div class="accbody"><table><thead><tr>' +
           '<th>Size</th><th>Girth</th><th>Neck</th><th>Weight</th></tr></thead><tbody>' +
           SIZES.map(function(z, i){
             return '<tr class="' + (i === pdSz ? 'hit' : '') + '"><td>' + z.s + '</td><td>' + z.min + '–' + z.max +
@@ -2339,6 +2548,10 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         : '') +
       '<details><summary>Shipping &amp; returns</summary><div class="accbody">2–3 working days domestically; international varies by region. ' +
       'Unworn items can be exchanged or returned within 14 days of delivery, and size exchanges ship both ways free.</div></details>';
+    var accNow = accEl.querySelectorAll('details');
+    if(accWas.length === accNow.length){
+      [].forEach.call(accNow, function(d, i){ d.open = accWas[i]; });
+    }
 
     var rel = PRODUCTS.filter(function(y){ return y.id !== x.id && (y.c === x.c || y.b === x.b); }).slice(0, 4);
     document.getElementById('pdRel').innerHTML = rel.map(card).join('');
@@ -2651,17 +2864,399 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   /* ---------- partner ---------- */
   document.getElementById('pmForm').addEventListener('submit', function(e){
     e.preventDefault();
-    var email = document.getElementById('pmEmail').value.trim();
-    var note = document.getElementById('pmNote');
+    var email = document.getElementById('pmEmail').value.trim().toLowerCase();
+    var pass  = document.getElementById('pmPass').value;
+    var note  = document.getElementById('pmNote');
     if(!email || email.indexOf('@') < 0){
       note.textContent = 'Enter the work email your account was approved with.';
       note.style.borderLeftColor = 'var(--red)';
       document.getElementById('pmEmail').focus();
       return;
     }
+    if(email === DEMO.email && pass === DEMO.pass){
+      session = { email:DEMO.email, company:DEMO.company };
+      note.textContent = 'Signed in as ' + DEMO.company + '.';
+      note.style.borderLeftColor = '#4CC38A';
+      closePanel();
+      ptTab = 'linesheet';
+      if(location.hash.indexOf('#/partners') === 0) renderPortal(); else location.hash = '#/partners';
+      toast('Welcome back, ' + DEMO.company);
+      return;
+    }
+    if(email === DEMO.email){
+      note.textContent = 'That password does not match. The demo password is ' + DEMO.pass + '.';
+      note.style.borderLeftColor = 'var(--red)';
+      return;
+    }
     note.textContent = 'No approved account found for ' + email + '. Apply below and we will verify your business within two working days.';
     note.style.borderLeftColor = 'var(--yellow)';
   });
+  document.getElementById('pmFill').addEventListener('click', function(){
+    document.getElementById('pmEmail').value = DEMO.email;
+    document.getElementById('pmPass').value = DEMO.pass;
+    document.getElementById('pmEmail').focus();
+  });
+
+  /* ================= PARTNER PORTAL ================= */
+  var DEMO = { email:'buyer@demo-partner.com', pass:'puppia2026',
+               company:'Hundwerk GmbH', country:'Germany', terms:'FOB Busan', season:'SS26' };
+  var MOQ = 4000000;               /* KRW — roughly USD 3,000 */
+  var WS  = 0.5;                   /* wholesale = 50% of MSRP */
+  var session = null, ptTab = 'linesheet', ptBrand = 'all', ptCat = 'all';
+  var ORDER = {};                  /* 'pid|si|ci' -> qty */
+  var ORDERS = [
+    { po:'PO-FW25-0118', date:'2025-09-12', season:'FW25', units:642, value:9860000, status:'shp' },
+    { po:'PO-FW25-0203', date:'2025-11-04', season:'FW25', units:288, value:4420000, status:'cfm' }
+  ];
+  var ASSETS = [
+    { n:'SS26 line sheet', f:'PDF', s:'8.4 MB' },
+    { n:'SS26 product photography', f:'ZIP', s:'412 MB' },
+    { n:'Soft Harness® spec sheets', f:'PDF', s:'2.1 MB' },
+    { n:'Brand logos & the Standard seal', f:'ZIP', s:'6.8 MB' },
+    { n:'SS26 campaign film', f:'MP4', s:'184 MB' },
+    { n:'OEKO-TEX & GRS certificates', f:'PDF', s:'1.3 MB' }
+  ];
+  var ptWrap = document.getElementById('ptWrap');
+
+  function wholesale(x){ return Math.round(price(x) * WS / 500) * 500; }
+  function rowsOf(x){ return (x.c === 'walk' || x.c === 'apparel') ? SIZES : [{ s:'OS', min:0, max:0 }]; }
+  function stockOf(x, si, ci){
+    var h = (x.id.length * 17 + x.id.charCodeAt(1) * 5 + si * 29 + ci * 13) % 12;
+    return h === 0 ? 0 : h * 8 + 6;
+  }
+  function key(pid, si, ci){ return pid + '|' + si + '|' + ci; }
+  function qtyOf(pid, si, ci){ return ORDER[key(pid, si, ci)] || 0; }
+  function unitsOf(x){
+    var n = 0, rs = rowsOf(x);
+    for(var si = 0; si < rs.length; si++) for(var ci = 0; ci < x.cw.length; ci++) n += qtyOf(x.id, si, ci);
+    return n;
+  }
+  function orderTotals(){
+    var u = 0, v = 0, lines = 0;
+    PRODUCTS.forEach(function(x){
+      var n = unitsOf(x);
+      if(n){ u += n; v += n * wholesale(x); lines++; }
+    });
+    return { units:u, value:v, lines:lines };
+  }
+  function ptList(){
+    return PRODUCTS.filter(function(x){
+      return (ptBrand === 'all' || x.b === ptBrand) && (ptCat === 'all' || x.c === ptCat);
+    });
+  }
+
+  /* ---------- matrix ---------- */
+  function matrix(x){
+    var rs = rowsOf(x), cw = x.cw;
+    var h = '<div class="mtx-wrap"><table class="mtx"><thead><tr><th>Size</th>' +
+      cw.map(function(ci){
+        return '<th><span class="sw" style="background:' + CW[ci].h + '"></span>' + CW[ci].n + '</th>';
+      }).join('') + '<th>Total</th></tr></thead><tbody>';
+    rs.forEach(function(z, si){
+      h += '<tr><th>' + z.s + (z.max ? '<span style="opacity:.45; font-weight:400"> · ' + z.min + '–' + z.max + '</span>' : '') + '</th>';
+      cw.forEach(function(ci, k){
+        var ats = stockOf(x, si, k), q = qtyOf(x.id, si, k);
+        if(!ats){ h += '<td class="cell oos" title="Out of stock"></td>'; return; }
+        h += '<td class="cell' + (q ? ' has' : '') + (q > ats ? ' over' : '') + '">' +
+             '<input type="number" min="0" inputmode="numeric" aria-label="' + x.n + ' ' + z.s + ' ' + CW[ci].n + '"' +
+             ' data-p="' + x.id + '" data-s="' + si + '" data-c="' + k + '" value="' + (q || '') + '">' +
+             '<span class="ats">' + ats + ' avl</span></td>';
+      });
+      h += '<td class="rowtot" data-rt="' + si + '">' + rowTotal(x, si) + '</td></tr>';
+    });
+    h += '</tbody><tfoot><tr><th>Units</th>' +
+      cw.map(function(ci, k){ return '<td>' + colTotal(x, k) + '</td>'; }).join('') +
+      '<td>' + unitsOf(x) + '</td></tr></tfoot></table></div>' +
+      '<div class="mtx-legend">' +
+      '<span><i class="h"></i>Ordered</span><span><i class="o"></i>Above available stock</span>' +
+      '<span><i class="x"></i>Out of stock</span><span>“avl” = units available</span>' +
+      '<span>↑ ↓ or Enter to move down a row</span></div>' +
+      '<div class="ls-sub"><span>Units<b data-su>' + unitsOf(x) + '</b></span>' +
+      '<span>Line value<b data-sv>' + money(unitsOf(x) * wholesale(x)) + '</b></span></div>';
+    return h;
+  }
+  function rowTotal(x, si){
+    var n = 0; for(var k = 0; k < x.cw.length; k++) n += qtyOf(x.id, si, k); return n;
+  }
+  function colTotal(x, ci){
+    var n = 0, rs = rowsOf(x); for(var si = 0; si < rs.length; si++) n += qtyOf(x.id, si, ci); return n;
+  }
+  function repaintRow(pid){
+    var x = PMAP[pid], row = ptWrap.querySelector('.lsrow[data-p="' + pid + '"]');
+    if(!row) return;
+    var rs = rowsOf(x);
+    rs.forEach(function(z, si){
+      var c = row.querySelector('[data-rt="' + si + '"]');
+      if(c) c.textContent = rowTotal(x, si);
+    });
+    var foot = row.querySelectorAll('.mtx tfoot td');
+    x.cw.forEach(function(ci, k){ if(foot[k]) foot[k].textContent = colTotal(x, k); });
+    if(foot[x.cw.length]) foot[x.cw.length].textContent = unitsOf(x);
+    var n = unitsOf(x);
+    row.querySelector('[data-su]').textContent = n;
+    row.querySelector('[data-sv]').textContent = money(n * wholesale(x));
+    row.querySelector('.ls-units b').textContent = n;
+    row.classList.toggle('filled', n > 0);
+    paintOrderBar();
+  }
+  function paintOrderBar(){
+    var t = orderTotals(), bar = document.getElementById('ordbar');
+    if(!bar) return;
+    bar.hidden = false;
+    bar.classList.toggle('on', t.units > 0);
+    document.body.classList.toggle('has-ordbar', t.units > 0);
+    document.getElementById('obUnits').textContent = t.units;
+    document.getElementById('obLines').textContent = t.lines;
+    document.getElementById('obValue').textContent = money(t.value);
+    var pct = Math.min(100, t.value / MOQ * 100);
+    document.getElementById('obTrack').style.width = pct.toFixed(1) + '%';
+    var met = t.value >= MOQ;
+    document.getElementById('obMoq').classList.toggle('met', met);
+    document.getElementById('obMoqLabel').textContent = met
+      ? 'MOQ met' : money(MOQ - t.value) + ' to MOQ';
+  }
+
+  /* ---------- portal views ---------- */
+  function gateHTML(){
+    return '<div class="gate">' +
+      '<div><p class="eyebrow" style="color:var(--on-bone-mute)">For buyers</p>' +
+      '<h1 class="display">Partner<br>portal.</h1>' +
+      '<p class="lede" style="color:var(--on-bone-mute)">Browse the season line sheet at wholesale, key quantities straight into a size × colour grid, and place the order without a single email.</p>' +
+      '<ul class="gate-list">' +
+      '<li><span class="n">01</span><span><b>Line sheet at wholesale</b><p>Your prices, MSRP and margin on every style.</p></span></li>' +
+      '<li><span class="n">02</span><span><b>Matrix ordering</b><p>Rows are sizes, columns are colourways. Type quantities and the totals follow.</p></span></li>' +
+      '<li><span class="n">03</span><span><b>Live availability</b><p>Each cell shows units available; over-orders are flagged, not blocked.</p></span></li>' +
+      '<li><span class="n">04</span><span><b>Orders &amp; assets</b><p>Order history, and photography, spec sheets and certificates in one place.</p></span></li>' +
+      '</ul></div>' +
+      '<div class="demo-card"><h3>Demo account</h3>' +
+      '<p>This prototype ships with one approved buyer so you can walk the whole flow.</p>' +
+      '<dl class="cred"><dt>Email</dt><dd>' + DEMO.email + '</dd><dt>Password</dt><dd>' + DEMO.pass + '</dd>' +
+      '<dt>Account</dt><dd>' + DEMO.company + ' · ' + DEMO.country + '</dd></dl>' +
+      '<button class="btn-primary" style="width:100%" type="button" id="gateSignIn">Sign in</button></div></div>';
+  }
+  function portalHTML(){
+    var t = orderTotals();
+    return '<div class="pt-bar"><span class="acct">' +
+      '<b>' + DEMO.company + '</b><em>' + DEMO.country + '</em><em>Season ' + DEMO.season + '</em>' +
+      '<em>Terms ' + DEMO.terms + '</em></span>' +
+      '<button type="button" id="ptOut">Sign out</button></div>' +
+      '<div class="pt-tabs" role="group" aria-label="Portal sections">' +
+      '<button class="pt-tab" data-t="linesheet">Line sheet' + (t.lines ? '<span class="b">' + t.lines + '</span>' : '') + '</button>' +
+      '<button class="pt-tab" data-t="orders">Orders</button>' +
+      '<button class="pt-tab" data-t="assets">Brand assets</button>' +
+      '</div><div class="pt-body" id="ptBody"></div>' +
+      '<div class="ordbar" id="ordbar" hidden><div class="ob-figs">' +
+      '<div><em>Units</em><b id="obUnits">0</b></div>' +
+      '<div><em>Styles</em><b id="obLines">0</b></div>' +
+      '<div><em>Order value</em><b id="obValue">KRW 0</b></div>' +
+      '<div class="moq" id="obMoq"><em id="obMoqLabel">MOQ</em><span class="track"><i id="obTrack"></i></span></div>' +
+      '</div><div class="ob-act">' +
+      '<button class="btn-ghost-d" type="button" id="obClear">Clear</button>' +
+      '<button class="btn-primary" type="button" id="obReview">Review order</button>' +
+      '</div></div>';
+  }
+  function lineSheetHTML(){
+    var list = ptList();
+    var brands = '<button class="chip-btn" data-pb="all">All brands</button>' +
+      BRANDS.map(function(b){ return '<button class="chip-btn" data-pb="' + b.k + '">' + b.n + '</button>'; }).join('');
+    var cats = '<button class="chip-btn" data-pc="all">All</button>' +
+      CATS.map(function(c){ return '<button class="chip-btn" data-pc="' + c.k + '">' + c.n + '</button>'; }).join('');
+    return '<p class="pt-note"><b>How to order:</b> open a style, then type quantities into the grid — ' +
+      'rows are sizes, columns are colourways. Row, column and line totals update as you type, so a full size run is a few keystrokes rather than a dozen add-to-cart clicks.</p>' +
+      '<div class="pt-tools"><div class="pt-filters">' + brands + '</div><div class="pt-filters">' + cats + '</div>' +
+      '<div class="pt-filters"><button class="btn-mini" id="ptExpand">Expand all</button>' +
+      '<button class="btn-mini" id="ptCollapse">Collapse all</button></div></div>' +
+      '<div id="lsList">' + list.map(lsRowHTML).join('') + '</div>';
+  }
+  function lsRowHTML(x){
+    var br = BMAP[x.b], n = unitsOf(x), w = wholesale(x);
+    return '<article class="lsrow' + (n ? ' filled' : '') + '" data-p="' + x.id + '">' +
+      '<button class="ls-head" type="button" aria-expanded="false">' +
+      '<span class="ls-im">' + art(x.c, 'var(' + br.v + ')') + '</span>' +
+      '<span class="ls-id"><b>' + x.n + '</b><span>' + br.n + ' · ' + x.c + ' · ' +
+        x.c.slice(0,2).toUpperCase() + '-' + (1000 + x.n.length * 37) + '</span></span>' +
+      '<span class="ls-fig"><em>Wholesale</em><b>' + money(w) + '</b></span>' +
+      '<span class="ls-fig"><em>MSRP</em><b>' + money(price(x)) + '</b></span>' +
+      '<span class="ls-fig"><em>Margin</em><b>' + Math.round((1 - w / price(x)) * 100) + '%</b></span>' +
+      '<span class="ls-units"><span class="ls-fig"><em>Units</em></span><b>' + n + '</b></span>' +
+      '<span class="ls-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>' +
+      '</button><div class="ls-body">' + matrix(x) + '</div></article>';
+  }
+  function ordersHTML(){
+    return '<p class="pt-note"><b>Orders</b> placed through the portal appear here with their status. ' +
+      'Confirmed orders can be reordered into a new season with one click.</p>' +
+      '<div class="tw" style="border:1px solid var(--bone3); border-radius:3px; overflow-x:auto">' +
+      '<table class="pt-table"><thead><tr><th>PO number</th><th>Date</th><th>Season</th>' +
+      '<th>Units</th><th>Value</th><th>Status</th><th></th></tr></thead><tbody>' +
+      ORDERS.map(function(o){
+        var lbl = { sub:'Submitted', cfm:'Confirmed', shp:'Shipped' }[o.status];
+        return '<tr><td class="num"><b>' + o.po + '</b></td><td class="num">' + o.date + '</td>' +
+          '<td class="num">' + o.season + '</td><td class="num">' + o.units + '</td>' +
+          '<td class="num">' + money(o.value) + '</td>' +
+          '<td><span class="pill ' + o.status + '">' + lbl + '</span></td>' +
+          '<td style="text-align:right"><button class="btn-mini" data-reorder="' + o.po + '">Reorder</button></td></tr>';
+      }).join('') + '</tbody></table></div>';
+  }
+  function assetsHTML(){
+    return '<p class="pt-note"><b>Brand assets</b> for your own channels — photography, spec sheets, ' +
+      'logos and certificates. Everything here is cleared for retailer use.</p>' +
+      '<div class="tw" style="border:1px solid var(--bone3); border-radius:3px; overflow-x:auto">' +
+      '<table class="pt-table"><thead><tr><th>File</th><th>Format</th><th>Size</th><th></th></tr></thead><tbody>' +
+      ASSETS.map(function(a){
+        return '<tr><td><b>' + a.n + '</b></td><td class="num">' + a.f + '</td><td class="num">' + a.s + '</td>' +
+          '<td style="text-align:right"><button class="btn-mini" data-dl="' + a.n + '">Download</button></td></tr>';
+      }).join('') + '</tbody></table></div>';
+  }
+
+  function renderPortal(){
+    if(!session){ ptWrap.innerHTML = gateHTML();
+      document.getElementById('gateSignIn').addEventListener('click', function(){ open('partner'); });
+      return;
+    }
+    ptWrap.innerHTML = portalHTML();
+    var body = document.getElementById('ptBody');
+    body.innerHTML = ptTab === 'orders' ? ordersHTML() : (ptTab === 'assets' ? assetsHTML() : lineSheetHTML());
+    [].forEach.call(ptWrap.querySelectorAll('.pt-tab'), function(b){
+      b.setAttribute('aria-pressed', b.dataset.t === ptTab ? 'true' : 'false');
+      b.addEventListener('click', function(){ ptTab = b.dataset.t; renderPortal(); });
+    });
+    document.getElementById('ptOut').addEventListener('click', function(){
+      session = null; ORDER = {}; ptTab = 'linesheet';
+      document.body.classList.remove('has-ordbar');
+      renderPortal(); toast('Signed out');
+    });
+    var obR = document.getElementById('obReview'), obC = document.getElementById('obClear');
+    if(obR) obR.addEventListener('click', openReview);
+    if(obC) obC.addEventListener('click', function(){
+      if(!orderTotals().units){ toast('Nothing to clear'); return; }
+      ORDER = {}; renderPortal(); toast('Order cleared');
+    });
+    if(ptTab === 'linesheet') wireLineSheet();
+    if(ptTab === 'orders'){
+      [].forEach.call(body.querySelectorAll('[data-reorder]'), function(b){
+        b.addEventListener('click', function(){ toast('Reorder — ' + b.dataset.reorder + ' copied into ' + DEMO.season); });
+      });
+    }
+    if(ptTab === 'assets'){
+      [].forEach.call(body.querySelectorAll('[data-dl]'), function(b){
+        b.addEventListener('click', function(){ toast('“' + b.dataset.dl + '” — file delivery is out of scope for this prototype'); });
+      });
+    }
+    paintOrderBar();
+  }
+
+  function wireLineSheet(){
+    [].forEach.call(ptWrap.querySelectorAll('[data-pb]'), function(b){
+      b.setAttribute('aria-pressed', b.dataset.pb === ptBrand ? 'true' : 'false');
+      b.addEventListener('click', function(){ ptBrand = b.dataset.pb; renderPortal(); });
+    });
+    [].forEach.call(ptWrap.querySelectorAll('[data-pc]'), function(b){
+      b.setAttribute('aria-pressed', b.dataset.pc === ptCat ? 'true' : 'false');
+      b.addEventListener('click', function(){ ptCat = b.dataset.pc; renderPortal(); });
+    });
+    [].forEach.call(ptWrap.querySelectorAll('.ls-head'), function(h){
+      h.addEventListener('click', function(){
+        var row = h.closest('.lsrow'), on = row.classList.toggle('open');
+        h.setAttribute('aria-expanded', on ? 'true' : 'false');
+      });
+    });
+    document.getElementById('ptExpand').addEventListener('click', function(){
+      [].forEach.call(ptWrap.querySelectorAll('.lsrow'), function(r){
+        r.classList.add('open'); r.querySelector('.ls-head').setAttribute('aria-expanded', 'true');
+      });
+    });
+    document.getElementById('ptCollapse').addEventListener('click', function(){
+      [].forEach.call(ptWrap.querySelectorAll('.lsrow'), function(r){
+        r.classList.remove('open'); r.querySelector('.ls-head').setAttribute('aria-expanded', 'false');
+      });
+    });
+    [].forEach.call(ptWrap.querySelectorAll('.mtx input'), function(inp){
+      inp.addEventListener('focus', function(){ inp.select(); });
+      inp.addEventListener('input', function(){
+        var v = Math.max(0, parseInt(inp.value, 10) || 0);
+        var pid = inp.dataset.p, si = +inp.dataset.s, ci = +inp.dataset.c;
+        if(v) ORDER[key(pid, si, ci)] = v; else delete ORDER[key(pid, si, ci)];
+        var td = inp.parentNode, ats = stockOf(PMAP[pid], si, ci);
+        td.classList.toggle('has', v > 0);
+        td.classList.toggle('over', v > ats);
+        td.title = v > ats ? 'Above available stock (' + ats + ') — we will confirm the balance' : '';
+        repaintRow(pid);
+      });
+      inp.addEventListener('keydown', function(e){
+        var dir = e.key === 'ArrowDown' || e.key === 'Enter' ? 1 : (e.key === 'ArrowUp' ? -1 : 0);
+        if(!dir) return;
+        e.preventDefault();
+        var pid = inp.dataset.p, ci = inp.dataset.c, si = +inp.dataset.s;
+        var next = ptWrap.querySelector('.mtx input[data-p="' + pid + '"][data-s="' + (si + dir) + '"][data-c="' + ci + '"]');
+        if(next) next.focus();
+      });
+    });
+  }
+
+  /* ---------- review & submit ---------- */
+  panels.review = document.getElementById('reviewModal');
+  function reviewHTML(){
+    var t = orderTotals();
+    var rows = '';
+    PRODUCTS.forEach(function(x){
+      var n = unitsOf(x); if(!n) return;
+      var rs = rowsOf(x), parts = [];
+      rs.forEach(function(z, si){
+        x.cw.forEach(function(ci, k){
+          var q = qtyOf(x.id, si, k);
+          if(q) parts.push(z.s + '/' + CW[ci].n + ' ×' + q);
+        });
+      });
+      rows += '<tr><td><b>' + x.n + '</b><br><span style="font-family:\'Martian Mono\',monospace;font-size:9px;' +
+        'letter-spacing:.1em;color:var(--on-bone-mute)">' + parts.join('  ·  ') + '</span></td>' +
+        '<td class="num">' + n + '</td><td class="num">' + money(n * wholesale(x)) + '</td></tr>';
+    });
+    return '<table class="pt-table"><thead><tr><th>Style &amp; breakdown</th><th>Units</th><th>Value</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>' +
+      '<p class="pt-note" style="margin:18px 0 4px"><b>' + t.units + ' units</b> across ' + t.lines +
+      ' styles. Quantities above available stock are accepted and confirmed against the next production run.</p>';
+  }
+  function openReview(){
+    var t = orderTotals();
+    document.getElementById('rvTitle').textContent = 'Review order';
+    document.getElementById('rvBody').innerHTML = reviewHTML();
+    var short = MOQ - t.value;
+    document.getElementById('rvFoot').innerHTML =
+      '<div class="rv-terms">' +
+      '<span>Account<b>' + DEMO.company + '</b></span>' +
+      '<span>Season<b>' + DEMO.season + '</b></span>' +
+      '<span>Incoterms<b>' + DEMO.terms + '</b></span>' +
+      '<span>Lead time<b>30–45 days</b></span>' +
+      '<span>Order value<b>' + money(t.value) + '</b></span></div>' +
+      (short > 0
+        ? '<p class="pt-note" style="margin:0 0 14px"><b>' + money(short) + ' below the minimum order.</b> ' +
+          'Add units to reach ' + money(MOQ) + ' and the order can be submitted.</p>'
+        : '') +
+      '<button class="btn-primary" style="width:100%" type="button" id="rvSubmit"' +
+      (short > 0 ? ' disabled style="width:100%;opacity:.4;cursor:not-allowed"' : '') +
+      '>Submit order</button>';
+    open('review');
+    var sb = document.getElementById('rvSubmit');
+    if(!sb.disabled) sb.addEventListener('click', submitOrder);
+  }
+  function submitOrder(){
+    var t = orderTotals();
+    var po = 'PO-' + DEMO.season + '-' + ('000' + (ORDERS.length + 41)).slice(-4);
+    ORDERS.unshift({ po:po, date:new Date().toISOString().slice(0, 10), season:DEMO.season,
+                     units:t.units, value:t.value, status:'sub' });
+    ORDER = {};
+    document.getElementById('rvTitle').textContent = 'Order submitted';
+    document.getElementById('rvBody').innerHTML =
+      '<div class="rv-done"><p class="eyebrow" style="color:var(--on-bone-mute); justify-content:center">Purchase order</p>' +
+      '<p class="po">' + po + '</p>' +
+      '<p class="lede" style="color:var(--on-bone-mute); margin:0 auto">' + t.units + ' units · ' + money(t.value) +
+      '. A confirmation is on its way to ' + DEMO.email + ', and the order now shows in your Orders tab.</p></div>';
+    document.getElementById('rvFoot').innerHTML =
+      '<button class="btn-primary" style="width:100%" type="button" id="rvDone">See my orders</button>';
+    document.getElementById('rvDone').addEventListener('click', function(){
+      closePanel(); ptTab = 'orders'; renderPortal();
+    });
+  }
 
   /* ================= router ================= */
   var VIEWS = {
@@ -2669,6 +3264,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     shop:    document.getElementById('view-shop'),
     product: document.getElementById('view-product'),
     catalog: document.getElementById('view-catalog'),
+    partners: document.getElementById('view-partners'),
     harness: document.getElementById('view-harness')
   };
   var demob = document.getElementById('demobar');
@@ -2677,6 +3273,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   function viewFor(h){
     if(h.indexOf('#/soft-harness') === 0) return 'harness';
     if(h.indexOf('#/catalog') === 0) return 'catalog';
+    if(h.indexOf('#/partners') === 0) return 'partners';
     if(h.indexOf('#/product/') === 0) return 'product';
     if(h.indexOf('#/shop') === 0) return 'shop';
     if(h.indexOf('#/') === 0) return 'home';
@@ -2685,6 +3282,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   function setView(v){
     Object.keys(VIEWS).forEach(function(k){ VIEWS[k].hidden = (k !== v); });
     if(demob) demob.hidden = (v !== 'home');
+    var fl = document.getElementById('flag');
+    if(fl) fl.hidden = (v === 'partners');
     var shopish = (v === 'shop' || v === 'product');
     [].forEach.call(document.querySelectorAll('.navitem'), function(n){
       var isSig = n.classList.contains('signature');
@@ -2716,6 +3315,8 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       renderShop();
     } else if(v === 'product'){
       renderProduct(h.replace('#/product/', '').split('?')[0]);
+    } else if(v === 'partners'){
+      renderPortal();
     }
     requestAnimationFrame(function(){
       if(h.indexOf('#/') === 0) window.scrollTo(0, 0);
