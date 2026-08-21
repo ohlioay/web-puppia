@@ -13,14 +13,15 @@ prototype/index.html    단일 파일. 빌드 불필요. 브라우저에서 바�
 
 | 경로 | 페이지 |
 |---|---|
-| `#/` | **홈** — 시즌 캠페인 슬롯 + The Standard + 4브랜드 카탈로그 |
-| `#/soft-harness` | **시그니처 페이지** — 기존 스크롤 서사 8씬 |
-| `#/shop?b=olchi` | 홈의 SHOP 섹션으로 이동 + 올치 필터 적용 (메가메뉴 딥링크) |
+| `#/` | **홈** — 시즌 캠페인 슬롯 + The Standard + 4브랜드 그리드 |
+| `#/soft-harness` | **시그니처 페이지** — 스크롤 서사 7씬 |
+| `#/catalog` | **시즌 라인시트 웹북** — 페이지 넘김, 시즌 셀렉터 |
+| `#/shop?b=olchi` | 홈의 SHOP 섹션으로 이동 + 올치 필터 (메가메뉴 딥링크) |
 | `#/shop?c=walk` | 카테고리 필터 적용 |
 
 ## 내비게이션
 
-2단 구조. 유틸리티 바(DOG/CAT · Brands · Where to buy · Partner Login) + 메인 내비.
+2단 구조. 유틸리티 바(Brands · Where to buy · Support · EN/KRW · Partner Login) + 메인 내비.
 메인 내비는 `◉ Soft Harness® │ Walk  Apparel  Living  Acc  Catalog`.
 **Soft Harness®만 제품 라인 이름이고 나머지는 카테고리** — 이 비대칭이 의도된 전략이며,
 씰 마크와 세로 구분선으로 시각적으로 명시한다.
@@ -31,15 +32,46 @@ prototype/index.html    단일 파일. 빌드 불필요. 브라우저에서 바�
 
 로고를 나열하지 않는다. 같은 서체·같은 크기의 라벨 + 점 하나로 구분한다.
 
-| 브랜드 | 도트 | 종 |
+| 브랜드 | 도트 | 상태 |
 |---|---|---|
-| PUPPIA | `#2A45E0` | DOG |
-| OLCHI | `#E2A32C` | DOG |
-| PINKAHOLIC | `#D9528C` | DOG |
-| CATSPIA | `#4E8C74` | CAT |
+| PUPPIA | `#E13B26` 레드 | **Active** — 매 시즌 신상 |
+| OLCHI | `#EDB230` 옐로우 | **Active** — 매 시즌 신상 |
+| PINKAHOLIC | `#B8446B` 로즈 | Archive — 재고 소진까지 |
+| CATSPIA | `#3E7C74` 틸 | Archive — 재고 소진까지 |
 
-**DOG / CAT 토글**은 필터가 아니라 모드다. CAT을 켜면 히어로 캠페인 자체가 캐츠피아로 바뀌고,
-제품 그리드가 고양이 제품으로 좁혀지며, 강아지 브랜드 탭이 비활성된다. 선택은 `localStorage`에 저장된다.
+### Active / Archive 이원화
+
+신상이 나오지 않는 브랜드에 "신상" 슬롯을 주면 매 시즌 비는 자리가 된다. 그래서:
+
+- **시즌 슬롯**(히어로 + This Week 2칸)은 PUPPIA·OLCHI만 순환한다. 세 번째 카드는 **카탈로그 고정 슬롯**이라 채울 필요가 없다
+- **SHOP 탭**은 `NEW / PUPPIA / OLCHI / ARCHIVE` — 아카이브 두 브랜드는 하나로 묶여 빈 탭이 구조적으로 생기지 않는다
+- **THE HOUSES**는 Active 2(큰 카드) + Archive 2(작은 카드)로 위계를 디자인에 반영한다
+- 아카이브 제품에는 `NEW` 대신 **`LAST STOCK`** 라벨(옐로우)이 붙는다
+
+## 컬러웨이
+
+메인은 살짝 오렌지가 도는 레드. 서브는 아이보리 · 옐로우 · 블루.
+
+| 토큰 | 값 | 역할 | 비중 |
+|---|---|---|---|
+| `--bone` | `#F4F0E6` | 기본 지면 | ~60% |
+| `--ink` | `#17161A` | 대비 섹션 | ~25% |
+| `--red` | `#E13B26` | 브랜드 메인 — CTA · 씰 · NEW · PUPPIA | ~8% |
+| `--blue` | `#1B4FD8` | **기술 색 전용** — 압력 분산 · 사이즈 데이터 | ~5% |
+| `--yellow` | `#EDB230` | LAST STOCK · ARCHIVE · OLCHI | ~2% |
+
+블루는 CTA에 쓰지 않는다. 압력 다이어그램에서 레드(목줄의 압박) ↔ 블루(하네스의 분산)로 쓰여
+**제품의 논리를 그대로 색으로 설명하는 역할**이기 때문이다.
+
+## 카탈로그 웹북 (`#/catalog`)
+
+시즌 PDF 라인시트를 페이지가 넘어가는 웹북으로 보여준다. PDF 뷰어를 임베드하지 않는다.
+
+- 2페이지 스프레드 · 3D 페이지 넘김 (`rotateY` + `backface-visibility`)
+- 좌우 클릭 · `←` `→` 키 · 버튼 세 가지 조작
+- 시즌 셀렉터(SS26 / FW25 / SS25) — 이전 시즌이 아카이브로 남는다
+- 라인시트 페이지는 **스타일 × 컬러웨이** 단위로 진열 (실제 라인시트와 발주 단위가 그렇다)
+- PDF 원본 다운로드는 파트너 로그인 후
 
 ## 목적
 
@@ -59,11 +91,11 @@ prototype/index.html    단일 파일. 빌드 불필요. 브라우저에서 바�
 
 | # | 섹션 | 인터랙션 | 상태 |
 |---|---|---|---|
-| H1 | THE SEASON | 캠페인 히어로 슬롯(`season.hero`) + This Week 3카드. DOG/CAT에 따라 교체 | 동작 |
+| H1 | THE SEASON | 캠페인 히어로(`season.hero`) + This Week 3카드 (시즌 2 + 고정 1) | 동작 |
 | H2 | THE STANDARD | **고정 섹션.** 압력 비교 요약 + 씰 + 시그니처 페이지 진입 | 동작 |
-| H3 | SHOP | 브랜드 탭 × 카테고리 칩 × 제품 그리드, 신상 우선 정렬 | 동작 |
+| H3 | SHOP | `NEW / PUPPIA / OLCHI / ARCHIVE` 탭 × 카테고리 칩 × 그리드 | 동작 |
 | H4 | CATEGORIES | Walk / Apparel / Living / Acc 4개 도어 | 동작 |
-| H5 | THE HOUSES | 4개 브랜드 블록 | 동작 |
+| H5 | THE HOUSES | Active 2 + Archive 2 블록 | 동작 |
 | H6 | FIT FINDER | 시그니처 페이지의 핏 시뮬레이터로 연결 | 동작 |
 | H7 | DISTRIBUTION | 유통 국가 도트맵 + 바이어 진입 | 동작 |
 
@@ -94,6 +126,8 @@ prototype/index.html    단일 파일. 빌드 불필요. 브라우저에서 바�
   (문서 길이 12,284px → 7,334px). 정보 손실 없음.
 - **해시 라우터**: `#/` 로 시작하면 라우트, 그 외 `#id`는 인페이지 앵커. 뷰 전환 시 스크롤을 리셋하고
   숨겨진 뷰의 씬은 `offsetParent === null` 로 걸러 스크롤 계산에서 제외한다.
+- 우하단 **Season slot** 컨트롤은 프로토타입 전용이다. `season.hero` 슬롯을 PUPPIA ↔ OLCHI로 바꿔
+  운영자가 시즌마다 하는 작업을 눈으로 확인하기 위한 것으로, 실제 사이트에는 없다.
 - 390 / 834 / 1440px에서 가로 오버플로 0, 콘솔 에러 0으로 확인.
 
 ## 컬러 시스템

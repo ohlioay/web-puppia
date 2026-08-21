@@ -7,7 +7,7 @@
 
 ## 문서
 
-- **프로토타입**: [`prototype/index.html`](prototype/index.html) — 홈 + Soft Harness® 두 페이지, 해시 라우터 (단일 파일, 빌드 불필요)
+- **프로토타입**: [`prototype/index.html`](prototype/index.html) — 홈 · Soft Harness® · 카탈로그 웹북 세 페이지, 해시 라우터 (단일 파일, 빌드 불필요)
 
 | 문서 | 내용 |
 |---|---|
@@ -17,4 +17,4 @@
 | [docs/research/03-strategy.md](docs/research/03-strategy.md) | 조합 전략 · IA · 홈 스크롤 시나리오 · 기술 스택 · 로드맵 |
 | [docs/research/04-extra-ideas.md](docs/research/04-extra-ideas.md) | 추가 제안 아이디어 |
 | [docs/research/05-sources.md](docs/research/05-sources.md) | 출처 |
-| [docs/research/06-home-and-brand-architecture.md](docs/research/06-home-and-brand-architecture.md) | 메인 홈 설계 · 2단 내비게이션 · 4브랜드 아키텍처 · DOG/CAT 모드 |
+| [docs/research/06-home-and-brand-architecture.md](docs/research/06-home-and-brand-architecture.md) | 메인 홈 설계 · 2단 내비게이션 · 4브랜드 아키텍처 · Active/Archive 이원화 · 컬러웨이 · 카탈로그 웹북 |
