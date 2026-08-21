@@ -12,9 +12,9 @@
 :root{
   /* ground */
   --ink:#17161A; --ink2:#201F24; --ink3:#2C2B31;
-  --bone:#F4F0E6; --bone2:#E9E3D4; --bone3:#D6CFBC;
-  --on-ink:#F6F2E8; --on-ink-mute:#948D82;
-  --on-bone:#17161A; --on-bone-mute:#6B6459;
+  --bone:#FFFFFF; --bone2:#F4F4F1; --bone3:#E2E1DC;
+  --on-ink:#F7F7F5; --on-ink-mute:#918F8A;
+  --on-bone:#17161A; --on-bone-mute:#6A6862;
 
   /* brand — main red (slightly orange-red); subs: ivory / yellow / blue */
   --red:#E13B26; --red-lt:#F26A50; --red-dk:#B62B18;
@@ -25,7 +25,7 @@
   --press:#E13B26; --press-lt:#F26A50;
   --load:#1B4FD8;  --load-lt:#5C82F5;
 
-  --on-red:#FFF1EC;
+  --on-red:#FFFFFF;
   --product:#E13B26;
   --b-puppia:#E13B26; --b-olchi:#EDB230; --b-pinka:#B8446B; --b-catspia:#3E7C74;
   --navh:94px;
@@ -642,7 +642,7 @@ footer{background:var(--red); color:var(--on-red); padding:clamp(40px,6vw,80px) 
   pointer-events:none; z-index:4;
 }
 .pg{position:relative; background:var(--bone); color:var(--on-bone); overflow:hidden; display:flex; flex-direction:column}
-.pg.blank{background:rgba(0,0,0,.14)}
+.pg.blank{background:rgba(0,0,0,.12)}
 .pg-num{
   position:absolute; bottom:12px; font-family:"Martian Mono",monospace; font-size:8px;
   letter-spacing:.16em; color:var(--on-bone-mute);
@@ -1020,7 +1020,7 @@ body.has-ordbar .toast{bottom:104px}
   grid-template-columns:46px minmax(0,1fr) auto;
 }
 @media(min-width:840px){.ls-head{grid-template-columns:46px minmax(0,1.6fr) repeat(3,88px) 92px 30px}}
-.ls-head:hover{background:var(--bone)}
+.ls-head:hover{background:var(--bone2)}
 .ls-im{aspect-ratio:1; background:var(--bone2); border-radius:2px; display:grid; place-items:center; overflow:hidden}
 .ls-im svg{width:80%; height:auto}
 .ls-id b{display:block; font-size:14.5px; font-weight:600; letter-spacing:-.005em; line-height:1.3}
@@ -1037,7 +1037,7 @@ body.has-ordbar .toast{bottom:104px}
 .ls-chev{display:grid; place-items:center; opacity:.4; transition:transform .2s}
 .lsrow.open .ls-chev{transform:rotate(180deg); opacity:.8}
 .ls-chev svg{width:14px; height:14px}
-.ls-body{display:none; border-top:1px solid var(--bone3); padding:16px 14px 18px; background:var(--bone)}
+.ls-body{display:none; border-top:1px solid var(--bone3); padding:16px 14px 18px; background:var(--bone2)}
 .lsrow.open .ls-body{display:block}
 
 /* matrix */
@@ -1205,7 +1205,7 @@ body.has-ordbar .toast{bottom:104px}
   display:block; width:100%; text-align:left; background:transparent; border:0; cursor:pointer;
   padding:15px 16px; border-bottom:1px solid var(--bone3); color:inherit; font:inherit; transition:background .16s;
 }
-.thitem:hover{background:var(--bone)}
+.thitem:hover{background:var(--bone2)}
 .thitem.on{background:var(--bone2); box-shadow:inset 3px 0 0 var(--red)}
 .thitem .tsub{display:flex; align-items:baseline; gap:8px; font-size:14px; font-weight:600; line-height:1.35}
 .thitem .tdot{width:7px; height:7px; border-radius:50%; background:var(--red); flex:0 0 auto; margin-top:5px}
@@ -1213,7 +1213,7 @@ body.has-ordbar .toast{bottom:104px}
   overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical}
 .thitem .tmeta{display:flex; gap:9px; align-items:center; margin-top:8px;
   font-family:"Martian Mono",monospace; font-size:8px; letter-spacing:.12em; text-transform:uppercase; color:var(--on-bone-mute)}
-.thview{background:var(--bone); display:flex; flex-direction:column; min-height:0; overflow:hidden}
+.thview{background:var(--bone2); display:flex; flex-direction:column; min-height:0; overflow:hidden}
 .thview-head{padding:16px 18px; border-bottom:1px solid var(--bone3); background:#fff;
   display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap}
 .thview-head h3{margin:0; font-size:1.05rem; font-weight:600; letter-spacing:-.01em}
@@ -1237,7 +1237,7 @@ body.has-ordbar .toast{bottom:104px}
 .composer{flex:0 0 auto}
 .composer textarea{
   width:100%; border:1px solid var(--bone3); border-radius:3px; padding:11px 13px; font:inherit;
-  font-size:13.5px; color:inherit; resize:vertical; min-height:74px; outline:none; background:var(--bone);
+  font-size:13.5px; color:inherit; resize:vertical; min-height:74px; outline:none; background:var(--bone2);
 }
 .composer textarea:focus{border-color:var(--red)}
 .composer-row{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:10px; flex-wrap:wrap}
@@ -1275,6 +1275,59 @@ body.has-ordbar .toast{bottom:104px}
 .exp-foot .btn-primary{flex:1 1 200px}
 .exp-note{width:100%; margin:0; font-size:12px; line-height:1.6; color:var(--on-bone-mute)}
 .exp-note b{color:var(--on-bone)}
+
+/* ---- mobile menu ---- */
+.menu-btn{display:grid}
+@media(min-width:1000px){.menu-btn{display:none}}
+@media(max-width:699px){.nav-r .partner{display:none}}
+.navdrawer{
+  position:fixed; top:0; left:0; bottom:0; z-index:82; width:min(360px,86%);
+  background:var(--bone); color:var(--on-bone); display:flex; flex-direction:column;
+  transform:translateX(-100%); transition:transform .34s cubic-bezier(.3,.8,.3,1);
+  box-shadow:24px 0 60px -30px rgba(0,0,0,.4);
+}
+.navdrawer.on{transform:none}
+.navdrawer[hidden]{display:none}
+.nd-head{display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:16px 20px; background:var(--red); color:var(--on-red)}
+.nd-head .brand{font-size:16px}
+.nd-body{flex:1; overflow-y:auto; padding:8px 0 20px}
+.nd-sig{
+  display:flex; align-items:center; gap:9px; padding:16px 20px; margin:0 0 4px;
+  text-decoration:none; color:var(--red); border-bottom:1px solid var(--bone3);
+  font-family:"Martian Mono",monospace; font-size:11px; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+}
+.nd-sig .seal{width:16px; height:16px}
+.nd-cat{border-bottom:1px solid var(--bone3)}
+.nd-row{display:flex; align-items:stretch}
+.nd-row > a{
+  flex:1; padding:15px 20px; text-decoration:none; color:inherit;
+  font-family:"Martian Mono",monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+}
+.nd-row > button{
+  appearance:none; background:transparent; border:0; border-left:1px solid var(--bone3); cursor:pointer;
+  width:52px; display:grid; place-items:center; color:var(--on-bone-mute); transition:transform .2s;
+}
+.nd-row > button svg{width:14px; height:14px}
+.nd-cat.open .nd-row > button{transform:rotate(180deg); color:var(--red)}
+.nd-sub{display:none; padding:2px 20px 16px; background:var(--bone2)}
+.nd-cat.open .nd-sub{display:block}
+.nd-sub h5{margin:12px 0 8px; font-family:"Martian Mono",monospace; font-size:8px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--on-bone-mute); font-weight:500}
+.nd-sub ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px}
+.nd-sub a{display:block; padding:8px 0; text-decoration:none; color:inherit; font-size:14px}
+.nd-sub a:hover{color:var(--red)}
+.nd-sub .blabel{font-size:9px}
+.nd-util{padding:18px 20px 0; display:flex; flex-direction:column; gap:2px}
+.nd-util a{
+  display:block; padding:10px 0; text-decoration:none; color:var(--on-bone-mute);
+  font-family:"Martian Mono",monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+}
+.nd-util a:hover{color:var(--on-bone)}
+.nd-foot{padding:16px 20px 22px; border-top:1px solid var(--bone3); display:flex; gap:10px; flex-wrap:wrap}
+.nd-foot .btn-primary{flex:1 1 100%}
+.nd-locale{display:flex; gap:18px; padding:0 20px 4px;
+  font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-bone-mute)}
 
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
@@ -1355,6 +1408,9 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       <div class="navitem"><a href="#/catalog">Catalog</a></div>
     </div>
     <div class="nav-r">
+      <button class="icon-btn menu-btn" id="btnMenu" type="button" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
       <button class="icon-btn" id="btnSearch" type="button" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
       </button>
@@ -1612,6 +1668,13 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   </div>
   <div class="exp-foot" id="expFoot"></div>
 </div>
+
+<aside class="navdrawer" id="navDrawer" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="nd-head"><span class="brand">PUPPIA</span>
+    <button class="sp-close" type="button" data-close style="color:inherit">Close</button></div>
+  <div class="nd-body" id="ndBody"></div>
+  <div class="nd-foot" id="ndFoot"></div>
+</aside>
 
 <div class="scrim" id="scrim" hidden></div>
 
@@ -2958,6 +3021,55 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   document.getElementById('btnCart').addEventListener('click', function(){ open('cart'); });
   document.getElementById('btnPartner').addEventListener('click', function(){ open('partner'); });
   document.getElementById('utilPartner').addEventListener('click', function(e){ e.preventDefault(); open('partner'); });
+
+  /* ---------- mobile menu ---------- */
+  panels.menu = document.getElementById('navDrawer');
+  var SUBCATS = {
+    walk:    ['Harness', 'Leash', 'Collar', 'Walk Set'],
+    apparel: ['Outerwear', 'Tee & Knit', 'Dress', 'Rainwear'],
+    living:  ['Bed & Mat', 'House', 'Carrier', 'Car Seat'],
+    acc:     ['Bowl', 'Pouch', 'Charm', 'Grooming']
+  };
+  var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+    'stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+
+  function renderMenu(){
+    var body = document.getElementById('ndBody');
+    body.innerHTML =
+      '<a class="nd-sig" href="#/soft-harness">' + SEAL_SVG + 'Soft Harness&#174;</a>' +
+      CATS.map(function(c){
+        return '<div class="nd-cat" data-c="' + c.k + '"><div class="nd-row">' +
+          '<a href="#/shop?c=' + c.k + '">' + c.n + '</a>' +
+          '<button type="button" aria-label="Show ' + c.n + ' subcategories" aria-expanded="false">' + CHEV + '</button>' +
+          '</div><div class="nd-sub"><h5>Category</h5><ul>' +
+          SUBCATS[c.k].map(function(x){ return '<li><a href="#/shop?c=' + c.k + '">' + x + '</a></li>'; }).join('') +
+          '</ul><h5>By brand</h5><ul>' +
+          BRANDS.map(function(b){
+            return '<li><a class="blabel" style="--bd:var(' + b.v + ')" href="#/shop?b=' + b.k + '"><i></i>' + b.n + '</a></li>';
+          }).join('') + '</ul></div></div>';
+      }).join('') +
+      '<div class="nd-cat"><div class="nd-row"><a href="#/catalog">Catalog</a></div></div>' +
+      '<div class="nd-util">' +
+      '<a href="#h5">Brands</a><a href="#h7">Where to buy</a><a href="#partners">Support</a>' +
+      '</div><p class="nd-locale"><span>EN</span><span>USD</span></p>';
+
+    document.getElementById('ndFoot').innerHTML = session
+      ? '<a class="btn-primary" href="#/partners" style="text-align:center; text-decoration:none; line-height:1.2">Partner portal</a>'
+      : '<button class="btn-primary" type="button" id="ndLogin">Partner login</button>';
+
+    [].forEach.call(body.querySelectorAll('.nd-row > button'), function(b){
+      b.addEventListener('click', function(){
+        var cat = b.closest('.nd-cat'), on = cat.classList.toggle('open');
+        b.setAttribute('aria-expanded', on ? 'true' : 'false');
+      });
+    });
+    [].forEach.call(document.querySelectorAll('#navDrawer a[href]'), function(a){
+      a.addEventListener('click', function(){ closePanel(); });
+    });
+    var lg = document.getElementById('ndLogin');
+    if(lg) lg.addEventListener('click', function(){ closePanel(); setTimeout(function(){ open('partner'); }, 260); });
+  }
+  document.getElementById('btnMenu').addEventListener('click', function(){ renderMenu(); open('menu'); });
 
   /* ---------- search ---------- */
   var sInput = document.getElementById('searchInput');

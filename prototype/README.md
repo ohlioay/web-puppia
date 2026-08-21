@@ -23,12 +23,22 @@ prototype/index.html    단일 파일. 빌드 불필요. 브라우저에서 바�
 
 ## 내비게이션
 
-2단 구조. 유틸리티 바(Brands · Where to buy · Support · EN/KRW · Partner Login) + 메인 내비.
+2단 구조. 유틸리티 바(Brands · Where to buy · Support · EN/USD · Partner Login) + 메인 내비.
 메인 내비는 `◉ Soft Harness® │ Walk  Apparel  Living  Acc  Catalog`.
 **Soft Harness®만 제품 라인 이름이고 나머지는 카테고리** — 이 비대칭이 의도된 전략이며,
 씰 마크와 세로 구분선으로 시각적으로 명시한다.
 
 카테고리 호버 시 메가메뉴가 열린다: 서브카테고리 / 브랜드별 바로가기 / 이번 시즌 이미지 3열.
+
+### 좁은 화면 (< 1000px)
+
+메가메뉴가 있는 가로 내비는 좁은 화면에서 성립하지 않으므로 **햄버거 + 좌측 드로어**로 대체한다.
+카테고리를 숨기는 대신 **전부 담는다** — 시그니처, 카테고리 5개(각각 서브카테고리 + 브랜드별 바로가기로 펼침),
+Brands / Where to buy / Support, 로케일, 파트너 진입.
+
+- 700px 미만에서는 헤더의 `PARTNER` 알약을 숨긴다 (드로어 하단에 있다)
+- 링크를 누르면 드로어가 자동으로 닫힌다
+- 360 / 390 / 834 / 1024 / 1440px에서 **모든 라우트에 대해 내비 도달 가능**을 자동 검증한다
 
 ## 브랜드 시스템
 
@@ -54,7 +64,7 @@ prototype/index.html    단일 파일. 빌드 불필요. 브라우저에서 바�
 | 토큰 | 값 | 역할 |
 |---|---|---|
 | `--red` | `#E13B26` | **브랜드 메인.** 고정 헤더 · 푸터 · CATEGORIES 섹션 · CTA · 씰 · NEW 라벨 |
-| `--bone` | `#F4F0E6` | 기본 지면 |
+| `--bone` | `#FFFFFF` | 기본 지면 (화이트) |
 | `--ink` | `#17161A` | 다이어그램 가독성이 필요한 THE STANDARD 한 곳만 |
 | `--blue` | `#1B4FD8` | **기술 색 전용** — 압력 분산 · 사이즈 데이터 |
 | `--yellow` | `#EDB230` | 스크롤 진행바 · 장바구니 배지 · OLCHI |
@@ -63,16 +73,19 @@ prototype/index.html    단일 파일. 빌드 불필요. 브라우저에서 바�
 
 ```
 HEADER      RED        ← 상시 고정
-H1 Season   IVORY      (히어로 슬롯은 브랜드 컬러 블록)
+H1 Season   WHITE      (히어로 슬롯은 브랜드 컬러 블록)
 H2 Standard INK        ← 유일한 어두운 섹션. 압력 다이어그램 대비 확보용
-H3 Shop     IVORY
+H3 Shop     WHITE
 H4 Categories RED      ← 본문 안의 큰 레드 블록
-H5 Houses   IVORY
-H6 Fit      IVORY-2
-H7 Distribution IVORY  (도트맵을 레드로)
+H5 Houses   WHITE
+H6 Fit      OFF-WHITE  (--bone2 #F4F4F1)
+H7 Distribution WHITE  (도트맵을 레드로)
 FOOTER      RED
 CATALOG     DEEP RED   (책 스테이지)
 ```
+
+지면은 순백(`--bone`)이고, 카드 썸네일·테이블 헤더·입력 필드처럼 **한 단계 눌러야 하는 면**만
+`--bone2` (#F4F4F1)를 쓴다. 레드가 강한 브랜드라 지면을 채색하면 화면이 무거워진다.
 
 텍스트를 제외한 그래픽에서 블랙은 H2 한 곳으로 제한했다. 나머지 어두운 면은 전부 레드 계열로 대체.
 
