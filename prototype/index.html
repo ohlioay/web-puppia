@@ -746,14 +746,17 @@ footer{background:var(--red); color:var(--on-red); padding:clamp(40px,6vw,80px) 
   font:inherit; font-size:13.5px; padding:6px 10px 6px 0; text-align:left; width:100%;
   display:flex; align-items:center; gap:8px; transition:color .16s;
 }
+.fbtn i{width:7px; height:7px; border-radius:50%; background:var(--bd,transparent); flex:0 0 auto}
+.fbtn:hover{color:var(--on-bone)}
+@media(min-width:900px){
+  .fbtn[aria-pressed="true"]{color:var(--red); font-weight:600}
+}
 @media(max-width:899px){
   .fbtn{border:1px solid var(--bone3); border-radius:99px; padding:7px 13px; width:auto;
     font-family:"Martian Mono",monospace; font-size:9.5px; letter-spacing:.14em; text-transform:uppercase}
-  .fbtn[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:#fff}
+  .fbtn[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:#fff; font-weight:700}
+  .fbtn[aria-pressed="true"] i{background:#fff}
 }
-.fbtn i{width:7px; height:7px; border-radius:50%; background:var(--bd,transparent); flex:0 0 auto}
-.fbtn:hover{color:var(--on-bone)}
-.fbtn[aria-pressed="true"]{color:var(--red); font-weight:600}
 .fbtn em{margin-left:auto; font-style:normal; font-family:"Martian Mono",monospace; font-size:9px; opacity:.55}
 @media(max-width:899px){.fbtn em{display:none}}
 .shop-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:clamp(14px,1.8vw,26px)}
@@ -3448,11 +3451,11 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     return '<p class="pt-note"><b>Orders</b> placed through the portal appear here with their status. ' +
       'Open one to see the full size and colourway breakdown, shipping terms and progress.</p>' +
       '<div class="tw" style="border:1px solid var(--bone3); border-radius:3px; overflow-x:auto">' +
-      '<table class="pt-table"><thead><tr><th>PO number</th><th>Date</th><th>Season</th>' +
+      '<table class="pt-table"><thead><tr><th>PO number</th><th>Date</th>' +
       '<th>Units</th><th>Value</th><th>Status</th><th></th></tr></thead><tbody>' +
       ORDERS.map(function(o){
         return '<tr><td class="num"><b>' + o.po + '</b></td><td class="num">' + o.date + '</td>' +
-          '<td class="num">' + o.season + '</td><td class="num">' + orderUnits(o) + '</td>' +
+          '<td class="num">' + orderUnits(o) + '</td>' +
           '<td class="num">' + money(orderValue(o)) + '</td>' +
           '<td><span class="pill ' + o.status + '">' + STATUS[o.status] + '</span></td>' +
           '<td style="text-align:right"><a class="btn-mini" href="#/partners/orders/' + o.po + '">View</a></td></tr>';
