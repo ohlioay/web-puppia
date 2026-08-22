@@ -58,6 +58,7 @@ body{
 .lede{font-size:clamp(.95rem,1.45vw,1.1rem); line-height:1.62; max-width:min(44ch,100%)}
 
 /* ---------------- chrome ---------------- */
+#bar[hidden],#top[hidden],footer[hidden]{display:none}
 #bar{position:fixed; top:0; left:0; height:2px; width:100%; z-index:60; background:transparent}
 #bar i{display:block; height:100%; width:0%; background:var(--yellow); transform-origin:0 50%}
 
@@ -79,7 +80,7 @@ body{
 .util .hide-s{display:none}
 @media(min-width:820px){.util .hide-s{display:inline}}
 
-nav{
+#top nav{
   display:flex; align-items:center; justify-content:space-between; gap:clamp(12px,2vw,28px);
   padding:0 clamp(14px,3vw,32px); height:60px;
 }
@@ -1363,12 +1364,267 @@ body.has-ordbar .toast{bottom:104px}
 }
 .as-warn b{color:var(--on-bone)}
 
+/* ================= ADMIN CONSOLE ================= */
+#view-admin a{color:inherit; text-decoration:none}
+#view-admin a.plain{text-decoration:underline; text-underline-offset:2px}
+:root{--adm-side:236px; --adm-top:56px}
+body.in-admin{background:var(--bone2)}
+#view-admin{background:var(--bone2); color:var(--on-bone); min-height:100vh}
+.adm{display:grid; grid-template-columns:var(--adm-side) 1fr; min-height:100vh}
+
+/* --- gate --- */
+.adm-gate{min-height:100vh; display:grid; place-items:center; padding:40px 20px; background:var(--ink); color:var(--on-ink)}
+.adm-gate-in{width:min(420px,100%)}
+.adm-gate h1{font-family:"Archivo",sans-serif; font-weight:900; font-stretch:112%; font-size:2rem; margin:0 0 8px; letter-spacing:-.02em}
+.adm-gate p.sub{margin:0 0 26px; color:var(--on-ink-mute); font-size:14px; line-height:1.65}
+.adm-gate .field label{color:var(--on-ink-mute)}
+.adm-gate .field input{background:var(--ink2); border-color:#3A383F; color:var(--on-ink)}
+.adm-gate .demo{margin-top:20px; padding:14px 16px; border:1px dashed #47454C; border-radius:3px;
+  font-family:"Martian Mono",monospace; font-size:10px; line-height:2; color:var(--on-ink-mute)}
+.adm-gate .demo b{color:var(--on-ink); display:block; font-family:"Instrument Sans",sans-serif; font-size:11.5px;
+  letter-spacing:.14em; text-transform:uppercase; margin-bottom:6px}
+.adm-gate .back{display:inline-block; margin-top:22px; color:var(--on-ink-mute); font-size:12.5px}
+
+/* --- sidebar --- */
+.adm-side{background:var(--ink); color:var(--on-ink); display:flex; flex-direction:column;
+  position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto}
+.adm-logo{padding:18px 20px 16px; border-bottom:1px solid #302F35; display:flex; align-items:baseline; gap:9px}
+.adm-logo b{font-family:"Archivo",sans-serif; font-weight:900; font-stretch:112%; font-size:16px; letter-spacing:.02em}
+.adm-logo span{font-family:"Martian Mono",monospace; font-size:8px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--red-lt)}
+.adm-nav{padding:12px 0; flex:1}
+.adm-grp{font-family:"Martian Mono",monospace; font-size:8px; letter-spacing:.18em; text-transform:uppercase;
+  color:#6E6C74; padding:16px 20px 7px}
+.adm-nav a{display:flex; align-items:center; gap:10px; padding:9px 20px; font-size:13.5px; color:#C9C7CE;
+  border-left:2px solid transparent}
+.adm-nav a:hover{background:var(--ink2); color:#fff}
+.adm-nav a[aria-current="page"]{background:var(--ink2); color:#fff; border-left-color:var(--red); font-weight:600}
+.adm-nav a svg{width:16px; height:16px; flex:0 0 auto; opacity:.75}
+.adm-nav a .n{margin-left:auto; min-width:18px; height:18px; padding:0 5px; border-radius:9px; background:var(--red);
+  color:#fff; font-family:"Martian Mono",monospace; font-size:9px; display:grid; place-items:center}
+.adm-me{border-top:1px solid #302F35; padding:14px 20px 18px; font-size:12px; color:var(--on-ink-mute)}
+.adm-me b{display:block; color:#fff; font-size:13px; margin-bottom:2px}
+.adm-me .row{display:flex; gap:8px; margin-top:11px}
+.adm-me .row a,.adm-me .row button{flex:1; text-align:center; border:1px solid #46444B; border-radius:2px;
+  padding:6px 4px; font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:#C9C7CE; background:none; cursor:pointer}
+.adm-me .row a:hover,.adm-me .row button:hover{background:var(--ink2); color:#fff}
+
+/* --- main --- */
+.adm-main{min-width:0; display:flex; flex-direction:column}
+.adm-bar{position:sticky; top:0; z-index:6; background:var(--bone); border-bottom:1px solid var(--bone3);
+  padding:0 clamp(18px,2.4vw,30px); height:var(--adm-top); display:flex; align-items:center; gap:14px}
+.adm-crumb{font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--on-bone-mute); display:flex; align-items:center; gap:8px; min-width:0}
+.adm-crumb b{color:var(--on-bone)}
+.adm-bar .sp{margin-left:auto}
+.adm-body{padding:clamp(20px,2.6vw,34px) clamp(18px,2.4vw,30px) 90px; flex:1; min-width:0}
+.adm-h{margin:0 0 6px; font-family:"Archivo",sans-serif; font-weight:900; font-stretch:112%;
+  font-size:clamp(1.5rem,2.6vw,2rem); letter-spacing:-.02em}
+.adm-lede{margin:0 0 26px; font-size:14px; line-height:1.7; color:var(--on-bone-mute); max-width:70ch}
+.adm-lede b{color:var(--on-bone)}
+
+/* --- panels --- */
+.adm-card{background:var(--bone); border:1px solid var(--bone3); border-radius:4px; margin-bottom:20px}
+.adm-card > h3{margin:0; padding:15px 18px; border-bottom:1px solid var(--bone3); font-size:14.5px;
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.adm-card > h3 .tagline{font-weight:400; font-size:12.5px; color:var(--on-bone-mute)}
+.adm-card > h3 .sp{margin-left:auto}
+.adm-in{padding:18px}
+.adm-help{margin:0 0 16px; padding:11px 14px; background:#FFF7E8; border-left:3px solid var(--yellow);
+  border-radius:0 3px 3px 0; font-size:12.5px; line-height:1.7; color:var(--on-bone)}
+.adm-help b{font-weight:700}
+.adm-lock{background:var(--bone2); border-left-color:var(--on-bone-mute)}
+
+/* --- stat tiles --- */
+.adm-stats{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); margin-bottom:22px}
+.adm-stat{background:var(--bone); border:1px solid var(--bone3); border-radius:4px; padding:15px 16px 14px; display:block}
+.adm-stat em{display:block; font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--on-bone-mute); font-style:normal; margin-bottom:8px}
+.adm-stat b{display:block; font-family:"Archivo",sans-serif; font-weight:900; font-stretch:110%; font-size:1.9rem;
+  line-height:1; letter-spacing:-.02em}
+.adm-stat span{display:block; margin-top:6px; font-size:11.5px; color:var(--on-bone-mute)}
+.adm-stat.hot{border-color:var(--red); box-shadow:inset 0 0 0 1px var(--red)}
+.adm-stat.hot b{color:var(--red)}
+
+/* --- todo list --- */
+.adm-todo{list-style:none; margin:0; padding:0}
+.adm-todo li{display:flex; align-items:center; gap:12px; padding:13px 18px; border-bottom:1px solid var(--bone3);
+  font-size:13.5px; flex-wrap:wrap}
+.adm-todo li:last-child{border-bottom:0}
+.adm-todo li i{width:8px; height:8px; border-radius:50%; background:var(--red); flex:0 0 auto}
+.adm-todo li.done i{background:var(--bone3)}
+.adm-todo li.done{color:var(--on-bone-mute)}
+.adm-todo li .sp{margin-left:auto}
+.adm-todo li b{font-weight:600}
+
+/* --- tables --- */
+.adm-tw{overflow-x:auto}
+.adm-t{width:100%; border-collapse:collapse; font-size:13px}
+.adm-t th,.adm-t td{padding:11px 14px; text-align:left; border-bottom:1px solid var(--bone3); vertical-align:middle}
+.adm-t thead th{font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--on-bone-mute); font-weight:500; background:var(--bone2); white-space:nowrap}
+.adm-t tbody tr:hover{background:var(--bone2)}
+.adm-t tbody tr:last-child td{border-bottom:0}
+.adm-t .num{font-family:"Martian Mono",monospace; font-size:11px; text-align:right; white-space:nowrap}
+.adm-t .rt{text-align:right; white-space:nowrap}
+.adm-t td b{font-weight:600}
+.adm-thumb{width:38px; height:38px; border-radius:3px; background:var(--bone2); display:grid; place-items:center; flex:0 0 auto}
+.adm-thumb svg{width:78%; height:auto}
+.adm-name{display:flex; align-items:center; gap:11px; min-width:0}
+.adm-name span.t{min-width:0}
+.adm-name b{display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.adm-name em{display:block; font-style:normal; font-family:"Martian Mono",monospace; font-size:9px;
+  color:var(--on-bone-mute); margin-top:2px}
+
+/* --- chips / state --- */
+.adm-tag{display:inline-flex; align-items:center; gap:6px; font-family:"Martian Mono",monospace; font-size:8.5px;
+  letter-spacing:.1em; text-transform:uppercase; padding:4px 9px; border-radius:2px; background:var(--bone2);
+  color:var(--on-bone-mute); white-space:nowrap}
+.adm-tag i{width:6px; height:6px; border-radius:50%; background:currentColor}
+.adm-tag.live{background:#E8F5EC; color:#1F7A3D}
+.adm-tag.off{background:var(--bone2); color:var(--on-bone-mute)}
+.adm-tag.wait{background:#FFF2DA; color:#96650A}
+.adm-tag.stop{background:#FDE9E6; color:var(--red-dk)}
+.adm-tag.info{background:#E9EEFD; color:var(--blue)}
+
+/* --- toolbar --- */
+.adm-tools{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-bottom:16px}
+.adm-search{flex:1 1 220px; min-width:0; display:flex; align-items:center; gap:9px; background:var(--bone);
+  border:1px solid var(--bone3); border-radius:3px; padding:0 12px}
+.adm-search svg{width:15px; height:15px; opacity:.45; flex:0 0 auto}
+.adm-search input{flex:1; min-width:0; border:0; background:none; padding:10px 0; font:inherit; font-size:13.5px; color:inherit}
+.adm-search input:focus{outline:none}
+.adm-sel{border:1px solid var(--bone3); border-radius:3px; background:var(--bone); padding:9px 11px;
+  font:inherit; font-size:12.5px; color:inherit; cursor:pointer}
+
+/* --- buttons --- */
+.adm-btn{border:1px solid var(--bone3); background:var(--bone); border-radius:3px; padding:8px 14px; cursor:pointer;
+  font-family:"Martian Mono",monospace; font-size:9px; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--on-bone); white-space:nowrap; display:inline-flex; align-items:center; gap:7px}
+.adm-btn:hover{border-color:var(--on-bone-mute)}
+.adm-btn.pri{background:var(--red); border-color:var(--red); color:#fff}
+.adm-btn.pri:hover{background:var(--red-dk); border-color:var(--red-dk)}
+.adm-btn.danger{color:var(--red-dk); border-color:#F0C4BC}
+.adm-btn.danger:hover{background:#FDE9E6}
+.adm-btn[disabled]{opacity:.4; cursor:not-allowed}
+.adm-btn svg{width:14px; height:14px}
+
+/* --- forms --- */
+.adm-form{display:grid; gap:20px; grid-template-columns:1fr}
+@media(min-width:1080px){.adm-form.two{grid-template-columns:minmax(0,1fr) 340px; align-items:start}}
+.adm-f{margin-bottom:17px}
+.adm-f:last-child{margin-bottom:0}
+.adm-f > label{display:flex; align-items:baseline; gap:8px; font-family:"Martian Mono",monospace; font-size:8.5px;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--on-bone-mute); margin-bottom:7px; flex-wrap:wrap}
+.adm-f > label .req{color:var(--red)}
+.adm-f input[type=text],.adm-f input[type=number],.adm-f input[type=email],.adm-f input[type=url],
+.adm-f textarea,.adm-f select{
+  width:100%; border:1px solid var(--bone3); border-radius:3px; background:var(--bone); padding:10px 12px;
+  font:inherit; font-size:14px; color:inherit}
+.adm-f textarea{min-height:96px; resize:vertical; line-height:1.65}
+.adm-f input:focus,.adm-f textarea:focus,.adm-f select:focus{outline:none; border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(225,59,38,.13)}
+.adm-hint{margin:7px 0 0; font-size:11.5px; line-height:1.6; color:var(--on-bone-mute)}
+.adm-hint b{color:var(--on-bone); font-weight:600}
+.adm-row{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.adm-picks{display:flex; gap:7px; flex-wrap:wrap}
+.adm-pick{border:1px solid var(--bone3); background:var(--bone); border-radius:2px; padding:8px 12px; cursor:pointer;
+  font:inherit; font-size:12.5px; display:inline-flex; align-items:center; gap:8px; color:inherit}
+.adm-pick i{width:11px; height:11px; border-radius:50%; border:1px solid rgba(0,0,0,.14); flex:0 0 auto}
+.adm-pick[aria-pressed="true"]{border-color:var(--red); background:#FDECE9; color:var(--red-dk); font-weight:600}
+.adm-toggle{display:flex; align-items:center; gap:11px; cursor:pointer; font-size:13.5px}
+.adm-toggle input{position:absolute; opacity:0; width:0; height:0}
+.adm-toggle .sw{width:38px; height:22px; border-radius:11px; background:var(--bone3); position:relative;
+  transition:background .16s ease; flex:0 0 auto}
+.adm-toggle .sw::after{content:""; position:absolute; top:3px; left:3px; width:16px; height:16px; border-radius:50%;
+  background:#fff; transition:transform .16s ease; box-shadow:0 1px 3px rgba(0,0,0,.28)}
+.adm-toggle input:checked + .sw{background:#2E9E56}
+.adm-toggle input:checked + .sw::after{transform:translateX(16px)}
+.adm-toggle input:focus-visible + .sw{outline:2px solid var(--red); outline-offset:2px}
+
+/* --- preview --- */
+.adm-prev{position:sticky; top:calc(var(--adm-top) + 16px)}
+.adm-prev-in{background:var(--bone); border:1px solid var(--bone3); border-radius:4px; overflow:hidden}
+.adm-prev-in > b{display:block; padding:11px 15px; border-bottom:1px solid var(--bone3);
+  font-family:"Martian Mono",monospace; font-size:8.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--on-bone-mute); font-weight:500}
+.adm-shot{padding:18px 16px; background:var(--bone)}
+.adm-shot .eyebrow{font-size:7.5px; margin:0 0 10px; color:var(--on-bone-mute)}
+.adm-shot h4{font-family:"Archivo",sans-serif; font-weight:900; font-stretch:112%; font-size:1.45rem; line-height:1.04;
+  letter-spacing:-.025em; margin:8px 0 8px}
+.adm-shot p{margin:0; font-size:11.5px; line-height:1.6; color:var(--on-bone-mute)}
+.adm-shot .sl{margin-top:13px; border-radius:3px; aspect-ratio:4/3; display:grid; place-items:center;
+  background:var(--sl,var(--red))}
+.adm-shot .sl svg{width:58%; height:auto}
+.adm-shot .cta{display:inline-block; margin-top:12px; font-family:"Martian Mono",monospace; font-size:8.5px;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--red); border-bottom:1px solid currentColor;
+  padding-bottom:2px}
+.adm-checks{list-style:none; margin:0; padding:0; border-top:1px solid var(--bone3)}
+.adm-checks li{display:flex; align-items:flex-start; gap:9px; padding:9px 15px; font-size:12.5px;
+  border-bottom:1px solid var(--bone3); line-height:1.5}
+.adm-checks li:last-child{border-bottom:0}
+.adm-checks li i{width:15px; height:15px; border-radius:50%; flex:0 0 auto; margin-top:1px; display:grid;
+  place-items:center; background:var(--bone3); color:#fff; font-size:9px; font-style:normal; line-height:1}
+.adm-checks li.ok i{background:#2E9E56}
+.adm-checks li.no{color:var(--on-bone-mute)}
+.adm-checks li.no i{background:var(--bone3); color:var(--on-bone-mute)}
+
+/* --- slot editor rows --- */
+.adm-slot{border:1px solid var(--bone3); border-radius:3px; padding:15px 16px; margin-bottom:12px; background:var(--bone)}
+.adm-slot.locked{background:var(--bone2); border-style:dashed}
+.adm-slot > .hd{display:flex; align-items:center; gap:10px; margin-bottom:13px; flex-wrap:wrap}
+.adm-slot > .hd b{font-size:13.5px}
+.adm-slot > .hd .sp{margin-left:auto}
+.adm-slot .lockmsg{margin:0; font-size:12.5px; line-height:1.65; color:var(--on-bone-mute)}
+
+/* --- dirty bar --- */
+.adm-dirty{position:fixed; left:var(--adm-side); right:0; bottom:0; z-index:40; background:var(--ink); color:var(--on-ink);
+  padding:13px clamp(18px,2.4vw,30px); display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  transform:translateY(110%); transition:transform .2s ease; box-shadow:0 -14px 30px -20px rgba(0,0,0,.5)}
+.adm-dirty.on{transform:none}
+.adm-dirty p{margin:0; font-size:13px; flex:1 1 240px; min-width:0}
+.adm-dirty p b{color:#fff}
+.adm-dirty .adm-btn{background:none; border-color:#4A484F; color:#D6D4DA}
+.adm-dirty .adm-btn:hover{background:var(--ink2); color:#fff}
+.adm-dirty .adm-btn.pri{background:var(--red); border-color:var(--red); color:#fff}
+
+/* --- empty --- */
+.adm-empty{padding:46px 20px; text-align:center; color:var(--on-bone-mute); font-size:13.5px}
+.adm-empty b{display:block; color:var(--on-bone); font-size:15px; margin-bottom:6px}
+
+/* --- matrix (stock editor) --- */
+.adm-stock{width:100%; border-collapse:collapse; font-size:12px}
+.adm-stock th,.adm-stock td{border:1px solid var(--bone3); padding:0; text-align:center}
+.adm-stock thead th{background:var(--bone2); padding:8px 10px; font-family:"Martian Mono",monospace; font-size:8.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--on-bone-mute); font-weight:500; white-space:nowrap}
+.adm-stock tbody th{background:var(--bone2); padding:8px 10px; font-weight:600; text-align:left; white-space:nowrap}
+.adm-stock input{width:100%; border:0; background:none; padding:9px 6px; text-align:center; font:inherit;
+  font-family:"Martian Mono",monospace; font-size:11.5px; color:inherit}
+.adm-stock input:focus{outline:2px solid var(--red); outline-offset:-2px; background:#FDECE9}
+.adm-stock .sw{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px;
+  vertical-align:-1px; border:1px solid rgba(0,0,0,.14)}
+
+/* --- narrow --- */
+@media(max-width:900px){
+  .adm{grid-template-columns:1fr}
+  .adm-side{position:static; height:auto; flex-direction:row; align-items:center; gap:4px; overflow-x:auto; padding:0 10px}
+  .adm-logo{border-bottom:0; border-right:1px solid #302F35; padding:14px 14px; flex:0 0 auto}
+  .adm-nav{display:flex; padding:0; flex:0 0 auto}
+  .adm-grp,.adm-me{display:none}
+  .adm-nav a{padding:16px 12px; border-left:0; border-bottom:2px solid transparent; white-space:nowrap}
+  .adm-nav a[aria-current="page"]{border-left:0; border-bottom-color:var(--red); background:none}
+  .adm-nav a svg{display:none}
+  .adm-dirty{left:0}
+  .adm-prev{position:static}
+}
+
 /* ---------------- small screens ---------------- */
 @media(max-width:700px){
   :root{--navh:78px}
   .util{height:30px; font-size:8px}
   .util-l,.util-r{gap:9px}
-  nav{height:48px}
+  #top nav{height:48px}
   .brand{font-size:15px}
   .partner{padding:6px 10px; font-size:8.5px}
   .hpad{padding:44px 20px}
@@ -1767,6 +2023,48 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<!-- ===================== ADMIN CONSOLE ===================== -->
+<div id="view-admin" hidden>
+  <div id="admGate" hidden>
+    <div class="adm-gate"><div class="adm-gate-in">
+      <p class="eyebrow" style="color:var(--red-lt)">PUPPIA Admin</p>
+      <h1>Sign in</h1>
+      <p class="sub">The console that runs the public site — banners, products, the catalog, buyer accounts and orders.
+        Everything you publish here appears on the live site immediately.</p>
+      <form id="admForm" novalidate>
+        <div class="field"><label for="admEmail">Email</label>
+          <input id="admEmail" type="email" placeholder="you@puppia.com" required></div>
+        <div class="field"><label for="admPass">Password</label>
+          <input id="admPass" type="password" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" required></div>
+        <button class="btn-primary" style="width:100%" type="submit">Sign in</button>
+      </form>
+      <p class="md-note" id="admNote" style="margin-top:14px; color:var(--on-ink-mute)">Staff accounts only. Buyer logins do not work here.</p>
+      <div class="demo"><b>Demo staff account</b>admin@puppia.com<br>puppia-admin</div>
+      <a class="back" href="#/">&larr; Back to the site</a>
+    </div></div>
+  </div>
+  <div class="adm" id="admShell" hidden>
+    <aside class="adm-side">
+      <div class="adm-logo"><b>PUPPIA</b><span>Admin</span></div>
+      <nav class="adm-nav" id="admNav"></nav>
+      <div class="adm-me" id="admMe"></div>
+    </aside>
+    <div class="adm-main">
+      <div class="adm-bar">
+        <p class="adm-crumb" id="admCrumb"></p>
+        <span class="sp"></span>
+        <a class="adm-btn" href="#/" target="_self">View site</a>
+      </div>
+      <div class="adm-body" id="admBody"></div>
+    </div>
+  </div>
+  <div class="adm-dirty" id="admDirty">
+    <p id="admDirtyMsg"></p>
+    <button class="adm-btn" type="button" id="admRevert">Discard</button>
+    <button class="adm-btn pri" type="button" id="admSave">Publish to the site</button>
+  </div>
+</div>
+
 <div id="view-catalog" data-ground="ink" hidden>
   <div class="cat-wrap">
     <div class="cat-head">
@@ -2138,6 +2436,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   <div class="foot-base">
     <span>PUPPIA — Prototype 01</span>
     <span>Placeholder geometry · No product photography</span>
+    <a href="#/admin">Staff console</a>
   </div>
 </footer>
 
@@ -2569,19 +2868,24 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       d:'A lightweight collar with a safety buckle and a bell.' ,
       as:'https://drive.google.com/drive/folders/puppia-ss26-bell-collar' }
   ];
-  var PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
+  var PMAP = {};
+  function remap(){ PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; }); }
+  remap();
 
-  /* H1 season slot rotates only across brands that still ship new product */
-  var SEASON = {
-    puppia: { t:'Spring<br>Walk Kit', d:'Harness and lead matched in one colourway. This block is the campaign slot that changes every season.' },
-    olchi:  { t:'Color<br>Block SS26', d:'The Olchi spring palette. The hero slot rotates across the labels shipping new product.' }
+  /* Everything the home screen shows that an editor may change lives in one object.
+     The admin console writes here; the home view only reads. */
+  var HOME = {
+    eyebrow:'The Season — SS26',
+    hero:{ b:'puppia', t:'Spring\nWalk Kit', cta:'Shop the collection', href:'#/shop',
+           d:'Harness and lead matched in one colourway. This block is the campaign slot that changes every season.' },
+    /* This Week: 2 editable season slots + 1 evergreen slot that never needs refilling */
+    week:[
+      { id:'w1', kind:'season', b:'puppia', c:'walk',    n:'Two-Tone Lead',  l:'New in Walk',   href:'', live:true },
+      { id:'w2', kind:'season', b:'olchi',  c:'living',  n:'2-Row Car Seat', l:'New in Living', href:'', live:true },
+      { id:'w3', kind:'fixed',  b:'puppia', c:'apparel', n:'SS26 Catalog',   l:'Web book · always on',
+        href:'#/catalog', live:true }
+    ]
   };
-  /* This Week: 2 rotating season slots + 1 evergreen slot (catalog) */
-  var WEEK = [
-    { kind:'season', b:'puppia', c:'walk',    n:'Two-Tone Lead',  l:'New in Walk' },
-    { kind:'season', b:'olchi',  c:'living',  n:'2-Row Car Seat', l:'New in Living' },
-    { kind:'fixed',  b:'puppia', c:'apparel', n:'SS26 Catalog',   l:'Web book · always on', href:'#/catalog' }
-  ];
 
   function art(cat, color){
     var st = 'fill="none" stroke="' + color + '" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"';
@@ -2633,29 +2937,31 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   function money(n){ return '$' + n.toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
 
   /* ================= HOME : render ================= */
-  var slotBrand = 'puppia';
   var elGrid   = document.getElementById('pgrid');
   var elWeek   = document.getElementById('weekStrip');
   var elHouses = document.getElementById('houses');
 
   function renderHomeGrid(){
-    var list = PRODUCTS.slice().sort(function(a, b){ return (b.nw ? 1 : 0) - (a.nw ? 1 : 0); }).slice(0, 8);
+    var list = shown().slice().sort(function(a, b){ return (b.nw ? 1 : 0) - (a.nw ? 1 : 0); }).slice(0, 8);
     elGrid.innerHTML = list.map(card).join('');
   }
+  function brOf(k){ return BMAP[k] || BRANDS[0]; }
+  function nl2br(t){ return esc(t).replace(/\n/g, '<br>'); }
   function renderSeason(){
-    var br = BMAP[slotBrand], sn = SEASON[slotBrand];
+    var h = HOME.hero, br = brOf(h.b);
     var wrap = document.getElementById('seasonBrand');
     wrap.style.setProperty('--bd', 'var(' + br.v + ')');
     wrap.lastElementChild.textContent = br.n;
-    document.getElementById('seasonTitle').innerHTML = sn.t;
-    document.getElementById('seasonDek').textContent = sn.d;
+    document.querySelector('#h1 .eyebrow').textContent = HOME.eyebrow;
+    document.getElementById('seasonTitle').innerHTML = nl2br(h.t);
+    document.getElementById('seasonDek').textContent = h.d;
+    var cta = document.querySelector('#h1 .season-copy .more');
+    cta.childNodes[0].nodeValue = h.cta + ' ';
+    cta.setAttribute('href', h.href || '#/shop');
     document.getElementById('seasonSlot').style.setProperty('--slot', 'var(' + br.v + ')');
-    [].forEach.call(document.querySelectorAll('.demobar button'), function(b){
-      b.setAttribute('aria-pressed', b.dataset.slotb === slotBrand ? 'true' : 'false');
-    });
   }
   function renderWeek(){
-    elWeek.innerHTML = WEEK.map(function(w){
+    elWeek.innerHTML = HOME.week.filter(function(w){ return w.live; }).map(function(w){
       var br = BMAP[w.b];
       var accent = w.kind === 'fixed' ? 'var(--red-dk)' : 'var(' + br.v + ')';
       var tag = w.kind === 'fixed'
@@ -2676,17 +2982,16 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
         '<p>' + b.d + '</p><span class="more" style="margin-top:auto">See products ' + ARROW_SVG + '</span></a>';
     }).join('');
   }
-  [].forEach.call(document.querySelectorAll('.demobar button'), function(b){
-    b.addEventListener('click', function(){ slotBrand = b.dataset.slotb; renderSeason(); });
-  });
-  renderSeason(); renderWeek(); renderHouses(); renderHomeGrid();
+  function renderHome(){ renderSeason(); renderWeek(); renderHouses(); renderHomeGrid(); }
+  renderHome();
 
   /* ================= SHOP (listing) ================= */
   var shopCat = 'all', shopBrand = 'all', shopSort = 'new';
   var SORTS = [{ k:'new', n:'Newest' }, { k:'low', n:'Price low to high' }, { k:'high', n:'Price high to low' }];
 
+  function shown(){ return PRODUCTS.filter(function(x){ return x.live !== false; }); }
   function shopList(){
-    var l = PRODUCTS.filter(function(x){
+    var l = shown().filter(function(x){
       return (shopCat === 'all' || x.c === shopCat) && (shopBrand === 'all' || x.b === shopBrand);
     });
     if(shopSort === 'low')  l.sort(function(a, b){ return price(a) - price(b); });
@@ -2694,7 +2999,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     else l.sort(function(a, b){ return (b.nw ? 1 : 0) - (a.nw ? 1 : 0); });
     return l;
   }
-  function countBy(fn){ return PRODUCTS.filter(fn).length; }
+  function countBy(fn){ return shown().filter(fn).length; }
   function renderShop(){
     var cur = CATS.filter(function(c){ return c.k === shopCat; })[0];
     var label = cur ? cur.n : 'All products';
@@ -2704,13 +3009,13 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       shopBrand === 'all' ? 'Shop — all brands' : 'Shop — ' + BMAP[shopBrand].n;
 
     document.getElementById('fCat').innerHTML =
-      '<li><button class="fbtn" data-c="all">All products<em>' + PRODUCTS.length + '</em></button></li>' +
+      '<li><button class="fbtn" data-c="all">All products<em>' + shown().length + '</em></button></li>' +
       CATS.map(function(c){
         return '<li><button class="fbtn" data-c="' + c.k + '">' + c.n +
                '<em>' + countBy(function(x){ return x.c === c.k; }) + '</em></button></li>';
       }).join('');
     document.getElementById('fBrand').innerHTML =
-      '<li><button class="fbtn" data-b="all">All brands<em>' + PRODUCTS.length + '</em></button></li>' +
+      '<li><button class="fbtn" data-b="all">All brands<em>' + shown().length + '</em></button></li>' +
       BRANDS.map(function(b){
         return '<li><button class="fbtn" data-b="' + b.k + '" style="--bd:var(' + b.v + ')"><i></i>' + b.n +
                '<em>' + countBy(function(x){ return x.b === b.k; }) + '</em></button></li>';
@@ -2854,7 +3159,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       [].forEach.call(accNow, function(d, i){ d.open = accWas[i]; });
     }
 
-    var rel = PRODUCTS.filter(function(y){ return y.id !== x.id && (y.c === x.c || y.b === x.b); }).slice(0, 4);
+    var rel = shown().filter(function(y){ return y.id !== x.id && (y.c === x.c || y.b === x.b); }).slice(0, 4);
     document.getElementById('pdRel').innerHTML = rel.map(card).join('');
   }
   var toastEl = document.getElementById('toast'), toastT = null;
@@ -2906,7 +3211,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     return out.slice(0, n);
   }
   function pick(bk, cats, n){
-    return variants(PRODUCTS.filter(function(x){ return x.b === bk && cats.indexOf(x.c) >= 0; }), n);
+    return variants(shown().filter(function(x){ return x.b === bk && cats.indexOf(x.c) >= 0; }), n);
   }
   function divider(b, sub){
     var br = BMAP[b];
@@ -3259,10 +3564,10 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     var q = sInput.value.trim().toLowerCase();
     if(!q){
       sCount.textContent = 'Type to search';
-      sRes.innerHTML = PRODUCTS.filter(function(x){ return x.nw; }).slice(0, 4).map(card).join('');
+      sRes.innerHTML = shown().filter(function(x){ return x.nw; }).slice(0, 4).map(card).join('');
       return;
     }
-    var hits = PRODUCTS.filter(function(x){
+    var hits = shown().filter(function(x){
       return (x.n + ' ' + BMAP[x.b].n + ' ' + x.c + ' ' + x.d).toLowerCase().indexOf(q) >= 0;
     });
     sCount.textContent = hits.length + (hits.length === 1 ? ' result' : ' results') + ' for “' + sInput.value.trim() + '”';
@@ -3352,20 +3657,32 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       document.getElementById('pmEmail').focus();
       return;
     }
-    if(email === DEMO.email && pass === DEMO.pass){
-      session = { email:DEMO.email, company:DEMO.company };
+    var acct = MEMBERS.filter(function(m){ return m.email === email; })[0];
+    if(acct && acct.status === 'ok' && pass === acct.pass){
+      session = { email:acct.email, company:acct.company };
       persist();
-      note.textContent = 'Signed in as ' + DEMO.company + '.';
+      note.textContent = 'Signed in as ' + acct.company + '.';
       note.style.borderLeftColor = '#4CC38A';
       closePanel();
       ptTab = 'linesheet'; ptOrderPO = null;
       paintDot();
       if(location.hash.indexOf('#/partners') === 0) renderPortal(); else location.hash = '#/partners';
-      toast('Welcome back, ' + DEMO.company);
+      toast('Welcome back, ' + acct.company);
       return;
     }
-    if(email === DEMO.email){
-      note.textContent = 'That password does not match. The demo password is ' + DEMO.pass + '.';
+    if(acct && acct.status === 'wait'){
+      note.textContent = 'This account is still being verified. We will email ' + email + ' as soon as it opens.';
+      note.style.borderLeftColor = 'var(--yellow)';
+      return;
+    }
+    if(acct && acct.status === 'stop'){
+      note.textContent = 'Sign-in for this account is on hold. Contact your PUPPIA sales contact.';
+      note.style.borderLeftColor = 'var(--red)';
+      return;
+    }
+    if(acct){
+      note.textContent = 'That password does not match.' +
+        (email === DEMO.email ? ' The demo password is ' + DEMO.pass + '.' : '');
       note.style.borderLeftColor = 'var(--red)';
       return;
     }
@@ -3423,7 +3740,9 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     if(!raw) return;
     try {
       var d = JSON.parse(raw);
-      if(d.session && d.session.email === DEMO.email) session = d.session;
+      if(d.session && MEMBERS.some(function(m){
+        return m.email === d.session.email && m.status === 'ok';
+      })) session = d.session;
       if(d.order && typeof d.order === 'object') ORDER = d.order;
       if(Array.isArray(d.orders) && d.orders.length) ORDERS = d.orders;
       if(Array.isArray(d.threads) && d.threads.length){
@@ -3442,7 +3761,10 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   function wholesale(x){ return Math.round(price(x) * WS * 2) / 2; }
   function rowsOf(x){ return (x.c === 'walk' || x.c === 'apparel') ? SIZES : [{ s:'OS', min:0, max:0 }]; }
   function stockOf(x, si, ci){
-    var h = (x.id.length * 17 + x.id.charCodeAt(1) * 5 + si * 29 + ci * 13) % 12;
+    var over = STOCK[key(x.id || 'new', si, ci)];
+    if(over !== undefined) return over;
+    var id = x.id || 'new';
+    var h = (id.length * 17 + id.charCodeAt(1) * 5 + si * 29 + ci * 13) % 12;
     return h === 0 ? 0 : h * 8 + 6;
   }
   function key(pid, si, ci){ return pid + '|' + si + '|' + ci; }
@@ -3461,7 +3783,7 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     return { units:u, value:v, lines:lines };
   }
   function ptList(){
-    return PRODUCTS.filter(function(x){
+    return shown().filter(function(x){
       return (ptBrand === 'all' || x.b === ptBrand) && (ptCat === 'all' || x.c === ptCat);
     });
   }
@@ -4178,12 +4500,14 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
     product: document.getElementById('view-product'),
     catalog: document.getElementById('view-catalog'),
     partners: document.getElementById('view-partners'),
-    harness: document.getElementById('view-harness')
+    harness: document.getElementById('view-harness'),
+    admin:   document.getElementById('view-admin')
   };
   var demob = document.getElementById('demobar');
   var header = document.getElementById('top');
 
   function viewFor(h){
+    if(h.indexOf('#/admin') === 0) return 'admin';
     if(h.indexOf('#/soft-harness') === 0) return 'harness';
     if(h.indexOf('#/catalog') === 0) return 'catalog';
     if(h.indexOf('#/partners') === 0) return 'partners';
@@ -4194,9 +4518,17 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   }
   function setView(v){
     Object.keys(VIEWS).forEach(function(k){ VIEWS[k].hidden = (k !== v); });
+    /* the console is its own application: the marketing chrome comes off entirely */
+    var isAdm = (v === 'admin');
+    document.body.classList.toggle('in-admin', isAdm);
+    header.hidden = isAdm;
+    var pbar = document.getElementById('bar'), foot = document.getElementById('partners');
+    if(pbar) pbar.hidden = isAdm;
+    if(foot) foot.hidden = isAdm;
+    if(isAdm) closePanel();
     if(demob) demob.hidden = (v !== 'home');
     var fl = document.getElementById('flag');
-    if(fl) fl.hidden = (v === 'partners');
+    if(fl) fl.hidden = (v === 'partners' || isAdm);
     document.body.classList.toggle('has-ordbar', v === 'partners' && orderTotals().units > 0);
     var shopish = (v === 'shop' || v === 'product');
     [].forEach.call(document.querySelectorAll('.navitem'), function(n){
@@ -4229,6 +4561,16 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
       renderShop();
     } else if(v === 'product'){
       renderProduct(h.replace('#/product/', '').split('?')[0]);
+    } else if(v === 'admin'){
+      var a = h.split('?')[0].split('/');   /* #, admin, section, id */
+      var want = a[2] || 'dash';
+      admSec = SECTIONS.some(function(x){ return x.k === want; }) ? want : 'dash';
+      admId = a[3] ? decodeURIComponent(a[3]) : null;
+      if(admSec !== 'products') pd = null;
+      if(admSec !== 'home') hd = null;
+      if(admSec !== 'catalog') cd = null;
+      if(admSec !== 'home') clearDirty();
+      renderAdmin();
     } else if(v === 'partners'){
       var seg = h.split('?')[0].split('/');   /* #, partners, tab, po */
       ptTab = (seg[2] === 'orders' || seg[2] === 'assets' || seg[2] === 'messages') ? seg[2] : 'linesheet';
@@ -4246,7 +4588,1175 @@ section[id], footer[id]{scroll-margin-top:var(--navh)}
   }
   window.addEventListener('hashchange', route);
 
+  /* ============================================================
+     ADMIN CONSOLE
+     One rule: the console writes to the same objects the site reads.
+     There is no second copy of the data, so nothing can drift.
+     ============================================================ */
+
+  var STAFF = { email:'admin@puppia.com', pass:'puppia-admin', name:'Sujin Ahn', role:'Content manager' };
+  var ASTORE = 'puppia.admin.v1';
+
+  var MEMBERS = [
+    { id:'m1', email:'buyer@demo-partner.com', pass:'puppia2026', company:'Hundwerk GmbH', country:'Germany',
+      terms:'FOB Busan', status:'ok', since:'2023-04-11', note:'Demo buyer account. Signs in on the storefront.' },
+    { id:'m2', email:'ana@petcasa.es', pass:'petcasa26', company:'Petcasa SL', country:'Spain',
+      terms:'FOB Busan', status:'wait', since:'2026-08-14',
+      note:'Applied through the site form. Business number and store photos attached.' },
+    { id:'m3', email:'ken@midori-pet.jp', pass:'midori26', company:'Midori Pet Co.', country:'Japan',
+      terms:'CIF Tokyo', status:'wait', since:'2026-08-19', note:'Referred by the Osaka trade show.' },
+    { id:'m4', email:'orders@boneandco.com', pass:'bone2026', company:'Bone & Co.', country:'United States',
+      terms:'FOB Busan', status:'ok', since:'2024-02-02', note:'' },
+    { id:'m5', email:'hello@pattes.fr', pass:'pattes26', company:'Pattes Paris', country:'France',
+      terms:'FOB Busan', status:'stop', since:'2022-06-30', note:'On hold — two invoices past due.' }
+  ];
+  var MSTATE = { ok:'Active', wait:'Pending', stop:'Suspended' };
+
+  /* Stock: the hash below is the seed. Anything the console edits is stored as an override,
+     so an edited cell wins and everything else keeps its seeded value. */
+  var STOCK = {};
+  var ORDER_STATE = {};   /* PO -> { status, ship } set from the console */
+
+  var admin = null, admSec = 'dash', admId = null, DIRTY = null;
+
+  var ICON = {
+    dash:'<path d="M4 13h7V4H4zM13 20h7v-9h-7zM4 20h7v-4H4zM13 8h7V4h-7z"/>',
+    home:'<path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>',
+    products:'<path d="M20 8 12 4 4 8m16 0-8 4m8-4v8l-8 4m0-8L4 8m8 4v8M4 8v8l8 4"/>',
+    catalog:'<path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zm16 0h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/>',
+    members:'<path d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20M9.5 10.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M21 20v-1.5a4 4 0 0 0-3-3.87M16 3.6a4 4 0 0 1 0 7.75"/>',
+    orders:'<path d="M6 4h12l1.5 16H4.5zM9 8a3 3 0 0 0 6 0"/>',
+    messages:'<path d="M20 14a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>',
+    settings:'<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/><path d="M19.4 15a1.6 1.6 0 0 0 .32 1.77l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.6 1.6 0 0 0 15 19.4a1.6 1.6 0 0 0-.97 1.47V21a2 2 0 1 1-4 0v-.09A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.77.32l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.6 1.6 0 0 0 4.6 15a1.6 1.6 0 0 0-1.47-.97H3a2 2 0 1 1 0-4h.09A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.32-1.77l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.6 1.6 0 0 0 9 4.6h.07A1.6 1.6 0 0 0 10 3.13V3a2 2 0 1 1 4 0v.09A1.6 1.6 0 0 0 15 4.6a1.6 1.6 0 0 0 1.77-.32l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.6 1.6 0 0 0 19.4 9v.07a1.6 1.6 0 0 0 1.47.96H21a2 2 0 1 1 0 4h-.09a1.6 1.6 0 0 0-1.47.97z"/>'
+  };
+  function ico(k){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[k] + '</svg>';
+  }
+
+  var SECTIONS = [
+    { k:'dash',     n:'Overview',   g:'Every day' },
+    { k:'home',     n:'Home screen',g:'Content' },
+    { k:'products', n:'Products',   g:'Content' },
+    { k:'catalog',  n:'Catalog',    g:'Content' },
+    { k:'orders',   n:'Orders',     g:'Buyers' },
+    { k:'members',  n:'Buyer accounts', g:'Buyers' },
+    { k:'messages', n:'Enquiries',  g:'Buyers' },
+    { k:'settings', n:'Settings',   g:'Setup' }
+  ];
+
+  /* ---------- counts that drive the badges ---------- */
+  function nWait(){ return MEMBERS.filter(function(m){ return m.status === 'wait'; }).length; }
+  function nNewOrders(){ return ORDERS.filter(function(o){ return o.status === 'sub'; }).length; }
+  function nAsk(){ return THREADS.filter(function(t){ return t.status === 'open'; }).length; }
+  function nDraft(){ return PRODUCTS.filter(function(x){ return x.live === false; }).length; }
+  function badge(k){
+    var n = k === 'members' ? nWait() : k === 'orders' ? nNewOrders() : k === 'messages' ? nAsk() : 0;
+    return n ? '<span class="n">' + n + '</span>' : '';
+  }
+
+  /* ---------- persistence ---------- */
+  function admPersist(){
+    try {
+      localStorage.setItem(ASTORE, JSON.stringify({
+        admin:admin, home:HOME, stock:STOCK, ostate:ORDER_STATE,
+        members:MEMBERS, seasons:SEASONS,
+        products:PRODUCTS.map(function(x){ return x; })
+      }));
+    } catch(e){}
+  }
+  function admRestore(){
+    var raw;
+    try { raw = localStorage.getItem(ASTORE); } catch(e){ return; }
+    if(!raw) return;
+    var d;
+    try { d = JSON.parse(raw); } catch(e){ return; }
+    if(!d) return;
+    if(d.admin && d.admin.email === STAFF.email) admin = d.admin;
+    if(d.home && d.home.hero && d.home.week) HOME = d.home;
+    if(d.stock) STOCK = d.stock;
+    if(d.ostate) ORDER_STATE = d.ostate;
+    if(d.members && d.members.length) MEMBERS = d.members;
+    if(d.seasons && d.seasons.length){
+      SEASONS = d.seasons;
+      season = SEASONS[0];
+    }
+    if(d.products && d.products.length){
+      PRODUCTS.length = 0;
+      d.products.forEach(function(x){ PRODUCTS.push(x); });
+      PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
+    }
+    Object.keys(ORDER_STATE).forEach(function(po){
+      ORDERS.forEach(function(o){
+        if(o.po !== po) return;
+        o.status = ORDER_STATE[po].status;
+        o.ship = ORDER_STATE[po].ship;
+      });
+    });
+  }
+
+  /* ---------- unsaved-changes bar ---------- */
+  function setDirty(msg, save, revert){ DIRTY = { msg:msg, save:save, revert:revert }; paintDirty(); }
+  function clearDirty(){ DIRTY = null; paintDirty(); }
+  function paintDirty(){
+    var bar = document.getElementById('admDirty');
+    if(!bar) return;
+    var show = !!DIRTY && !!admin && !VIEWS.admin.hidden;
+    bar.classList.toggle('on', show);
+    if(DIRTY) document.getElementById('admDirtyMsg').innerHTML = DIRTY.msg;
+  }
+  document.getElementById('admSave').addEventListener('click', function(){
+    if(DIRTY && DIRTY.save) DIRTY.save();
+  });
+  document.getElementById('admRevert').addEventListener('click', function(){
+    if(DIRTY && DIRTY.revert) DIRTY.revert();
+  });
+
+  /* ---------- shell ---------- */
+  function admLogin(email, pass){
+    if(email.toLowerCase() !== STAFF.email || pass !== STAFF.pass) return false;
+    admin = { email:STAFF.email, name:STAFF.name, role:STAFF.role };
+    admPersist();
+    return true;
+  }
+  function admSignOut(){
+    admin = null; clearDirty();
+    try {
+      var raw = localStorage.getItem(ASTORE);
+      var d = raw ? JSON.parse(raw) : {};
+      d.admin = null;
+      localStorage.setItem(ASTORE, JSON.stringify(d));
+    } catch(e){}
+  }
+  document.getElementById('admForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var em = document.getElementById('admEmail').value.trim();
+    var pw = document.getElementById('admPass').value;
+    var note = document.getElementById('admNote');
+    if(!em || !pw){ note.textContent = 'Enter both your email and your password.'; return; }
+    if(admLogin(em, pw)){ renderAdmin(); return; }
+    note.innerHTML = MEMBERS.some(function(m){ return m.email === em.toLowerCase(); })
+      ? 'That is a <b>buyer</b> account. Buyers sign in on the storefront, not here.'
+      : 'That email and password do not match a staff account.';
+  });
+
+  function admNav(){
+    var groups = [], seen = {};
+    SECTIONS.forEach(function(s){ if(!seen[s.g]){ seen[s.g] = []; groups.push(s.g); } seen[s.g].push(s); });
+    return groups.map(function(g){
+      return '<p class="adm-grp">' + g + '</p>' + seen[g].map(function(s){
+        return '<a href="#/admin/' + s.k + '"' + (s.k === admSec ? ' aria-current="page"' : '') + '>' +
+          ico(s.k) + '<span>' + s.n + '</span>' + badge(s.k) + '</a>';
+      }).join('');
+    }).join('');
+  }
+  function admCrumb(){
+    var s = SECTIONS.filter(function(x){ return x.k === admSec; })[0] || SECTIONS[0];
+    var out = '<span>Admin</span><span>/</span><b>' + s.n + '</b>';
+    if(admId) out += '<span>/</span><b>' + esc(admId) + '</b>';
+    return out;
+  }
+
+  /* ---------- shared bits ---------- */
+  function tag(cls, txt){ return '<span class="adm-tag ' + cls + '"><i></i>' + txt + '</span>'; }
+  function liveTag(on){ return on ? tag('live', 'Live') : tag('off', 'Hidden'); }
+  function helpBox(html, cls){ return '<p class="adm-help' + (cls ? ' ' + cls : '') + '">' + html + '</p>'; }
+  function panel(title, tagline, body, right){
+    return '<div class="adm-card"><h3>' + title +
+      (tagline ? '<span class="tagline">' + tagline + '</span>' : '') +
+      (right ? '<span class="sp"></span>' + right : '') +
+      '</h3>' + body + '</div>';
+  }
+  function field(label, req, inner, hint){
+    return '<div class="adm-f"><label>' + label + (req ? ' <span class="req">Required</span>' : '') + '</label>' +
+      inner + (hint ? '<p class="adm-hint">' + hint + '</p>' : '') + '</div>';
+  }
+  function toggle(id, on, label){
+    return '<label class="adm-toggle"><input type="checkbox" id="' + id + '"' + (on ? ' checked' : '') +
+      '><span class="sw"></span><span>' + label + '</span></label>';
+  }
+  function brandPicks(name, val){
+    return '<div class="adm-picks">' + BRANDS.map(function(b){
+      return '<button class="adm-pick" type="button" data-' + name + '="' + b.k + '" aria-pressed="' +
+        (b.k === val) + '"><i style="background:var(' + b.v + ')"></i>' + b.n + '</button>';
+    }).join('') + '</div>';
+  }
+  function catPicks(name, val){
+    return '<div class="adm-picks">' + CATS.map(function(c){
+      return '<button class="adm-pick" type="button" data-' + name + '="' + c.k + '" aria-pressed="' +
+        (c.k === val) + '">' + c.n + '</button>';
+    }).join('') + '</div>';
+  }
+  function pickWire(root, name, set){
+    [].forEach.call(root.querySelectorAll('[data-' + name + ']'), function(b){
+      b.addEventListener('click', function(){
+        [].forEach.call(root.querySelectorAll('[data-' + name + ']'), function(x){
+          x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+        });
+        set(b.dataset[name]);
+      });
+    });
+  }
+  function searchBox(id, ph, val){
+    return '<label class="adm-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+      'stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>' +
+      '<input id="' + id + '" type="search" placeholder="' + ph + '" value="' + esc(val || '') + '"></label>';
+  }
+  function selBox(id, opts, val){
+    return '<select class="adm-sel" id="' + id + '">' + opts.map(function(o){
+      return '<option value="' + o.k + '"' + (o.k === val ? ' selected' : '') + '>' + o.n + '</option>';
+    }).join('') + '</select>';
+  }
+  function codeOf(x){
+    var h = 0, id = x.id || x.n;
+    for(var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 9000;
+    return x.c.slice(0, 2).toUpperCase() + '-' + (1000 + h);
+  }
+  function isLive(x){ return x.live !== false; }
+  function today(){ return new Date().toISOString().slice(0, 10); }
+
+  /* ---------- 1. OVERVIEW ---------- */
+  function admDash(){
+    var jobs = [
+      { on:nWait() > 0,  t:'<b>' + nWait() + ' buyer' + (nWait() === 1 ? '' : 's') + '</b> waiting for approval',
+        w:'They cannot see prices or order until you approve them.', h:'#/admin/members' },
+      { on:nNewOrders() > 0, t:'<b>' + nNewOrders() + ' order' + (nNewOrders() === 1 ? '' : 's') + '</b> not confirmed yet',
+        w:'The buyer sees "Submitted" until you confirm.', h:'#/admin/orders' },
+      { on:nAsk() > 0, t:'<b>' + nAsk() + ' enquir' + (nAsk() === 1 ? 'y' : 'ies') + '</b> with no reply',
+        w:'Answer from Enquiries — the buyer sees it in their portal.', h:'#/admin/messages' },
+      { on:nDraft() > 0, t:'<b>' + nDraft() + ' product' + (nDraft() === 1 ? '' : 's') + '</b> still hidden',
+        w:'Finish the missing fields and switch them on.', h:'#/admin/products' }
+    ];
+    var todo = jobs.filter(function(j){ return j.on; });
+    var recent = ORDERS.slice().sort(function(a, b){ return a.date < b.date ? 1 : -1; }).slice(0, 5);
+
+    return '<h1 class="adm-h">Good to see you, ' + esc(admin.name.split(' ')[0]) + '.</h1>' +
+      '<p class="adm-lede">' + (todo.length
+        ? 'There ' + (todo.length === 1 ? 'is <b>1 thing</b>' : 'are <b>' + todo.length + ' things</b>') +
+          ' waiting for you. Work down the list — each row tells you what happens if you leave it.'
+        : 'Nothing is waiting. Everything below is a shortcut, not a chore.') + '</p>' +
+
+      '<div class="adm-stats">' +
+        '<a class="adm-stat' + (nWait() ? ' hot' : '') + '" href="#/admin/members"><em>Waiting for approval</em><b>' +
+          nWait() + '</b><span>buyer accounts</span></a>' +
+        '<a class="adm-stat' + (nNewOrders() ? ' hot' : '') + '" href="#/admin/orders"><em>To confirm</em><b>' +
+          nNewOrders() + '</b><span>submitted orders</span></a>' +
+        '<a class="adm-stat' + (nAsk() ? ' hot' : '') + '" href="#/admin/messages"><em>Unanswered</em><b>' +
+          nAsk() + '</b><span>enquiries</span></a>' +
+        '<a class="adm-stat" href="#/admin/products"><em>On the site</em><b>' +
+          PRODUCTS.filter(isLive).length + '</b><span>of ' + PRODUCTS.length + ' products</span></a>' +
+      '</div>' +
+
+      panel('Today', 'in the order it matters',
+        '<ul class="adm-todo">' + jobs.map(function(j){
+          return '<li class="' + (j.on ? '' : 'done') + '"><i></i><span><span>' + j.t + '</span>' +
+            '<br><span style="font-size:12px;color:var(--on-bone-mute)">' + (j.on ? j.w : 'Nothing to do here.') + '</span></span>' +
+            '<span class="sp"></span>' + (j.on ? '<a class="adm-btn" href="' + j.h + '">Open</a>' : '') + '</li>';
+        }).join('') + '</ul>') +
+
+      panel('Latest orders', '', '<div class="adm-tw"><table class="adm-t"><thead><tr>' +
+        '<th>PO</th><th>Buyer</th><th>Date</th><th>Units</th><th>Value</th><th>Status</th><th></th>' +
+        '</tr></thead><tbody>' + (recent.length ? recent.map(function(o){
+          return '<tr><td><b>' + o.po + '</b></td><td>' + esc(buyerOf(o).company) + '</td>' +
+            '<td class="num">' + o.date + '</td><td class="num">' + orderUnits(o) + '</td>' +
+            '<td class="num">' + money(orderValue(o)) + '</td>' +
+            '<td>' + tag(o.status === 'sub' ? 'wait' : o.status === 'cfm' ? 'info' : 'live', STATUS[o.status]) + '</td>' +
+            '<td class="rt"><a class="adm-btn" href="#/admin/orders/' + o.po + '">Open</a></td></tr>';
+        }).join('') : '<tr><td colspan="7"><p class="adm-empty">No orders yet.</p></td></tr>') +
+        '</tbody></table></div>');
+  }
+  function buyerOf(o){
+    return MEMBERS.filter(function(m){ return m.email === (o.buyer || MEMBERS[0].email); })[0] || MEMBERS[0];
+  }
+
+  /* ---------- 2. HOME SCREEN ---------- */
+  var hd = null;   /* working copy while editing */
+  function admHome(){
+    if(!hd) hd = JSON.parse(JSON.stringify(HOME));
+    var br = brOf(hd.hero.b);
+
+    var hero =
+      '<div class="adm-form two"><div>' +
+        field('Section label', false,
+          '<input type="text" id="hEyebrow" value="' + esc(hd.eyebrow) + '">',
+          'The small line above the headline. Usually the season code.') +
+        field('Brand', true, brandPicks('hb', hd.hero.b),
+          'Sets the dot colour and the tile colour. It does not filter anything.') +
+        field('Headline', true,
+          '<textarea id="hTitle" style="min-height:78px">' + esc(hd.hero.t) + '</textarea>',
+          'Press <b>Enter</b> to break the line. Two or three words per line reads best — this is the biggest type on the site.') +
+        field('Supporting line', false,
+          '<textarea id="hDek">' + esc(hd.hero.d) + '</textarea>',
+          'One or two sentences. Say what the campaign is, not why it is great.') +
+        '<div class="adm-row">' +
+          field('Button text', false, '<input type="text" id="hCta" value="' + esc(hd.hero.cta) + '">') +
+          field('Button link', false, '<input type="text" id="hHref" value="' + esc(hd.hero.href) + '">',
+            'Anywhere on the site, e.g. <b>#/shop?b=olchi</b>.') +
+        '</div>' +
+      '</div>' +
+      '<div class="adm-prev"><div class="adm-prev-in"><b>Live preview</b>' +
+        '<div class="adm-shot" id="hShot"></div></div></div></div>';
+
+    var week = hd.week.map(function(w, i){
+      var wb = brOf(w.b);
+      if(w.kind === 'fixed'){
+        return '<div class="adm-slot locked"><div class="hd"><b>Slot ' + (i + 1) + '</b>' +
+          tag('info', 'Evergreen') + '<span class="sp"></span>' + liveTag(w.live) + '</div>' +
+          '<p class="lockmsg">This slot points at the catalog web book and never goes stale, so you are never ' +
+          'left with an empty third card when a brand has nothing new. You can retitle it; you cannot repoint it.</p>' +
+          '<div class="adm-row" style="margin-top:14px">' +
+            field('Card title', false, '<input type="text" data-wn="' + i + '" value="' + esc(w.n) + '">') +
+            field('Small line', false, '<input type="text" data-wl="' + i + '" value="' + esc(w.l) + '">') +
+          '</div></div>';
+      }
+      return '<div class="adm-slot"><div class="hd"><b>Slot ' + (i + 1) + '</b>' +
+        '<span class="adm-tag"><i style="background:var(' + wb.v + ')"></i>' + wb.n + '</span>' +
+        '<span class="sp"></span>' +
+        '<label class="adm-toggle"><input type="checkbox" data-wlive="' + i + '"' + (w.live ? ' checked' : '') +
+        '><span class="sw"></span><span>Show on the site</span></label></div>' +
+        '<div class="adm-row">' +
+          field('Card title', true, '<input type="text" data-wn="' + i + '" value="' + esc(w.n) + '">') +
+          field('Small line', false, '<input type="text" data-wl="' + i + '" value="' + esc(w.l) + '">') +
+        '</div>' +
+        field('Brand', true, brandPicks('wb' + i, w.b)) +
+        field('Tile artwork', true, catPicks('wc' + i, w.c),
+          'Picks the placeholder drawing. Swap it for the real photo when you have one.') +
+        '</div>';
+    }).join('');
+
+    return '<h1 class="adm-h">Home screen</h1>' +
+      '<p class="adm-lede">The home screen is built from <b>fixed slots</b>. You fill slots in; you never move ' +
+      'them around. That is deliberate — it means no edit made here can break the layout.</p>' +
+
+      panel('The Season', 'the first thing anyone sees', '<div class="adm-in">' +
+        helpBox('This is the only block that changes every season. Everything else on the home screen ' +
+                'either rotates on its own or is locked.') + hero + '</div>') +
+
+      panel('This Week', 'three cards under the campaign', '<div class="adm-in">' +
+        helpBox('Two slots follow the season. The third is <b>evergreen</b> — it points at the catalog, so ' +
+                'the row never looks half-empty when a brand has no new product that month.') + week + '</div>') +
+
+      panel('The Standard', 'locked', '<div class="adm-in">' +
+        helpBox('<b>This section cannot be edited or removed.</b> The Soft Harness block is written into the page ' +
+                'itself, not stored as content. Campaign banners change every few weeks; the reason the brand ' +
+                'exists should not move at all. If the wording genuinely has to change, that is a developer ' +
+                'request, on purpose.', 'adm-lock') + '</div>');
+  }
+
+  function paintHShot(){
+    var el = document.getElementById('hShot');
+    if(!el) return;
+    var br = brOf(hd.hero.b);
+    el.innerHTML = '<p class="eyebrow" style="color:var(--on-bone-mute)">' + esc(hd.eyebrow) + '</p>' +
+      '<span class="blabel" style="--bd:var(' + br.v + ')"><i></i>' + br.n + '</span>' +
+      '<h4>' + nl2br(hd.hero.t || 'Headline') + '</h4>' +
+      '<p>' + esc(hd.hero.d) + '</p>' +
+      '<span class="cta">' + esc(hd.hero.cta || 'Button') + ' →</span>' +
+      '<span class="sl" style="--sl:var(' + br.v + ')">' + art('walk', 'rgba(255,255,255,.92)') + '</span>';
+  }
+  function homeDirty(){
+    var same = JSON.stringify(hd) === JSON.stringify(HOME);
+    if(same){ clearDirty(); return; }
+    setDirty('<b>Not published yet.</b> The home screen still shows the old version to visitors.',
+      function(){
+        HOME = JSON.parse(JSON.stringify(hd));
+        admPersist(); renderHome(); clearDirty(); renderAdmin();
+        toast('Home screen updated — it is live now');
+      },
+      function(){ hd = null; clearDirty(); renderAdmin(); toast('Changes discarded'); });
+  }
+  function wireHome(root){
+    function bind(id, path){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('input', function(){ path(el.value); paintHShot(); homeDirty(); });
+    }
+    bind('hEyebrow', function(v){ hd.eyebrow = v; });
+    bind('hTitle',   function(v){ hd.hero.t = v; });
+    bind('hDek',     function(v){ hd.hero.d = v; });
+    bind('hCta',     function(v){ hd.hero.cta = v; });
+    bind('hHref',    function(v){ hd.hero.href = v; });
+    pickWire(root, 'hb', function(v){ hd.hero.b = v; paintHShot(); homeDirty(); });
+    hd.week.forEach(function(w, i){
+      pickWire(root, 'wb' + i, function(v){
+        hd.week[i].b = v; homeDirty();
+        var hdr = root.querySelectorAll('.adm-slot')[i];
+        var t = hdr && hdr.querySelector('.adm-tag');
+        if(t) t.innerHTML = '<i style="background:var(' + brOf(v).v + ')"></i>' + brOf(v).n;
+      });
+      pickWire(root, 'wc' + i, function(v){ hd.week[i].c = v; homeDirty(); });
+    });
+    [].forEach.call(root.querySelectorAll('[data-wn]'), function(el){
+      el.addEventListener('input', function(){ hd.week[+el.dataset.wn].n = el.value; homeDirty(); });
+    });
+    [].forEach.call(root.querySelectorAll('[data-wl]'), function(el){
+      el.addEventListener('input', function(){ hd.week[+el.dataset.wl].l = el.value; homeDirty(); });
+    });
+    [].forEach.call(root.querySelectorAll('[data-wlive]'), function(el){
+      el.addEventListener('change', function(){ hd.week[+el.dataset.wlive].live = el.checked; homeDirty(); });
+    });
+    paintHShot();
+  }
+
+  /* ---------- 3. PRODUCTS ---------- */
+  var pQuery = '', pBrand = 'all', pCat = 'all';
+  function admProductList(){
+    var q = pQuery.trim().toLowerCase();
+    var list = PRODUCTS.filter(function(x){
+      if(pBrand !== 'all' && x.b !== pBrand) return false;
+      if(pCat !== 'all' && x.c !== pCat) return false;
+      if(!q) return true;
+      return (x.n + ' ' + brOf(x.b).n + ' ' + codeOf(x)).toLowerCase().indexOf(q) >= 0;
+    });
+    var rows = list.map(function(x){
+      var br = brOf(x.b);
+      return '<tr><td><span class="adm-name"><span class="adm-thumb">' + art(x.c, 'var(' + br.v + ')') +
+        '</span><span class="t"><b>' + esc(x.n) + '</b><em>' + codeOf(x) + '</em></span></span></td>' +
+        '<td><span class="adm-tag"><i style="background:var(' + br.v + ')"></i>' + br.n + '</span></td>' +
+        '<td>' + CATS.filter(function(c){ return c.k === x.c; })[0].n + '</td>' +
+        '<td class="num">' + money(x.p) + '</td>' +
+        '<td class="num">' + x.cw.length + '</td>' +
+        '<td>' + (x.as ? tag('live', 'Linked') : tag('wait', 'Missing')) + '</td>' +
+        '<td>' + liveTag(isLive(x)) + '</td>' +
+        '<td class="rt"><a class="adm-btn" href="#/admin/products/' + x.id + '">Edit</a></td></tr>';
+    }).join('');
+
+    return '<h1 class="adm-h">Products</h1>' +
+      '<p class="adm-lede">One product record feeds <b>every</b> screen — the listing, the detail page, search, ' +
+      'the line sheet and the order matrix. Change it once here and it changes everywhere.</p>' +
+      '<div class="adm-tools">' + searchBox('pQ', 'Search by name or code', pQuery) +
+        selBox('pB', [{ k:'all', n:'All brands' }].concat(BRANDS.map(function(b){ return { k:b.k, n:b.n }; })), pBrand) +
+        selBox('pC', [{ k:'all', n:'All categories' }].concat(CATS), pCat) +
+        '<a class="adm-btn pri" href="#/admin/products/new">+ New product</a></div>' +
+      panel(list.length + ' product' + (list.length === 1 ? '' : 's'), '',
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>Product</th><th>Brand</th><th>Category</th>' +
+        '<th>MSRP</th><th>Colours</th><th>Assets</th><th>On the site</th><th></th></tr></thead><tbody>' +
+        (rows || '<tr><td colspan="8"><p class="adm-empty"><b>Nothing matches.</b>Clear the search or pick another filter.</p></td></tr>') +
+        '</tbody></table></div>');
+  }
+
+  var pd = null;   /* product working copy */
+  function blankProduct(){
+    return { id:'', b:'puppia', c:'walk', n:'', p:0, std:false, nw:true, cw:[0], d:'', as:'', live:false };
+  }
+  function slugify(n){
+    return n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'product';
+  }
+  function pChecks(x){
+    return [
+      { ok:!!x.n.trim(), t:'Name', w:'Shown on every screen and printed on the purchase order.' },
+      { ok:x.p > 0, t:'MSRP above zero', w:'Wholesale is calculated from this, so a zero price breaks the line sheet.' },
+      { ok:x.cw.length > 0, t:'At least one colourway', w:'The order matrix has one column per colourway.' },
+      { ok:x.d.trim().length >= 40, t:'Description of 40 characters or more', w:'Buyers copy this into their own listings.' },
+      { ok:!!x.as, t:'Assets folder link', w:'Without it the Assets button on the detail page has nothing to open.' }
+    ];
+  }
+  function checksHTML(){
+    return '<ul class="adm-checks">' + pChecks(pd).map(function(c){
+      return '<li class="' + (c.ok ? 'ok' : 'no') + '"><i>' + (c.ok ? '✓' : '') + '</i><span>' + c.t +
+        '<br><span style="color:var(--on-bone-mute);font-size:11.5px">' + c.w + '</span></span></li>';
+    }).join('') + '</ul>';
+  }
+  function liveToggleHTML(){
+    var missing = pChecks(pd).filter(function(c){ return !c.ok; }).length;
+    return toggle('eLive', isLive(pd) && !missing, missing
+      ? 'Cannot go live yet — ' + missing + ' item' + (missing === 1 ? '' : 's') + ' missing'
+      : 'Show this product on the site');
+  }
+  /* Typing must never rebuild the form — that would throw the caret away mid-word.
+     Only the checklist and the live switch repaint as you type. */
+  function paintChecks(){
+    var host = document.getElementById('eChecks');
+    if(!host) return;
+    var on = pd.live !== false && !pChecks(pd).some(function(c){ return !c.ok; });
+    host.innerHTML = checksHTML();
+    document.getElementById('eLiveWrap').innerHTML = liveToggleHTML();
+    document.getElementById('eLive').checked = on;
+    wireLive();
+  }
+  function wireLive(){
+    var lv = document.getElementById('eLive');
+    if(!lv) return;
+    lv.addEventListener('change', function(){
+      if(pChecks(pd).some(function(c){ return !c.ok; })){
+        lv.checked = false;
+        toast('Finish the checklist first — the list above shows what is left');
+        return;
+      }
+      pd.live = lv.checked;
+    });
+  }
+  function admProductEdit(id){
+    var isNew = (id === 'new');
+    if(!pd || (isNew ? pd.id !== '' : pd.id !== id)){
+      pd = isNew ? blankProduct() : JSON.parse(JSON.stringify(PMAP[id] || blankProduct()));
+    }
+    if(!isNew && !PMAP[id]){
+      return '<h1 class="adm-h">Not found</h1><p class="adm-lede">No product has the id <b>' + esc(id) +
+        '</b>. <a href="#/admin/products">Back to the list</a>.</p>';
+    }
+    var stock =
+      '<div class="adm-tw"><table class="adm-stock"><thead><tr><th>Size</th>' +
+      pd.cw.map(function(ci){
+        return '<th><span class="sw" style="background:' + CW[ci].h + '"></span>' + CW[ci].n + '</th>';
+      }).join('') + '</tr></thead><tbody>' +
+      rowsOf(pd).map(function(z, si){
+        return '<tr><th>' + z.s + '</th>' + pd.cw.map(function(ci, k){
+          return '<td><input type="number" min="0" data-st="' + si + '|' + k + '" value="' +
+            stockOf(pd, si, k) + '" aria-label="' + z.s + ' ' + CW[ci].n + ' stock"></td>';
+        }).join('') + '</tr>';
+      }).join('') + '</tbody></table></div>';
+
+    return '<h1 class="adm-h">' + (isNew ? 'New product' : esc(pd.n || 'Untitled')) + '</h1>' +
+      '<p class="adm-lede">' + (isNew
+        ? 'Fill the form down the left. The checklist on the right tells you what is still missing — you can save a ' +
+          'draft at any point, but the product only goes on the site once the checklist is clear.'
+        : 'Every field here is already live. Changes take effect the moment you publish them.') + '</p>' +
+
+      '<div class="adm-form two"><div>' +
+        panel('The basics', '', '<div class="adm-in">' +
+          field('Product name', true, '<input type="text" id="eN" value="' + esc(pd.n) + '" placeholder="e.g. Soft Harness C">',
+            'Buyers search on this. Write it the way it appears on the hangtag.') +
+          field('Brand', true, brandPicks('eb', pd.b), 'Decides the dot colour and which brand page it appears under.') +
+          field('Category', true, catPicks('ec', pd.c),
+            'Decides the top menu it lives under — and whether it is sized <b>XS–XL</b> (Walk, Apparel) or ' +
+            '<b>one size</b> (Living, Acc).') +
+          field('MSRP (USD)', true, '<input type="number" id="eP" min="0" step="1" value="' + pd.p + '">',
+            'The retail price. Wholesale is half of it and is calculated for you, so you never type two numbers.') +
+          field('Description', true, '<textarea id="eD" placeholder="What it is, and what it does that others do not.">' +
+            esc(pd.d) + '</textarea>',
+            'Shown on the detail page and exported in the line sheet.') +
+        '</div>') +
+        panel('Colourways', 'each one becomes a column in the order matrix', '<div class="adm-in">' +
+          '<div class="adm-picks">' + CW.map(function(c, i){
+            return '<button class="adm-pick" type="button" data-cw="' + i + '" aria-pressed="' +
+              (pd.cw.indexOf(i) >= 0) + '"><i style="background:' + c.h + '"></i>' + c.n + '</button>';
+          }).join('') + '</div>' +
+          '<p class="adm-hint">Pick every colour this style ships in. Removing one deletes its stock column.</p>' +
+        '</div>') +
+        panel('Stock', 'per size and colour', '<div class="adm-in">' +
+          helpBox('A cell left at <b>0</b> shows as out of stock in the buyer\'s matrix and cannot be ordered. ' +
+                  'Buyers may still key in more than the number here — that is treated as a pre-order and flagged ' +
+                  'in amber, not blocked.') + stock + '</div>') +
+        panel('Assets & flags', '', '<div class="adm-in">' +
+          field('Google Drive folder', false,
+            '<input type="url" id="eAs" placeholder="https://drive.google.com/drive/folders/..." value="' + esc(pd.as || '') + '">',
+            'Paste the share link once. The <b>Assets</b> button on the detail page and the bulk download in ' +
+            'the order view both read this one field.') +
+          '<div class="adm-f"><label>Flags</label>' +
+            '<div style="display:grid; gap:12px">' +
+            toggle('eNw', pd.nw, 'Mark as NEW — adds the badge and sorts it to the front') +
+            toggle('eStd', pd.std, 'The Standard seal — only for Soft Harness structures') +
+            '</div>' +
+            '<p class="adm-hint">The seal is the trademark claim. Putting it on a product that is not a ' +
+            'Soft Harness structure is the one mistake here that costs the brand something.</p></div>' +
+        '</div>') +
+      '</div>' +
+
+      '<div class="adm-prev"><div class="adm-prev-in"><b>Before it can go live</b>' +
+        '<div id="eChecks">' + checksHTML() + '</div>' +
+        '<div style="padding:15px">' +
+          '<div id="eLiveWrap">' + liveToggleHTML() + '</div>' +
+          '<div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap">' +
+            '<button class="adm-btn pri" type="button" id="eSave" style="flex:1">' +
+              (isNew ? 'Create product' : 'Publish changes') + '</button>' +
+            '<a class="adm-btn" href="#/admin/products">Cancel</a>' +
+          '</div>' +
+          (isNew ? '' :
+            '<div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--bone3)">' +
+            '<button class="adm-btn danger" type="button" id="eDel" style="width:100%">Delete this product</button>' +
+            '<p class="adm-hint">Past orders keep their record either way.</p></div>') +
+        '</div>' +
+      '</div></div></div>';
+  }
+
+  function wireProductEdit(root, id){
+    var isNew = (id === 'new');
+    function re(){ renderAdmin(); }
+    function bind(elid, fn){
+      var el = document.getElementById(elid);
+      if(el) el.addEventListener('input', function(){ fn(el.value); paintChecks(); });
+    }
+    bind('eN',  function(v){ pd.n = v; });
+    bind('eP',  function(v){ pd.p = Math.max(0, +v || 0); });
+    bind('eD',  function(v){ pd.d = v; });
+    bind('eAs', function(v){ pd.as = v.trim(); });
+    pickWire(root, 'eb', function(v){ pd.b = v; });
+    /* the category decides the sizing scheme, so the stock grid has to be rebuilt */
+    pickWire(root, 'ec', function(v){ pd.c = v; re(); });
+    [].forEach.call(root.querySelectorAll('[data-cw]'), function(b){
+      b.addEventListener('click', function(){
+        var i = +b.dataset.cw, at = pd.cw.indexOf(i);
+        if(at >= 0){
+          if(pd.cw.length === 1){ toast('A product needs at least one colourway'); return; }
+          pd.cw.splice(at, 1);
+        } else pd.cw.push(i);
+        pd.cw.sort(function(a, c){ return a - c; });
+        re();
+      });
+    });
+    [].forEach.call(root.querySelectorAll('[data-st]'), function(el){
+      el.addEventListener('change', function(){
+        var parts = el.dataset.st.split('|');
+        STOCK[key(pd.id || 'new', parts[0], parts[1])] = Math.max(0, +el.value || 0);
+      });
+    });
+    var nw = document.getElementById('eNw'), st = document.getElementById('eStd');
+    if(nw) nw.addEventListener('change', function(){ pd.nw = nw.checked; });
+    if(st) st.addEventListener('change', function(){ pd.std = st.checked; });
+    wireLive();
+
+    var save = document.getElementById('eSave');
+    if(save) save.addEventListener('click', function(){
+      if(!pd.n.trim()){ toast('Give the product a name first'); return; }
+      if(pChecks(pd).some(function(c){ return !c.ok; })) pd.live = false;
+      if(isNew){
+        var base = slugify(pd.n), sid = base, k = 2;
+        while(PMAP[sid]) sid = base + '-' + (k++);
+        pd.id = sid;
+        /* move the stock typed against the placeholder id onto the real one */
+        Object.keys(STOCK).forEach(function(kk){
+          if(kk.indexOf('new|') !== 0) return;
+          STOCK[sid + '|' + kk.slice(4)] = STOCK[kk];
+          delete STOCK[kk];
+        });
+        PRODUCTS.push(pd);
+      } else {
+        var at = PRODUCTS.map(function(x){ return x.id; }).indexOf(pd.id);
+        PRODUCTS[at] = pd;
+      }
+      PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
+      var wentLive = pd.live !== false;
+      admPersist(); renderHome(); pd = null;
+      toast(isNew
+        ? (wentLive ? 'Product created and live on the site' : 'Saved as a hidden draft')
+        : 'Saved — the site is showing it now');
+      location.hash = '#/admin/products';
+    });
+
+    var del = document.getElementById('eDel');
+    if(del) del.addEventListener('click', function(){
+      if(del.dataset.armed !== '1'){
+        del.dataset.armed = '1';
+        del.textContent = 'Click again to delete "' + pd.n + '"';
+        setTimeout(function(){
+          if(!del.parentNode) return;
+          del.dataset.armed = '0'; del.textContent = 'Delete this product';
+        }, 4000);
+        return;
+      }
+      var at = PRODUCTS.map(function(x){ return x.id; }).indexOf(pd.id);
+      if(at >= 0) PRODUCTS.splice(at, 1);
+      PMAP = {}; PRODUCTS.forEach(function(x){ PMAP[x.id] = x; });
+      admPersist(); renderHome(); pd = null;
+      toast('Deleted');
+      location.hash = '#/admin/products';
+    });
+  }
+
+  /* ---------- 4. CATALOG ---------- */
+  var cd = null;
+  function admCatalog(){
+    var rows = SEASONS.map(function(s, i){
+      return '<tr><td><span class="adm-name"><span class="adm-thumb" style="background:' + s.cover + '"></span>' +
+        '<span class="t"><b>' + esc(s.n) + '</b><em>' + esc(s.note) + '</em></span></span></td>' +
+        '<td>' + (i === 0 ? tag('live', 'Current season') : tag('off', 'Archive')) + '</td>' +
+        '<td class="num">' + (s.pages || 24) + '</td>' +
+        '<td>' + liveTag(s.live !== false) + '</td>' +
+        '<td class="rt"><a class="adm-btn" href="#/admin/catalog/' + s.k + '">Edit</a></td></tr>';
+    }).join('');
+    return '<h1 class="adm-h">Catalog</h1>' +
+      '<p class="adm-lede">Each season is a <b>web book</b> — the PDF line sheet rebuilt as pages that turn in the ' +
+      'browser. Nobody has to pinch-zoom a PDF on a phone, and search engines can read it.</p>' +
+      helpBox('The season at the top of this list is the one that opens by default at <b>#/catalog</b>. ' +
+              'Older seasons stay reachable from the season selector — buyers do reorder from last year.') +
+      panel(SEASONS.length + ' seasons', '',
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>Season</th><th>Position</th><th>Pages</th>' +
+        '<th>On the site</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>');
+  }
+  function admCatalogEdit(k){
+    var s = SEASONS.filter(function(x){ return x.k === k; })[0];
+    if(!s) return '<h1 class="adm-h">Not found</h1><p class="adm-lede"><a href="#/admin/catalog">Back to the list</a>.</p>';
+    if(!cd || cd.k !== k) cd = JSON.parse(JSON.stringify(s));
+    return '<h1 class="adm-h">' + esc(cd.n) + '</h1>' +
+      '<p class="adm-lede">This is the cover and the shelf label. The pages inside are generated from the products ' +
+      'you have already registered, so there is no second place to keep them up to date.</p>' +
+      '<div class="adm-form two"><div>' + panel('Cover', '', '<div class="adm-in">' +
+        field('Season code', true, '<input type="text" id="cN" value="' + esc(cd.n) + '">',
+          'Short and uppercase — <b>SS26</b>, <b>FW25</b>. It appears in the selector and in export filenames.') +
+        field('Cover headline', false, '<textarea id="cT" style="min-height:70px">' +
+          esc(cd.title.replace(/<br>/g, '\n')) + '</textarea>', 'Press <b>Enter</b> to break the line.') +
+        field('Description', false, '<input type="text" id="cNote" value="' + esc(cd.note) + '">') +
+        field('Cover colour', true, '<div class="adm-picks">' +
+          [{ v:'var(--red)', n:'Red' }, { v:'var(--blue)', n:'Blue' }, { v:'var(--yellow)', n:'Yellow' },
+           { v:'var(--ink)', n:'Ink' }].map(function(o){
+            return '<button class="adm-pick" type="button" data-cc="' + o.v + '" aria-pressed="' +
+              (o.v === cd.cover) + '"><i style="background:' + o.v + '"></i>' + o.n + '</button>';
+          }).join('') + '</div>') +
+        field('Pages', false, '<input type="number" id="cPg" min="4" step="2" value="' + (cd.pages || 24) + '">',
+          'Always an even number — the book shows two pages at a time.') +
+        '<div class="adm-f"><label>Visibility</label>' +
+          toggle('cLive', cd.live !== false, 'Show this season in the selector') + '</div>' +
+      '</div>') + '</div>' +
+      '<div class="adm-prev"><div class="adm-prev-in"><b>Cover preview</b>' +
+        '<div class="adm-shot"><span class="sl" id="cShot" style="--sl:' + cd.cover +
+          '; aspect-ratio:3/4; place-items:end start; padding:18px">' +
+          '<span style="font-family:Archivo,sans-serif; font-weight:900; font-stretch:112%; font-size:1.5rem; ' +
+          'line-height:1.05; color:#fff" id="cShotT">' + cd.title + '</span></span></div>' +
+        '<div style="padding:15px; display:flex; gap:8px; flex-wrap:wrap">' +
+          '<button class="adm-btn pri" type="button" id="cSave" style="flex:1">Publish changes</button>' +
+          '<a class="adm-btn" href="#/admin/catalog">Cancel</a></div>' +
+      '</div></div></div>';
+  }
+  function wireCatalogEdit(root){
+    function shot(){
+      var e = document.getElementById('cShot'), t = document.getElementById('cShotT');
+      if(e) e.style.setProperty('--sl', cd.cover);
+      if(t) t.innerHTML = cd.title;
+    }
+    function bind(id, fn){
+      var el = document.getElementById(id);
+      if(el) el.addEventListener('input', function(){ fn(el.value); shot(); });
+    }
+    bind('cN', function(v){ cd.n = v; });
+    bind('cT', function(v){ cd.title = esc(v).replace(/\n/g, '<br>'); });
+    bind('cNote', function(v){ cd.note = v; });
+    bind('cPg', function(v){ cd.pages = Math.max(4, +v || 24); });
+    pickWire(root, 'cc', function(v){ cd.cover = v; shot(); });
+    var lv = document.getElementById('cLive');
+    if(lv) lv.addEventListener('change', function(){ cd.live = lv.checked; });
+    var sv = document.getElementById('cSave');
+    if(sv) sv.addEventListener('click', function(){
+      var at = SEASONS.map(function(x){ return x.k; }).indexOf(cd.k);
+      SEASONS[at] = cd;
+      if(season.k === cd.k) season = SEASONS[at];
+      admPersist(); cd = null;
+      toast('Catalog updated');
+      location.hash = '#/admin/catalog';
+    });
+  }
+
+  /* ---------- 5. BUYER ACCOUNTS ---------- */
+  var mFilter = 'all', mQuery = '';
+  function admMembers(){
+    var q = mQuery.trim().toLowerCase();
+    var list = MEMBERS.filter(function(m){
+      if(mFilter !== 'all' && m.status !== mFilter) return false;
+      if(!q) return true;
+      return (m.company + ' ' + m.email + ' ' + m.country).toLowerCase().indexOf(q) >= 0;
+    }).sort(function(a, b){
+      return (a.status === 'wait' ? 0 : 1) - (b.status === 'wait' ? 0 : 1);
+    });
+    var rows = list.map(function(m){
+      var cls = m.status === 'ok' ? 'live' : m.status === 'wait' ? 'wait' : 'stop';
+      return '<tr><td><b>' + esc(m.company) + '</b><br><span style="font-size:11.5px;color:var(--on-bone-mute)">' +
+        esc(m.email) + '</span></td>' +
+        '<td>' + esc(m.country) + '</td><td>' + esc(m.terms) + '</td>' +
+        '<td class="num">' + m.since + '</td>' +
+        '<td class="num">' + ORDERS.filter(function(o){ return (o.buyer || MEMBERS[0].email) === m.email; }).length + '</td>' +
+        '<td>' + tag(cls, MSTATE[m.status]) + '</td>' +
+        '<td class="rt">' + (m.status === 'wait'
+          ? '<button class="adm-btn pri" type="button" data-appr="' + m.id + '">Approve</button> ' +
+            '<button class="adm-btn" type="button" data-rej="' + m.id + '">Decline</button>'
+          : '<a class="adm-btn" href="#/admin/members/' + m.id + '">Open</a>') + '</td></tr>';
+    }).join('');
+
+    return '<h1 class="adm-h">Buyer accounts</h1>' +
+      '<p class="adm-lede">Everyone who can see wholesale prices. An account is either <b>Active</b> ' +
+      '(signs in, sees prices, places orders), <b>Pending</b> (applied, sees nothing yet) or ' +
+      '<b>Suspended</b> (cannot sign in).</p>' +
+      (nWait() ? helpBox('<b>' + nWait() + ' application' + (nWait() === 1 ? ' is' : 's are') + ' waiting.</b> ' +
+        'Approving switches their login on immediately — check the company is a real retailer first.') : '') +
+      '<div class="adm-tools">' + searchBox('mQ', 'Search company, email or country', mQuery) +
+        selBox('mF', [{ k:'all', n:'All accounts' }, { k:'wait', n:'Pending only' },
+                      { k:'ok', n:'Active only' }, { k:'stop', n:'Suspended only' }], mFilter) + '</div>' +
+      panel(list.length + ' account' + (list.length === 1 ? '' : 's'), '',
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>Company</th><th>Country</th><th>Terms</th>' +
+        '<th>Since</th><th>Orders</th><th>Status</th><th></th></tr></thead><tbody>' +
+        (rows || '<tr><td colspan="7"><p class="adm-empty"><b>Nothing matches.</b>Try another filter.</p></td></tr>') +
+        '</tbody></table></div>');
+  }
+  function admMemberEdit(id){
+    var m = MEMBERS.filter(function(x){ return x.id === id; })[0];
+    if(!m) return '<h1 class="adm-h">Not found</h1><p class="adm-lede"><a href="#/admin/members">Back to the list</a>.</p>';
+    var mine = ORDERS.filter(function(o){ return (o.buyer || MEMBERS[0].email) === m.email; });
+    var spend = mine.reduce(function(n, o){ return n + orderValue(o); }, 0);
+    return '<h1 class="adm-h">' + esc(m.company) + '</h1>' +
+      '<p class="adm-lede">' + esc(m.email) + ' &middot; ' + esc(m.country) + ' &middot; buyer since ' + m.since + '</p>' +
+      '<div class="adm-stats">' +
+        '<div class="adm-stat"><em>Status</em><b style="font-size:1.2rem">' + MSTATE[m.status] + '</b>' +
+          '<span>' + (m.status === 'ok' ? 'Can sign in and order' : m.status === 'wait'
+            ? 'Cannot see prices yet' : 'Sign-in is blocked') + '</span></div>' +
+        '<div class="adm-stat"><em>Orders</em><b>' + mine.length + '</b><span>all time</span></div>' +
+        '<div class="adm-stat"><em>Value</em><b style="font-size:1.3rem">' + money(spend) + '</b><span>all time</span></div>' +
+        '<div class="adm-stat"><em>Terms</em><b style="font-size:1.2rem">' + esc(m.terms) + '</b><span>incoterms</span></div>' +
+      '</div>' +
+      panel('Account', '', '<div class="adm-in"><div class="adm-row">' +
+        field('Company', true, '<input type="text" id="mCo" value="' + esc(m.company) + '">') +
+        field('Country', true, '<input type="text" id="mCn" value="' + esc(m.country) + '">') +
+        field('Terms', false, '<input type="text" id="mTm" value="' + esc(m.terms) + '">') +
+      '</div>' +
+      field('Internal note', false, '<textarea id="mNo" placeholder="Anything the next person should know.">' +
+        esc(m.note || '') + '</textarea>', 'Staff only. The buyer never sees this.') +
+      '<div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px">' +
+        '<button class="adm-btn pri" type="button" id="mSave">Save</button>' +
+        (m.status === 'ok'
+          ? '<button class="adm-btn danger" type="button" id="mStop">Suspend sign-in</button>'
+          : '<button class="adm-btn" type="button" id="mGo">' +
+            (m.status === 'wait' ? 'Approve this account' : 'Restore sign-in') + '</button>') +
+        '<a class="adm-btn" href="#/admin/members">Back</a>' +
+      '</div></div>') +
+      panel('Their orders', '', '<div class="adm-tw"><table class="adm-t"><thead><tr><th>PO</th><th>Date</th>' +
+        '<th>Units</th><th>Value</th><th>Status</th><th></th></tr></thead><tbody>' +
+        (mine.length ? mine.map(function(o){
+          return '<tr><td><b>' + o.po + '</b></td><td class="num">' + o.date + '</td>' +
+            '<td class="num">' + orderUnits(o) + '</td><td class="num">' + money(orderValue(o)) + '</td>' +
+            '<td>' + tag(o.status === 'sub' ? 'wait' : o.status === 'cfm' ? 'info' : 'live', STATUS[o.status]) + '</td>' +
+            '<td class="rt"><a class="adm-btn" href="#/admin/orders/' + o.po + '">Open</a></td></tr>';
+        }).join('') : '<tr><td colspan="6"><p class="adm-empty">No orders yet.</p></td></tr>') +
+        '</tbody></table></div>');
+  }
+  function setMemberStatus(id, st, msg){
+    MEMBERS.forEach(function(m){ if(m.id === id) m.status = st; });
+    if(st !== 'ok' && session){
+      var me = MEMBERS.filter(function(m){ return m.email === session.email; })[0];
+      if(me && me.status !== 'ok'){ signOut(); }
+    }
+    admPersist(); renderAdmin(); toast(msg);
+  }
+
+  /* ---------- 6. ORDERS ---------- */
+  var oFilter = 'all';
+  function admOrders(){
+    var list = ORDERS.filter(function(o){ return oFilter === 'all' || o.status === oFilter; })
+      .sort(function(a, b){ return a.date < b.date ? 1 : -1; });
+    var rows = list.map(function(o){
+      return '<tr><td><b>' + o.po + '</b></td><td>' + esc(buyerOf(o).company) + '</td>' +
+        '<td class="num">' + o.date + '</td><td class="num">' + orderUnits(o) + '</td>' +
+        '<td class="num">' + money(orderValue(o)) + '</td>' +
+        '<td>' + tag(o.status === 'sub' ? 'wait' : o.status === 'cfm' ? 'info' : 'live', STATUS[o.status]) + '</td>' +
+        '<td class="rt"><a class="adm-btn' + (o.status === 'sub' ? ' pri' : '') + '" href="#/admin/orders/' + o.po + '">' +
+        (o.status === 'sub' ? 'Confirm' : 'Open') + '</a></td></tr>';
+    }).join('');
+    return '<h1 class="adm-h">Orders</h1>' +
+      '<p class="adm-lede">Orders arrive here the moment a buyer submits. The status you set is exactly what they ' +
+      'see in their portal, so keep it honest — it is the only place they can check.</p>' +
+      '<div class="adm-tools">' + selBox('oF', [{ k:'all', n:'All orders' }, { k:'sub', n:'Submitted' },
+        { k:'cfm', n:'Confirmed' }, { k:'shp', n:'Shipped' }], oFilter) + '</div>' +
+      panel(list.length + ' order' + (list.length === 1 ? '' : 's'), '',
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>PO</th><th>Buyer</th><th>Date</th><th>Units</th>' +
+        '<th>Value</th><th>Status</th><th></th></tr></thead><tbody>' +
+        (rows || '<tr><td colspan="7"><p class="adm-empty"><b>Nothing here.</b>Try another filter.</p></td></tr>') +
+        '</tbody></table></div>');
+  }
+  function admOrderView(po){
+    var o = ORDERS.filter(function(x){ return x.po === po; })[0];
+    if(!o) return '<h1 class="adm-h">Not found</h1><p class="adm-lede"><a href="#/admin/orders">Back to orders</a>.</p>';
+    var m = buyerOf(o);
+    var by = {};
+    o.lines.forEach(function(l){ (by[l.id] = by[l.id] || []).push(l); });
+    var rows = Object.keys(by).map(function(pid){
+      var x = PMAP[pid];
+      if(!x) return '';
+      var ls = by[pid], u = ls.reduce(function(n, l){ return n + l.q; }, 0);
+      return '<tr><td><span class="adm-name"><span class="adm-thumb">' + art(x.c, 'var(' + brOf(x.b).v + ')') +
+        '</span><span class="t"><b>' + esc(x.n) + '</b><em>' + ls.map(function(l){
+          return rowsOf(x)[l.si].s + '/' + CW[x.cw[l.ci]].n + ' ' + l.q;
+        }).join(' &middot; ') + '</em></span></span></td>' +
+        '<td class="num">' + u + '</td><td class="num">' + money(wholesale(x)) + '</td>' +
+        '<td class="num">' + money(u * wholesale(x)) + '</td></tr>';
+    }).join('');
+    var steps = ['sub', 'cfm', 'shp'], at = steps.indexOf(o.status);
+
+    return '<h1 class="adm-h">' + o.po + '</h1>' +
+      '<p class="adm-lede">' + esc(m.company) + ' &middot; ' + esc(m.country) + ' &middot; submitted ' + o.date + '</p>' +
+      panel('Status', 'the buyer sees this immediately', '<div class="adm-in">' +
+        helpBox(at === 0
+          ? '<b>Confirm</b> once you have checked stock and the shipping window. Until you do, the buyer is looking ' +
+            'at "Submitted" with no idea whether anyone has read it.'
+          : at === 1
+          ? 'Mark it <b>Shipped</b> when the vessel is booked, and set the date — that date is what the buyer plans ' +
+            'their floor set around.'
+          : 'This order is closed. Nothing further is needed.') +
+        '<div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center">' +
+          steps.map(function(s, i){
+            return '<button class="adm-btn' + (i === at ? ' pri' : '') + '" type="button" data-ost="' + s + '"' +
+              (i === at ? ' disabled' : '') + '>' + STATUS[s] + '</button>';
+          }).join('') + '</div>' +
+        (at >= 1 ? field('Ship date', false,
+          '<input type="text" id="oShip" placeholder="2026-10-28" value="' + esc(o.ship || '') + '" style="max-width:220px">',
+          'Shown on the buyer\'s order page as the expected date.') : '') +
+        '<div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">' +
+          '<button class="adm-btn" type="button" id="oMsg">Message the buyer</button>' +
+          '<a class="adm-btn" href="#/admin/members/' + m.id + '">Open the account</a>' +
+          '<a class="adm-btn" href="#/admin/orders">Back</a></div>' +
+      '</div>') +
+      panel('Breakdown', orderUnits(o) + ' units', '<div class="adm-tw"><table class="adm-t"><thead><tr>' +
+        '<th>Style &amp; breakdown</th><th>Units</th><th>Unit</th><th>Value</th></tr></thead><tbody>' + rows +
+        '</tbody><tfoot><tr><th class="rt">Total</th><th class="num">' + orderUnits(o) + '</th><th></th>' +
+        '<th class="num">' + money(orderValue(o)) + '</th></tr></tfoot></table></div>');
+  }
+
+  /* ---------- 7. ENQUIRIES ---------- */
+  function admMessages(){
+    var rows = THREADS.map(function(t){
+      var last = t.msgs[t.msgs.length - 1];
+      return '<tr><td><b>' + esc(t.subj) + '</b><br><span style="font-size:11.5px;color:var(--on-bone-mute)">' +
+        esc(last.b.slice(0, 90).replace(/\n/g, ' ')) + (last.b.length > 90 ? '…' : '') + '</span></td>' +
+        '<td>' + (t.po ? '<a href="#/admin/orders/' + t.po + '">' + t.po + '</a>' : '—') + '</td>' +
+        '<td class="num">' + last.t + '</td>' +
+        '<td>' + (t.status === 'open' ? tag('wait', 'Needs a reply') : tag('live', 'Answered')) + '</td>' +
+        '<td class="rt"><a class="adm-btn' + (t.status === 'open' ? ' pri' : '') +
+        '" href="#/admin/messages/' + t.id + '">Open</a></td></tr>';
+    }).join('');
+    return '<h1 class="adm-h">Enquiries</h1>' +
+      '<p class="adm-lede">Buyer questions, each one tied to an order where there is one. Your reply lands in ' +
+      'their portal — there is no separate email to remember to send.</p>' +
+      panel(THREADS.length + ' thread' + (THREADS.length === 1 ? '' : 's'), '',
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>Subject</th><th>Order</th><th>Last message</th>' +
+        '<th>Status</th><th></th></tr></thead><tbody>' +
+        (rows || '<tr><td colspan="5"><p class="adm-empty">No enquiries.</p></td></tr>') + '</tbody></table></div>');
+  }
+  function admThread(id){
+    var t = TMAP[id];
+    if(!t) return '<h1 class="adm-h">Not found</h1><p class="adm-lede"><a href="#/admin/messages">Back</a>.</p>';
+    return '<h1 class="adm-h">' + esc(t.subj) + '</h1>' +
+      '<p class="adm-lede">' + (t.po ? 'About <a href="#/admin/orders/' + t.po + '">' + t.po + '</a>. ' : '') +
+      'Written as <b>' + esc(admin.name) + ' &middot; PUPPIA Sales</b>.</p>' +
+      panel('Conversation', '', '<div class="adm-in">' +
+        '<div class="msg-stream" style="max-height:none; padding:0">' + t.msgs.map(function(msg){
+          var mine = msg.who !== 'me';
+          return '<div class="bub' + (mine ? ' me' : '') + '"><b>' + esc(msg.name) + '<span>' + msg.t + '</span></b>' +
+            '<p>' + esc(msg.b).replace(/\n/g, '<br>') + '</p></div>';
+        }).join('') + '</div>' +
+        '<div style="margin-top:18px">' +
+        field('Your reply', false, '<textarea id="tReply" placeholder="Answer the question first, then anything else."></textarea>',
+          'Say what you know now, even when it is not the whole answer. A buyer with a partial answer can still plan.') +
+        '<div style="display:flex; gap:8px; flex-wrap:wrap">' +
+          '<button class="adm-btn pri" type="button" id="tSend">Send reply</button>' +
+          '<button class="adm-btn" type="button" id="tClose">' +
+            (t.status === 'open' ? 'Mark as answered' : 'Reopen') + '</button>' +
+          '<a class="adm-btn" href="#/admin/messages">Back</a></div></div></div>');
+  }
+
+  /* ---------- 8. SETTINGS ---------- */
+  function admSettings(){
+    return '<h1 class="adm-h">Settings</h1>' +
+      '<p class="adm-lede">The lists every other screen is built from. Changing something here changes it ' +
+      '<b>everywhere at once</b>, so each block says what it touches before you edit it.</p>' +
+
+      panel('Brands', 'four labels on one site', '<div class="adm-in">' +
+        helpBox('The <b>Season slot</b> switch decides whether a brand can appear in the rotating home slots. ' +
+                'That is how a brand with nothing new this season stays fully visible on the site without ' +
+                'leaving an empty banner behind — you turn the rotation off, not the brand.') +
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>Brand</th><th>Since</th><th>Products</th>' +
+        '<th>Season slot</th></tr></thead><tbody>' + BRANDS.map(function(b){
+          return '<tr><td><span class="adm-tag"><i style="background:var(' + b.v + ')"></i>' + b.n + '</span>' +
+            '<br><span style="font-size:11.5px;color:var(--on-bone-mute)">' + esc(b.d) + '</span></td>' +
+            '<td class="num">' + b.yr.replace('Since ', '') + '</td>' +
+            '<td class="num">' + PRODUCTS.filter(function(x){ return x.b === b.k; }).length + '</td>' +
+            '<td><label class="adm-toggle"><input type="checkbox" data-bs="' + b.k + '"' +
+            (b.season ? ' checked' : '') + '><span class="sw"></span><span>' +
+            (b.season ? 'Rotates' : 'Fixed') + '</span></label></td></tr>';
+        }).join('') + '</tbody></table></div></div>') +
+
+      panel('Categories', 'the top menu', '<div class="adm-in">' +
+        helpBox('These four are the menu across the top of every page, and they decide the sizing scheme: ' +
+                '<b>Walk</b> and <b>Apparel</b> are sized XS–XL, <b>Living</b> and <b>Acc</b> are one size. ' +
+                'Adding a fifth is a developer job — the menu is built to hold four.', 'adm-lock') +
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>Category</th><th>Sizing</th>' +
+        '<th>Products</th></tr></thead><tbody>' + CATS.map(function(c){
+          var sized = (c.k === 'walk' || c.k === 'apparel');
+          return '<tr><td><b>' + c.n + '</b></td>' +
+            '<td>' + (sized ? tag('info', 'XS – XL') : tag('off', 'One size')) + '</td>' +
+            '<td class="num">' + PRODUCTS.filter(function(x){ return x.c === c.k; }).length + '</td></tr>';
+        }).join('') + '</tbody></table></div></div>') +
+
+      panel('Colourways', 'the columns in every order matrix', '<div class="adm-in">' +
+        helpBox('Every product picks its colours from this one list, which is why the order matrix looks the same ' +
+                'on every style. Renaming a colour here renames it on every product, every line sheet and every ' +
+                'purchase order already placed.') +
+        '<div class="adm-picks">' + CW.map(function(c){
+          return '<span class="adm-pick" style="cursor:default"><i style="background:' + c.h + '"></i>' + c.n +
+            '<span style="font-family:Martian Mono,monospace;font-size:9px;color:var(--on-bone-mute)">' +
+            c.h + '</span></span>';
+        }).join('') + '</div></div>') +
+
+      panel('Size chart', 'used by the fit finder and the order matrix', '<div class="adm-in">' +
+        helpBox('The single biggest cause of returns in this category is size. These numbers appear on the product ' +
+                'page, in the fit simulator and as the row labels in every order matrix — one source, so they can ' +
+                'never disagree with each other.') +
+        '<div class="adm-tw"><table class="adm-t"><thead><tr><th>Size</th><th>Chest girth</th><th>Neck</th>' +
+        '<th>Weight</th></tr></thead><tbody>' + SIZES.map(function(z){
+          return '<tr><td><b>' + z.s + '</b></td><td class="num">' + z.min + '–' + z.max + ' cm</td>' +
+            '<td class="num">' + z.neck + ' cm</td><td class="num">' + z.kg + ' kg</td></tr>';
+        }).join('') + '</tbody></table></div></div>') +
+
+      panel('Staff account', '', '<div class="adm-in">' +
+        '<p class="adm-hint" style="font-size:13px">Signed in as <b>' + esc(admin.name) + '</b> (' +
+        esc(admin.email) + ') &middot; ' + esc(admin.role) + '.</p>' +
+        helpBox('This prototype has one staff account. A real console needs roles — a merchandiser who can edit ' +
+                'products but not approve buyers, and someone in sales who can do the opposite.', 'adm-lock') +
+        '<button class="adm-btn danger" type="button" id="admOut2">Sign out</button></div>');
+  }
+
+  /* ---------- render + wire ---------- */
+  function renderAdmin(){
+    var gate = document.getElementById('admGate'), shell = document.getElementById('admShell');
+    gate.hidden = !!admin;
+    shell.hidden = !admin;
+    paintDirty();
+    if(!admin) return;
+
+    document.getElementById('admNav').innerHTML = admNav();
+    document.getElementById('admCrumb').innerHTML = admCrumb();
+    document.getElementById('admMe').innerHTML =
+      '<b>' + esc(admin.name) + '</b>' + esc(admin.role) +
+      '<div class="row"><a href="#/">View site</a><button type="button" id="admOut">Sign out</button></div>';
+    document.getElementById('admOut').addEventListener('click', function(){
+      admSignOut(); renderAdmin(); toast('Signed out of the console');
+    });
+
+    var body = document.getElementById('admBody');
+    body.innerHTML =
+      admSec === 'home'     ? admHome() :
+      admSec === 'products' ? (admId ? admProductEdit(admId) : admProductList()) :
+      admSec === 'catalog'  ? (admId ? admCatalogEdit(admId) : admCatalog()) :
+      admSec === 'members'  ? (admId ? admMemberEdit(admId) : admMembers()) :
+      admSec === 'orders'   ? (admId ? admOrderView(admId) : admOrders()) :
+      admSec === 'messages' ? (admId ? admThread(admId) : admMessages()) :
+      admSec === 'settings' ? admSettings() : admDash();
+
+    if(admSec === 'home') wireHome(body);
+    if(admSec === 'products' && admId) wireProductEdit(body, admId);
+    if(admSec === 'catalog' && admId) wireCatalogEdit(body);
+
+    /* list filters */
+    function live(id, fn){
+      var el = document.getElementById(id);
+      if(el) el.addEventListener('input', fn);
+    }
+    live('pQ', function(e){ pQuery = e.target.value; renderAdmin(); refocus('pQ'); });
+    live('mQ', function(e){ mQuery = e.target.value; renderAdmin(); refocus('mQ'); });
+    ['pB|pBrand', 'pC|pCat', 'mF|mFilter', 'oF|oFilter'].forEach(function(pair){
+      var parts = pair.split('|'), el = document.getElementById(parts[0]);
+      if(!el) return;
+      el.addEventListener('change', function(){
+        if(parts[1] === 'pBrand') pBrand = el.value;
+        if(parts[1] === 'pCat') pCat = el.value;
+        if(parts[1] === 'mFilter') mFilter = el.value;
+        if(parts[1] === 'oFilter') oFilter = el.value;
+        renderAdmin();
+      });
+    });
+
+    /* member row actions */
+    [].forEach.call(body.querySelectorAll('[data-appr]'), function(b){
+      b.addEventListener('click', function(){
+        setMemberStatus(b.dataset.appr, 'ok', 'Approved — they can sign in now');
+      });
+    });
+    [].forEach.call(body.querySelectorAll('[data-rej]'), function(b){
+      b.addEventListener('click', function(){
+        setMemberStatus(b.dataset.rej, 'stop', 'Declined — the account stays on file, suspended');
+      });
+    });
+
+    /* member detail */
+    var mSave = document.getElementById('mSave');
+    if(mSave) mSave.addEventListener('click', function(){
+      var m = MEMBERS.filter(function(x){ return x.id === admId; })[0];
+      m.company = document.getElementById('mCo').value.trim() || m.company;
+      m.country = document.getElementById('mCn').value.trim() || m.country;
+      m.terms   = document.getElementById('mTm').value.trim();
+      m.note    = document.getElementById('mNo').value;
+      admPersist(); renderAdmin(); toast('Account saved');
+    });
+    var mStop = document.getElementById('mStop');
+    if(mStop) mStop.addEventListener('click', function(){
+      setMemberStatus(admId, 'stop', 'Suspended — sign-in is blocked from now');
+    });
+    var mGo = document.getElementById('mGo');
+    if(mGo) mGo.addEventListener('click', function(){
+      setMemberStatus(admId, 'ok', 'Active — they can sign in now');
+    });
+
+    /* order detail */
+    [].forEach.call(body.querySelectorAll('[data-ost]'), function(b){
+      b.addEventListener('click', function(){
+        var o = ORDERS.filter(function(x){ return x.po === admId; })[0];
+        o.status = b.dataset.ost;
+        if(o.status === 'shp' && !o.ship) o.ship = today();
+        if(o.status === 'sub') o.ship = '';
+        ORDER_STATE[o.po] = { status:o.status, ship:o.ship || '' };
+        admPersist(); renderAdmin();
+        toast(o.po + ' is now "' + STATUS[o.status] + '" — the buyer sees it already');
+      });
+    });
+    var oShip = document.getElementById('oShip');
+    if(oShip) oShip.addEventListener('change', function(){
+      var o = ORDERS.filter(function(x){ return x.po === admId; })[0];
+      o.ship = oShip.value.trim();
+      ORDER_STATE[o.po] = { status:o.status, ship:o.ship };
+      admPersist(); toast('Ship date saved');
+    });
+    var oMsg = document.getElementById('oMsg');
+    if(oMsg) oMsg.addEventListener('click', function(){
+      var ex = THREADS.filter(function(t){ return t.po === admId; })[0];
+      if(ex){ location.hash = '#/admin/messages/' + ex.id; return; }
+      var t = { id:'t' + (THREADS.length + 1) + Date.now().toString(36).slice(-3),
+                subj:admId + ' — a note from PUPPIA', po:admId, status:'answered', unread:true, msgs:[] };
+      THREADS.unshift(t); TMAP[t.id] = t;
+      location.hash = '#/admin/messages/' + t.id;
+    });
+
+    /* thread reply */
+    var tSend = document.getElementById('tSend');
+    if(tSend) tSend.addEventListener('click', function(){
+      var box = document.getElementById('tReply'), txt = box.value.trim();
+      if(!txt){ toast('Write something first'); return; }
+      var t = TMAP[admId];
+      t.msgs.push({ who:'them', name:admin.name + ' · PUPPIA Sales', t:stamp(), b:txt });
+      t.status = 'answered'; t.unread = true;
+      admPersist(); persist(); renderAdmin();
+      toast('Sent — it is in their portal now');
+    });
+    var tClose = document.getElementById('tClose');
+    if(tClose) tClose.addEventListener('click', function(){
+      var t = TMAP[admId];
+      t.status = t.status === 'open' ? 'answered' : 'open';
+      persist(); renderAdmin();
+    });
+
+    /* settings */
+    [].forEach.call(body.querySelectorAll('[data-bs]'), function(el){
+      el.addEventListener('change', function(){
+        BRANDS.forEach(function(b){ if(b.k === el.dataset.bs) b.season = el.checked; });
+        renderHome(); renderAdmin();
+        toast(el.checked ? 'This brand can now appear in the season slots' : 'Removed from the season rotation');
+      });
+    });
+    var out2 = document.getElementById('admOut2');
+    if(out2) out2.addEventListener('click', function(){
+      admSignOut(); renderAdmin(); toast('Signed out of the console');
+    });
+  }
+  function refocus(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.focus();
+    try { el.setSelectionRange(el.value.length, el.value.length); } catch(e){}
+  }
+  function stamp(){
+    var d = new Date(), p = function(n){ return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) +
+      ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+
   /* ---------------- go ---------------- */
+  admRestore();
+  remap();
+  renderHome();      /* the console may have changed what the home screen says */
   restore();
   paintDot();
   route();

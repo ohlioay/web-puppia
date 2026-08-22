@@ -7,7 +7,7 @@
 
 ## 문서
 
-- **프로토타입**: [`prototype/index.html`](prototype/index.html) — 홈 · 제품 목록 · 제품 상세 · 카탈로그 웹북 · 파트너 포털 · Soft Harness® (단일 파일, 빌드 불필요)
+- **프로토타입**: [`prototype/index.html`](prototype/index.html) — 홈 · 제품 목록 · 제품 상세 · 카탈로그 웹북 · 파트너 포털 · 관리자 콘솔 · Soft Harness® (단일 파일, 빌드 불필요)
 
 | 문서 | 내용 |
 |---|---|
@@ -18,3 +18,4 @@
 | [docs/research/04-extra-ideas.md](docs/research/04-extra-ideas.md) | 추가 제안 아이디어 |
 | [docs/research/05-sources.md](docs/research/05-sources.md) | 출처 |
 | [docs/research/06-home-and-brand-architecture.md](docs/research/06-home-and-brand-architecture.md) | 메인 홈 설계 · 2단 내비게이션 · 4브랜드 아키텍처 · 컬러웨이 · 제품 목록/상세 · 카탈로그 웹북 · 파트너 포털 |
+| [docs/research/07-admin-console.md](docs/research/07-admin-console.md) | 관리자 콘솔 설계 · 신입이 쓸 수 있는 UI 원칙 · 상품 등록 게이트 · 실 구축 시 유의점 |
